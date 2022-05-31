@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
-use App\Http\Requests\StoreDoctorRequest;
-use App\Http\Requests\UpdateDoctorRequest;
+// use App\Http\Requests\StoreDoctorRequest;
+// use App\Http\Requests\UpdateDoctorRequest;
+use Illuminate\Http\Request;
+
 
 class DoctorController extends Controller
 {
@@ -26,6 +28,7 @@ class DoctorController extends Controller
     public function create()
     {
         //
+        return view('backend.layout.doctor.add');
     }
 
     /**
@@ -34,9 +37,9 @@ class DoctorController extends Controller
      * @param  \App\Http\Requests\StoreDoctorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDoctorRequest $request)
+    public function store(Request $request)
     {
-        //
+       die( $request->phone);
     }
 
     /**
@@ -68,7 +71,7 @@ class DoctorController extends Controller
      * @param  \App\Models\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDoctorRequest $request, Doctor $doctor)
+    public function update(Request $request, Doctor $doctor)
     {
         //
     }

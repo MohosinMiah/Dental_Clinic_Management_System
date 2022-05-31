@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('backend.layout.dashboard.index');
 });
+
+
+// ********************    DOCTOR MODULE START ********************************
+Route::get( '/doctor/register', [ DoctorController::class, 'create'] )->name('doctor_registration_form');
+Route::post( '/doctor/register/post', [ DoctorController::class, 'store'] )->name('doctor_registration_save');
+
+// ********************    DOCTOR MODULE END ********************************
