@@ -8,6 +8,11 @@
 	<h1 class="h3 mb-4 text-gray-800">Register New Doctor</h1>
 
 	<div class="row">
+		@if(session('status'))
+			<div class="alert alert-success">
+				{{ session('status') }}
+			</div>
+		@endif
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
 			<form method="post" action="{{ route('doctor_registration_save') }}" enctype="multipart/form-data">

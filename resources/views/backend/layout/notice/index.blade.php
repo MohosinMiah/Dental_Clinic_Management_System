@@ -15,7 +15,7 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Doctor List</h1>
+	<h1 class="h3 mb-4 text-gray-800"> Notice List</h1>
 
 	<div class="row">
 		<div class="col-md-12">
@@ -47,14 +47,14 @@
 								</tr>
 							</tfoot>
 							<tbody>
-								@foreach( $data['doctors'] as $doctor )
+								@foreach( $data['notices'] as $doctor )
 									<tr>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
+										<td>{{ $doctor->title }}</td>
+										<td>{{ $doctor->title }}</td>
+										<td>{{ $doctor->title }}</td>
+										<td>{{ $doctor->title }}</td>
+										<td>{{ $doctor->title }}</td>
+										<td>{{ $doctor->title }}</td>
 									</tr
 								@endforeach
 

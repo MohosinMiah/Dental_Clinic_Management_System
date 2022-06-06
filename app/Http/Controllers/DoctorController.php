@@ -17,7 +17,12 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+        $doctors = Doctor::all();
+        $data = [
+            'doctors' => $doctors
+        ];
+        return view('backend.layout.doctor.index',compact('data'));
+
     }
 
     /**
@@ -39,7 +44,34 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-       die( $request->phone);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required|unique:doctors|max:18',
+            'password' => 'required',
+          ]);
+   
+          $doctor = new Doctor;
+   
+          $doctor->name = $request->name;
+          $doctor->phone = $request->phone;
+          $doctor->password = $request->password;
+          $doctor->email = $request->email;
+          $doctor->designation = $request->designation;
+          $doctor->personal_home_page = $request->personal_home_page;
+          $doctor->degress = $request->degress;
+          $doctor->department = $request->department;
+          $doctor->specialist = $request->specialist;
+          $doctor->experience = $request->experience;
+          $doctor->date_of_birth = $request->date_of_birth;
+          $doctor->gender = $request->gender;
+          $doctor->blood_group = $request->blood_group;
+          $doctor->address = $request->address;
+          $doctor->about_me = $request->about_me;
+          $doctor->profile_pic = $request->profile_pic;
+   
+          $doctor->save();
+   
+          return redirect(route('doctor_registration_form'))->with('status', 'Form Data Has Been Inserted');
     }
 
     /**
@@ -50,7 +82,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
+        return view('backend.layout.doctor.index');
     }
 
     /**
