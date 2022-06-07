@@ -7,6 +7,7 @@
 	<!-- Page Heading -->
 	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
 	<script src="{{ asset('js/invoice.js')}}"></script>
+	<script src="{{ asset('js/services.js')}}"></script>
 
 	<div class="row">
 		@if(session('status'))
@@ -17,7 +18,7 @@
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
 			<form action="https://newclinic365.bdtask.com/new/admin/Invoice/save_invoice" name="insert_invoice" class="form-vertical" id="insert_invoice" method="post" accept-charset="utf-8">
-
+				@csrf
 				<div class="panel-body">
 
 					<div class="row">
@@ -57,15 +58,15 @@
 								<label for="date" class="col-sm-4 col-form-label">Doctor<i class="text-danger">*</i></label>
 								<div class="col-sm-8">
 									<select name="doctor_id" class=" form-control" required="">
-									<option value="">Doctor</option>
-																			<option value="7">Adword Lewis</option>
-																			<option value="8">Jenifer Nelson</option>
-																			<option value="9">Robinson Walker</option>
-																			<option value="10">Alice  Jessica</option>
-																			<option value="11">Clarke Jackson</option>
-																			<option value="12">Eliza Freya </option>
-																			<option value="17">Nicolas Juliea </option>
-																			</select>
+										<option value="">Doctor</option>
+										<option value="7">Adword Lewis</option>
+										<option value="8">Jenifer Nelson</option>
+										<option value="9">Robinson Walker</option>
+										<option value="10">Alice  Jessica</option>
+										<option value="11">Clarke Jackson</option>
+										<option value="12">Eliza Freya </option>
+										<option value="17">Nicolas Juliea </option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -106,7 +107,7 @@
 											id="SchoolHiddenId"
 											type="hidden"
 										/>
-										<input class="baseUrl" value="https://newclinic365.bdtask.com/new/" type="hidden">
+										<input class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
 									</td>
 									<td>
 										<input
@@ -164,6 +165,7 @@
 										<input id="total_tax_1" class="total_tax_1" type="hidden">
 										<input id="all_tax_1" class=" total_tax" value="0" type="hidden">
 										<!-- Tax calculate end -->
+								
 										<button
 											class="btn btn-danger"
 											type="button"
@@ -204,7 +206,7 @@
 								<tr>
 									<td align="center">
 										<input id="add-invoice-item" class="btn btn-info" name="add-invoice-item" onclick="addInputField('addinvoiceItem');" value="Add New Service" type="button">
-										<input name="baseUrl" class="baseUrl" value="https://newclinic365.bdtask.com/new/" type="hidden">
+										<input name="baseUrl" class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
 									</td>
 									<td colspan="3"><b>Due:</b></td>
 									<td class="text-right">

@@ -6,9 +6,25 @@ use App\Models\Invoice;
 // use App\Http\Requests\StoreInvoiceRequest;
 // use App\Http\Requests\UpdateInvoiceRequest;
 use Illuminate\Http\Request;
+use DB;
 
 class InvoiceController extends Controller
 {
+
+
+    public function retrieve_service(Request $request)
+    {
+       $service =  DB::table('services')->where('id', $request->product_id)->first();
+       return response()->json($service);
+    }
+
+    public function get_retrieve_service()
+    {
+       $service =  DB::table('services')->where('id', $request->$request)->first();
+       return response()->json($service);
+    }
+    
+
     /**
      * Display a listing of the resource.
      *

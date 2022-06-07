@@ -46,6 +46,10 @@ Route::post( '/invoice/add_new/post', [ InvoiceController::class, 'store'] )->na
 Route::get( '/invoice/list', [ InvoiceController::class, 'index'] )->name('invoice_list');
 
 
+Route::post( '/retrieve_service', [ InvoiceController::class, 'retrieve_service'] )->name('retrieve_service');
+Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_service'] )->name('get_retrieve_service');
+
+
 // ********************    NOTICE MODULE END ********************************
 
 

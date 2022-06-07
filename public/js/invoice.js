@@ -10,6 +10,28 @@ function addInputField(t) {
 }
 
 
+// e.innerHTML = `<td>
+// <input type='text' name='product_name' onkeypress='invoice_productList(" + count + ");' class='form-control productSelection' placeholder='Service name' id='" + a + "' required>
+// <input type='hidden' class='autocomplete_hidden_value  product_id_" + count + "' name='product_id[]' id ='SchoolHiddenId'/>
+// </td>
+// <td class='text-right'>
+// <input type='number' name='product_quantity[]' id='total_qntt_" + count + "' onkeyup='quantity_calculate(" + count + "); stockLimit(" + count + ");' class='total_qntt" + count + " form-control text-right' value='1'/>
+// </td>
+// <td>
+// <input type='number' name='product_rate[]' readonly value='0.00' id='price_item_" + count + "' class='price_item" + count + " form-control text-right' required/>
+// </td>
+// <td>
+// <input type='number' name='discount[]' onkeyup='quantity_calculate(" + count + "); stockLimit(" + count + ");' id='discount_" + count + "' class='form-control text-right' placeholder='Discount' />
+// </td>
+// <td class='text-right'>
+// <input class='total_price form-control text-right' type='text' name='total_price[]' id='total_price_" + count + "' value='0.00' readonly='readonly'/>
+// </td>
+// <td>
+// <input type='hidden' id='total_tax_" + count + "' class='total_tax_" + count + "' />
+// <input type='hidden' id='all_tax_" + count + "' class='total_tax'/>
+// <button style='text-align: right;' class='btn btn-danger' type='button' value='Delete' onclick='deleteRow(this)'>Delete</button>
+// </td>`,
+// document.getElementById(t).appendChild(e), document.getElementById(a).focus(), count++
 
 // https://newclinic365.bdtask.com/new/assets/my-assets/invoice.js
 

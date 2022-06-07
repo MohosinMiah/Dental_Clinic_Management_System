@@ -52,6 +52,9 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 @yield('js')
 </body>
 
