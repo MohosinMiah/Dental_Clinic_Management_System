@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('image')->nullable();;
-            $table->integer()->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
-use App\Http\Requests\StoreInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
+// use App\Http\Requests\StoreInvoiceRequest;
+// use App\Http\Requests\UpdateInvoiceRequest;
+use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -25,7 +26,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.layout.invoice.add');
     }
 
     /**

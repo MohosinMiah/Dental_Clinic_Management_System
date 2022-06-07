@@ -61,6 +61,22 @@
         </div>
     </li>
 
+	<li class="nav-item active">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Invoice</span>
+        </a>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item active" href="{{ route('invoice_added_form') }}">Add New</a>
+                <a class="collapse-item" href="{{ route('invoice_list') }}">List</a>
+            </div>
+        </div>
+    </li>
+
+
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

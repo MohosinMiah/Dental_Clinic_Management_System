@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
+           
             $table->id();
-
+            
             $table->string('patient_id');
             $table->text('doctor_id')->nullable();
             $table->text('service_id')->nullable();
