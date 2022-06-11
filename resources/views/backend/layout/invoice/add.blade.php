@@ -17,7 +17,7 @@
 		@endif
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
-			<form action="https://newclinic365.bdtask.com/new/admin/Invoice/save_invoice" name="insert_invoice" class="form-vertical" id="insert_invoice" method="post" accept-charset="utf-8">
+			<form action="{{ route('invoice_added_save') }}"  class="form-vertical" method="post">
 				@csrf
 				<div class="panel-body">
 
@@ -26,7 +26,7 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" autocomplete="off" name="phone" id="phone" class="form-control" type="number">
+									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" type="number">
 									<span id="csc" class="text-center invlid_patient_id">Phone Number</span>
 								</div>
 							</div>
@@ -39,7 +39,7 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="address" id="address" class="form-control" type="text">
+									<input required="" name="address" id="patient_address" class="form-control" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
@@ -50,7 +50,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Date <i class="text-danger">*</i></label>
 								<div class="col-sm-8">
-									   <input class="form-control" size="50" name="date" id="date" required="" value="2022-06-06" type="text">
+									   <input class="form-control" size="50" name="payment_date" id="payment_date" required="" value="2022-06-06" type="text">
 								</div>
 							</div>
 
@@ -93,7 +93,7 @@
 
 									<td>
 										<input
-											name="product_name"
+											name="product_name[]"
 											onkeypress="invoice_productList(1);"
 											class="form-control productSelection"
 											placeholder="Service Name"
@@ -224,7 +224,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Payment Notes</label>
 								<div class="col-sm-8">
-									<textarea name="payment_notes" class="form-control" placeholder="Payment Notes"></textarea>
+									<textarea name="payment_note" class="form-control" placeholder="Payment Notes"></textarea>
 								</div>
 							</div>
 
@@ -241,7 +241,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Payment Method Notes  </label>
 								<div class="col-sm-8">
-									<textarea name="payment_method_notes" class="form-control" placeholder="Payment Method Notes "></textarea>
+									<textarea name="payment_method_note" class="form-control" placeholder="Payment Method Notes "></textarea>
 								</div>
 							</div>
 						</div>
@@ -249,13 +249,13 @@
 
 					<div class="form-group row">
 						<div class="col-sm-offset-4 col-sm-4">
-							<input id="add-invoice" class="btn btn-success" name="add-invoice" value="Save And Paid" type="button" onclick="demoModeOne()">
+							<input type="submit"  class="btn btn-success"  value="Save And Paid" type="button" >
 						</div>
 					</div>
 
 
 				</div>
-			   </form>
+			</form>
 			{{--  Doctor Registration Form Start   --}}
 
 		</div>

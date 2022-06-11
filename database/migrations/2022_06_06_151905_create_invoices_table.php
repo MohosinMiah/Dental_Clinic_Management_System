@@ -19,10 +19,10 @@ return new class extends Migration
             
             $table->string('patient_id');
             $table->text('doctor_id')->nullable();
-            $table->text('service_id')->nullable();
             $table->text('added_by_id')->nullable();
 
             $table->string('patient_phone');
+            $table->string('patient_name');
             $table->text('patient_address')->nullable();
 
             $table->text('payment_date');
