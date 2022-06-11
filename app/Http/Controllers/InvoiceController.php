@@ -32,7 +32,11 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::all();
+        $data = [
+            'invoices' => $invoices
+        ];
+        return view('backend.layout.invoice.index', compact('data'));
     }
 
     /**
@@ -141,6 +145,16 @@ class InvoiceController extends Controller
         //
     }
 
+
+    public function invoiceView( $invoiceID )
+    {
+
+    }
+
+    public function invoiceEdit( $invoiceID )
+    {
+
+    }
     /**
      * Remove the specified resource from storage.
      *

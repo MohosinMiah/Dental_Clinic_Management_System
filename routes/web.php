@@ -46,6 +46,16 @@ Route::post( '/invoice/add_new/post', [ InvoiceController::class, 'store'] )->na
 Route::get( '/invoice/list', [ InvoiceController::class, 'index'] )->name('invoice_list');
 
 
+Route::get( '/invoice/invoice_view/{id}', [ InvoiceController::class, 'invoiceView'] )->name('single_view_invoice');
+Route::get( '/invoice/edit_invoice/{id}', [ InvoiceController::class, 'invoiceEdit'] )->name('single_edit_invoice');
+Route::get( '/invoice/invoice_delete/{id}', [ InvoiceController::class, 'destroy'] )->name('single_delete_invoice');
+
+
+
+
+
+
+
 Route::post( '/retrieve_service', [ InvoiceController::class, 'retrieve_service'] )->name('retrieve_service');
 Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_service'] )->name('get_retrieve_service');
 
