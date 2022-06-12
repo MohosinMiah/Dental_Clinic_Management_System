@@ -39,7 +39,7 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="address" id="patient_address" class="form-control" type="text">
+									<input required="" name="patient_address" id="patient_address"  class="form-control" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
@@ -162,8 +162,8 @@
 
 									 <td>
 										<!-- Tax calculate start-->
-										<input id="total_tax_1" class="total_tax_1" type="hidden">
-										<input id="all_tax_1" class=" total_tax" value="0" type="hidden">
+										<input id="total_tax_1" class="total_tax_1" name="service_total_tax[]" value="0.00"  type="hidden">
+										<input id="all_tax_1" class=" total_tax" name="service_all_tax[]" value="0.00" type="hidden">
 										<!-- Tax calculate end -->
 								
 										<button

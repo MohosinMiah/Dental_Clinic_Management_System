@@ -80,10 +80,10 @@ class InvoiceController extends Controller
 		$invoice->patient_address = $request->patient_address;
 		$invoice->payment_date = $request->payment_date;
 		$invoice->total = 111;
-		$invoice->tax_total = 1;
-		$invoice->grand_total = 1;
-		$invoice->paid_amount = 1;
-		$invoice->due_total = 1;
+		$invoice->tax_total = $request->total_tax;
+		$invoice->grand_total = $request->grand_total_price;
+		$invoice->paid_amount = $request->paid_amount;
+		$invoice->due_total = $request->due_amount;
 		$invoice->payment_note = $request->payment_note;
 		$invoice->payment_method = $request->payment_method;
 		$invoice->payment_method_note = $request->payment_method_note;
@@ -102,13 +102,12 @@ class InvoiceController extends Controller
 				'discount' => $request->discount[$index],
 				'rate' => $request->product_rate[$index],
 				'total' => $request->total_price[$index],
+				'service_total_tax' => $request->service_total_tax[$index],
+				'service_all_tax' => $request->service_all_tax[$index],
 			]);
 		}
-		die;
 
-
-		die('ID ' . $insertedInvoiceID);
-        //   return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
+          return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
     }
 
     /**
@@ -148,12 +147,42 @@ class InvoiceController extends Controller
 
     public function invoiceView( $invoiceID )
     {
+        $invoice = Invoice::where( 'id', $invoiceID )->first();
+		
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
 
+		// echo '<pre>';
+
+		// var_dump( $invoiceDetails );
+		// die;
+
+
+        $data = [
+            'invoice' => $invoice,
+			'invoiceDetails' => $invoiceDetails,
+        ];
+
+        return view('backend.layout.invoice.details', compact('data') );
     }
 
     public function invoiceEdit( $invoiceID )
     {
+		$invoice = Invoice::where( 'id', $invoiceID )->first();
+		
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
 
+		// echo '<pre>';
+
+		// var_dump( $invoiceDetails );
+		// die;
+
+
+        $data = [
+            'invoice' => $invoice,
+			'invoiceDetails' => $invoiceDetails,
+        ];
+
+        return view('backend.layout.invoice.edit', compact('data') );
     }
     /**
      * Remove the specified resource from storage.
