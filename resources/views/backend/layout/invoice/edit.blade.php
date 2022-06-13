@@ -26,20 +26,20 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" type="number">
+									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" value="{{ $data['invoice']->patient_phone }}" type="number">
 									<span id="csc" class="text-center invlid_patient_id">Phone Number</span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Patient Name <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="patient_name" id="patient_name" class="form-control" type="text">
+									<input required="" name="patient_name" id="patient_name" class="form-control" value="{{ $data['invoice']->patient_name }}" type="text">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="address" id="patient_address" class="form-control" type="text">
+									<input required="" name="address" id="patient_address" class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
