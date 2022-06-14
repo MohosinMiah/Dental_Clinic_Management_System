@@ -1,6 +1,22 @@
 
 function addInputField(t) {
+
     'use strict';
+
+    
+    var lastServiceNumber = null;
+    var count = 2;
+	try{
+		lastServiceNumber = document.getElementById( 'last_service_id' ).value;
+		if( lastServiceNumber != null )
+		{
+			count = ( parseInt( lastServiceNumber ) + 1 );
+		}
+	}catch(e) {
+		console.log(e);
+	}
+   
+
     if (count == limits) alert("You have reached the limit of adding " + count + " inputs");
     else {
         var a = "product_name" + count,
@@ -118,6 +134,6 @@ function deleteRow(t) {
     }
 }
 
-var count = 2,limits = 500;
+var limits = 500;
 
 

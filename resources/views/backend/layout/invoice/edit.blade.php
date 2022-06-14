@@ -17,7 +17,7 @@
 		@endif
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
-			<form action="{{ route('invoice_added_save') }}"  class="form-vertical" method="post">
+			<form action="{{ route('invoice_update' , $data['invoice']->id ) }}"  class="form-vertical" method="post">
 				@csrf
 				<div class="panel-body">
 
@@ -39,7 +39,7 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="address" id="patient_address" class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
+									<input required="" name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
@@ -87,16 +87,18 @@
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
-							<?php $i = 1; ?>
+							<?php 
+							$totalInvoice =  count( $data['invoiceDetails'] );
+							?>
 							@foreach( $data['invoiceDetails'] as $i=>$invoiceDetail )
-							<?php $i++; ?>
+							
 							<tbody id="addinvoiceItem">
 								<tr>
-
+									<h1>{{ $i + 1 }}
 									<td>
 										<input
 											name="product_name[]"
-											onkeypress="invoice_productList(1);"
+											onkeypress="invoice_productList( {{ $i + 1 }} );"
 											class="form-control productSelection"
 											placeholder="Service Name"
 											value="{{ $invoiceDetail->service_name }}"
@@ -105,7 +107,7 @@
 											type="text"
 										/>
 										<input
-											class="autocomplete_hidden_value product_id_1"
+											class="autocomplete_hidden_value product_id_{{ $i + 1 }}"
 											name="product_id[]"
 											id="SchoolHiddenId"
 											type="hidden"
@@ -116,9 +118,9 @@
 									<td>
 										<input
 											name="product_quantity[]"
-											onkeyup="quantity_calculate( {{ $i }} ) ;"
-											onchange="quantity_calculate( {{ $i }} );"
-											id="total_qntt_{{ $i }}"
+											onkeyup="quantity_calculate( {{ $i + 1 }} ); "
+											onchange="quantity_calculate( {{ $i + 1 }} );"
+											id="total_qntt_{{ $i + 1 }}"
 											class="form-control text-right"
 											value="{{ $invoiceDetail->quantity }}"
 											min="1"
@@ -131,8 +133,8 @@
 											name="product_rate[]"
 											readonly=""
 											value="{{ $invoiceDetail->rate }}"
-											id="price_item_{{ $i }}"
-											class="price_item1 form-control text-right"
+											id="price_item_{{ $i + 1 }}"
+											class="price_item{{ $i + 1 }} form-control text-right"
 											type="text"
 										/>
 									</td>
@@ -141,9 +143,9 @@
 									<td>
 										<input
 											name="discount[]"
-											onkeyup="quantity_calculate({{ $i }});"
-											onchange="quantity_calculate({{ $i }});"
-											id="discount_{{ $i }}"
+											onkeyup="quantity_calculate( {{ $i + 1 }} );"
+											onchange="quantity_calculate( {{ $i + 1 }} );"
+											id="discount_{{ $i + 1 }}"
 											class="form-control text-right"
 											placeholder="Discount"
 											value="{{ $invoiceDetail->discount }}"
@@ -156,7 +158,7 @@
 										<input
 											class="total_price form-control text-right"
 											name="total_price[]"
-											id="total_price_{{ $i }}"
+											id="total_price_{{ $i + 1 }}"
 											value="{{ $invoiceDetail->total }}"
 											tabindex="-1"
 											readonly="readonly"
@@ -166,10 +168,10 @@
 
 									 <td>
 										<!-- Tax calculate start-->
-										<input id="total_tax_{{ $i }}" class="total_tax_{{ $i }}" value="{{ $invoiceDetail->service_total_tax }}" type="hidden">
-										<input id="all_tax_{{ $i }}" class=" total_tax" value="{{ $invoiceDetail->service_all_tax }}" type="hidden">
+										<input id="total_tax_{{ $i + 1 }}" class="total_tax_{{ $i + 1 }}" name="service_total_tax[]"  value="{{ $invoiceDetail->service_total_tax }}" type="hidden">
+										<input id="all_tax_{{ $i + 1 }}" class=" total_tax" name="service_all_tax[]" value="{{ $invoiceDetail->service_all_tax }}" type="hidden">
 										<!-- Tax calculate end -->
-								
+										
 										<button
 											class="btn btn-danger"
 											type="button"
@@ -182,6 +184,15 @@
 									</td>
 
 								</tr>
+								<?php 
+								if( ++$i === $totalInvoice )
+								{
+								?>
+									<input type="hidden" id="last_service_id" value="{{ $i }}" >
+								<?php
+								}
+								?>
+
 
 							</tbody>
 							@endforeach
@@ -189,7 +200,7 @@
 								<tr>
 									<td colspan="4"><b>Total Tax:</b></td>
 									<td class="text-right">
-										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="{{ $data['invoice']->tax_total }}" readonly="readonly" type="text">
+										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="{{ $data['invoice']->tax_total }} " readonly="readonly" type="text">
 									</td>
 								</tr>
 

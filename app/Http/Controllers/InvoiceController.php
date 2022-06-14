@@ -12,90 +12,166 @@ class InvoiceController extends Controller
 {
 
 
-    public function retrieve_service(Request $request)
-    {
-       $service =  DB::table('services')->where('id', $request->product_id)->first();
-       return response()->json($service);
-    }
+public function retrieve_service(Request $request)
+{
+	$service =  DB::table('services')->where('id', $request->product_id)->first();
+	return response()->json($service);
+}
 
-    public function get_retrieve_service()
-    {
-       $service =  DB::table('services')->where('id', $request->$request)->first();
-       return response()->json($service);
-    }
-    
+public function get_retrieve_service()
+{
+	$service =  DB::table('services')->where('id', $request->$request)->first();
+	return response()->json($service);
+}
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $invoices = Invoice::all();
-        $data = [
-            'invoices' => $invoices
-        ];
-        return view('backend.layout.invoice.index', compact('data'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('backend.layout.invoice.add');
-    }
+/**
+ * Display a listing of the resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function index()
+{
+	$invoices = Invoice::all();
+	$data = [
+		'invoices' => $invoices
+	];
+	return view('backend.layout.invoice.index', compact('data'));
+}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreInvoiceRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+/**
+ * Show the form for creating a new resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function create()
+{
+	return view('backend.layout.invoice.add');
+}
 
-		// return $request->all();
-		// $validatedData = $request->validate([
-		//     'patient_id' => 'required',
-		//     'patient_phone' => 'required',
-		//     'patient_name' => 'required',
-		//     'payment_date' => 'required',
-		//     'total' => 'required',
-		//     'grand_total' => 'required',
-		//     'paid_amount' => 'required',
-		//     'payment_method' => 'required',
-		//   ]);
+/**
+ * Store a newly created resource in storage.
+ *
+ * @param  \App\Http\Requests\StoreInvoiceRequest  $request
+ * @return \Illuminate\Http\Response
+ */
+public function store(Request $request)
+{
 
-		$invoice = new Invoice;
+	// return $request->all();
+	// $validatedData = $request->validate([
+	//     'patient_id' => 'required',
+	//     'patient_phone' => 'required',
+	//     'patient_name' => 'required',
+	//     'payment_date' => 'required',
+	//     'total' => 'required',
+	//     'grand_total' => 'required',
+	//     'paid_amount' => 'required',
+	//     'payment_method' => 'required',
+	//   ]);
 
-		$invoice->patient_id =11;
-		$invoice->doctor_id = $request->doctor_id;
-		$invoice->added_by_id = $request->added_by_id;
-		$invoice->patient_phone = $request->patient_phone;
-		$invoice->patient_name = $request->patient_name;
-		$invoice->patient_address = $request->patient_address;
-		$invoice->payment_date = $request->payment_date;
-		$invoice->total = 111;
-		$invoice->tax_total = $request->total_tax;
-		$invoice->grand_total = $request->grand_total_price;
-		$invoice->paid_amount = $request->paid_amount;
-		$invoice->due_total = $request->due_amount;
-		$invoice->payment_note = $request->payment_note;
-		$invoice->payment_method = $request->payment_method;
-		$invoice->payment_method_note = $request->payment_method_note;
+	$invoice = new Invoice;
 
-		$invoice->save();
+	$invoice->patient_id =11;
+	$invoice->doctor_id = $request->doctor_id;
+	$invoice->added_by_id = $request->added_by_id;
+	$invoice->patient_phone = $request->patient_phone;
+	$invoice->patient_name = $request->patient_name;
+	$invoice->patient_address = $request->patient_address;
+	$invoice->payment_date = $request->payment_date;
+	$invoice->total = 111;
+	$invoice->tax_total = $request->total_tax;
+	$invoice->grand_total = $request->grand_total_price;
+	$invoice->paid_amount = $request->paid_amount;
+	$invoice->due_total = $request->due_amount;
+	$invoice->payment_note = $request->payment_note;
+	$invoice->payment_method = $request->payment_method;
+	$invoice->payment_method_note = $request->payment_method_note;
 
-		$insertedInvoiceID = $invoice->id;
+	$invoice->save();
 
-		foreach( $request->product_name as  $index=>$product  ) {
-	
+	$insertedInvoiceID = $invoice->id;
+
+	foreach( $request->product_name as  $index=>$product  )
+	{
+
+		DB::table('invoice_details')->insert([ 
+			'invoice_id' => $insertedInvoiceID,
+			'service_id' => $request->product_id[$index],
+			'service_name' => $request->product_name[$index],
+			'quantity' => $request->product_quantity[$index],
+			'discount' => $request->discount[$index],
+			'rate' => $request->product_rate[$index],
+			'total' => $request->total_price[$index],
+			'service_total_tax' => $request->service_total_tax[$index],
+			'service_all_tax' => $request->service_all_tax[$index],
+		]);
+	}
+
+	return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
+
+
+}
+
+/**
+ * Display the specified resource.
+ *
+ * @param  \App\Models\Invoice  $invoice
+ * @return \Illuminate\Http\Response
+ */
+public function show(Invoice $invoice)
+{
+	//
+}
+
+/**
+ * Show the form for editing the specified resource.
+ *
+ * @param  \App\Models\Invoice  $invoice
+ * @return \Illuminate\Http\Response
+ */
+public function edit(Invoice $invoice)
+{
+	//
+}
+
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \App\Http\Requests\UpdateInvoiceRequest  $request
+ * @param  \App\Models\Invoice  $invoice
+ * @return \Illuminate\Http\Response
+ */
+public function update( Request $request, $invoiceID )
+{
+
+	$invoice = Invoice::find( $invoiceID );
+	$invoice->patient_id =11;
+	$invoice->doctor_id = $request->doctor_id;
+	$invoice->added_by_id = $request->added_by_id;
+	$invoice->patient_phone = $request->patient_phone;
+	$invoice->patient_name = $request->patient_name;
+	$invoice->patient_address = $request->patient_address;
+	$invoice->payment_date = $request->payment_date;
+	$invoice->total = 111;
+	$invoice->tax_total = $request->total_tax;
+	$invoice->grand_total = $request->grand_total_price;
+	$invoice->paid_amount = $request->paid_amount;
+	$invoice->due_total = $request->due_amount;
+	$invoice->payment_note = $request->payment_note;
+	$invoice->payment_method = $request->payment_method;
+	$invoice->payment_method_note = $request->payment_method_note;
+	$invoice->save();
+
+
+	DB::table('invoice_details')
+		->where( 'invoice_id', $invoiceID )
+		->delete();
+		
+		foreach( $request->product_name as  $index=>$product  )
+		{
 			DB::table('invoice_details')->insert([ 
-				'invoice_id' => $insertedInvoiceID,
+				'invoice_id' => $invoiceID,
 				'service_id' => $request->product_id[$index],
 				'service_name' => $request->product_name[$index],
 				'quantity' => $request->product_quantity[$index],
@@ -106,92 +182,62 @@ class InvoiceController extends Controller
 				'service_all_tax' => $request->service_all_tax[$index],
 			]);
 		}
-
-          return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Invoice $invoice)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Invoice $invoice)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateInvoiceRequest  $request
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
-    {
-        //
-    }
+	return redirect( route( 'single_edit_invoice', $invoiceID ) )->with( 'status', 'Form Data Has Been Updated' );
 
 
-    public function invoiceView( $invoiceID )
-    {
-        $invoice = Invoice::where( 'id', $invoiceID )->first();
-		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
-
-		// echo '<pre>';
-
-		// var_dump( $invoiceDetails );
-		// die;
 
 
-        $data = [
-            'invoice' => $invoice,
-			'invoiceDetails' => $invoiceDetails,
-        ];
 
-        return view('backend.layout.invoice.details', compact('data') );
-    }
-
-    public function invoiceEdit( $invoiceID )
-    {
-		$invoice = Invoice::where( 'id', $invoiceID )->first();
-		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
-
-		// echo '<pre>';
-
-		// var_dump( $invoiceDetails );
-		// die;
+}
 
 
-        $data = [
-            'invoice' => $invoice,
-			'invoiceDetails' => $invoiceDetails,
-        ];
+public function invoiceView( $invoiceID )
+{
+	$invoice = Invoice::where( 'id', $invoiceID )->first();
+	
+	$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
 
-        return view('backend.layout.invoice.edit', compact('data') );
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Invoice $invoice)
-    {
-        //
-    }
+	// echo '<pre>';
+
+	// var_dump( $invoiceDetails );
+	// die;
+
+
+	$data = [
+		'invoice' => $invoice,
+		'invoiceDetails' => $invoiceDetails,
+	];
+
+	return view('backend.layout.invoice.details', compact('data') );
+}
+
+public function invoiceEdit( $invoiceID )
+{
+	$invoice = Invoice::where( 'id', $invoiceID )->first();
+	
+	$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
+
+	// echo '<pre>';
+
+	// var_dump( $invoiceDetails );
+	// die;
+
+
+	$data = [
+		'invoice' => $invoice,
+		'invoiceDetails' => $invoiceDetails,
+	];
+
+	return view('backend.layout.invoice.edit', compact('data') );
+}
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  \App\Models\Invoice  $invoice
+ * @return \Illuminate\Http\Response
+ */
+public function destroy(Invoice $invoice)
+{
+	//
+}
 }

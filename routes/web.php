@@ -40,9 +40,10 @@ Route::get( '/notice/list', [ NoticeController::class, 'index'] )->name('notice_
 // ********************    NOTICE MODULE END ********************************
 
 
-// ********************    NOTICE MODULE START ********************************
+// ********************    INVOICE MODULE START ********************************
 Route::get( '/invoice/add_new', [ InvoiceController::class, 'create'] )->name('invoice_added_form');
 Route::post( '/invoice/add_new/post', [ InvoiceController::class, 'store'] )->name('invoice_added_save');
+Route::post( '/invoice/update/{id}', [ InvoiceController::class, 'update'] )->name('invoice_update');
 Route::get( '/invoice/list', [ InvoiceController::class, 'index'] )->name('invoice_list');
 
 
@@ -60,6 +61,6 @@ Route::post( '/retrieve_service', [ InvoiceController::class, 'retrieve_service'
 Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_service'] )->name('get_retrieve_service');
 
 
-// ********************    NOTICE MODULE END ********************************
+// ********************    INVOICE MODULE END ********************************
 
 
