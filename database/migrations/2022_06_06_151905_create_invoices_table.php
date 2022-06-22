@@ -18,14 +18,14 @@ return new class extends Migration
             $table->id();
             
             $table->string('patient_id');
-            $table->text('doctor_id')->nullable();
-            $table->text('added_by_id')->nullable();
+            $table->integer('doctor_id')->nullable();
+            $table->integer('added_by_id')->nullable();
 
             $table->string('patient_phone');
             $table->string('patient_name');
             $table->text('patient_address')->nullable();
 
-            $table->text('payment_date');
+            $table->string('payment_date');
 
 			$table->float('total')->default(0);
 			$table->float('tax_total')->default(0);

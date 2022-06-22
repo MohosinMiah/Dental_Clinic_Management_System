@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\InvoiceController;
-
+use App\Http\Controllers\PatientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,3 +64,15 @@ Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_s
 // ********************    INVOICE MODULE END ********************************
 
 
+// ********************    PATIENT MODULE START ********************************
+
+Route::get( '/patient/add_new', [ PatientController::class, 'create'] )->name('patient_registration_form');
+Route::post( '/patient/add_new/post', [ PatientController::class, 'store'] )->name('patient_registration_save');
+Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] )->name('patient_update_save');
+Route::get( '/patient/list', [ PatientController::class, 'index'] )->name('patient_list');
+
+Route::get( '/patient/edit/{id}', [ PatientController::class, 'edit'] )->name('patient_edit');
+Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
+
+
+// ********************    PATIENT MODULE END ********************************

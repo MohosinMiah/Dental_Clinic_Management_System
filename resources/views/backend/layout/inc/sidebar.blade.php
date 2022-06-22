@@ -30,14 +30,31 @@
         Interface
     </div>
 
+
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item active">
+
+	<li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#headingOne" aria-expanded="true"
+            aria-controls="headingOne">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Patient</span>
+        </a>
+        <div id="headingOne" class="collapse" aria-labelledby="headingOne"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item active" href="{{ route('patient_registration_form') }}">Add New</a>
+                <a class="collapse-item" href="{{ route('patient_list') }}">List</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>Doctor</span>
         </a>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item active" href="{{ route('doctor_registration_form') }}">Add New</a>
@@ -46,28 +63,28 @@
         </div>
     </li>
 
-    <li class="nav-item active">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Notice</span>
-        </a>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item active" href="{{ route('notice_added_form') }}">Add New</a>
-                <a class="collapse-item" href="{{ route('notice_list') }}">List</a>
-            </div>
-        </div>
-    </li>
+	<li class="nav-item active">
+		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+			aria-controls="collapseThree">
+			<i class="fas fa-fw fa-cog"></i>
+			<span>Notice</span>
+		</a>
+		<div id="collapseThree" class="collapse" aria-labelledby="collapseThree"
+			data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<a class="collapse-item active" href="{{ route('notice_added_form') }}">Add New</a>
+				<a class="collapse-item" href="{{ route('notice_list') }}">List</a>
+			</div>
+		</div>
+	</li>
 
 	<li class="nav-item active">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-            aria-controls="collapseTwo">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+            aria-controls="collapseThree">
             <i class="fas fa-fw fa-cog"></i>
             <span>Invoice</span>
         </a>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+        <div id="collapseThree" class="collapse show" aria-labelledby="collapseThree"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item active" href="{{ route('invoice_added_form') }}">Add New</a>

@@ -58,6 +58,8 @@
 <script src="{{ asset('js/common_function.js') }}" type="text/javascript"></script>
 
 @yield('js')
+
+
 </body>
 
 </html>

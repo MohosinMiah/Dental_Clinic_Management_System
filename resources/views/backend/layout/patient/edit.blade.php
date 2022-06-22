@@ -3,183 +3,124 @@
 @section('content')
 
 <div class="container-fluid">
-
+	<?php $patient = $data['patient'];  ?>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Buttons</h1>
+	<h1 class="h3 mb-4 text-gray-800">Register New Patient</h1>
 
 	<div class="row">
-
-		<div class="col-lg-6">
-
-			<!-- Circle Buttons -->
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">Circle Buttons</h6>
-				</div>
-				<div class="card-body">
-					<p>Use Font Awesome Icons (included with this theme package) along with the circle
-						buttons as shown in the examples below!</p>
-					<!-- Circle Buttons (Default) -->
-					<div class="mb-2">
-						<code>.btn-circle</code>
-					</div>
-					<a href="#" class="btn btn-primary btn-circle">
-						<i class="fab fa-facebook-f"></i>
-					</a>
-					<a href="#" class="btn btn-success btn-circle">
-						<i class="fas fa-check"></i>
-					</a>
-					<a href="#" class="btn btn-info btn-circle">
-						<i class="fas fa-info-circle"></i>
-					</a>
-					<a href="#" class="btn btn-warning btn-circle">
-						<i class="fas fa-exclamation-triangle"></i>
-					</a>
-					<a href="#" class="btn btn-danger btn-circle">
-						<i class="fas fa-trash"></i>
-					</a>
-					<!-- Circle Buttons (Small) -->
-					<div class="mt-4 mb-2">
-						<code>.btn-circle .btn-sm</code>
-					</div>
-					<a href="#" class="btn btn-primary btn-circle btn-sm">
-						<i class="fab fa-facebook-f"></i>
-					</a>
-					<a href="#" class="btn btn-success btn-circle btn-sm">
-						<i class="fas fa-check"></i>
-					</a>
-					<a href="#" class="btn btn-info btn-circle btn-sm">
-						<i class="fas fa-info-circle"></i>
-					</a>
-					<a href="#" class="btn btn-warning btn-circle btn-sm">
-						<i class="fas fa-exclamation-triangle"></i>
-					</a>
-					<a href="#" class="btn btn-danger btn-circle btn-sm">
-						<i class="fas fa-trash"></i>
-					</a>
-					<!-- Circle Buttons (Large) -->
-					<div class="mt-4 mb-2">
-						<code>.btn-circle .btn-lg</code>
-					</div>
-					<a href="#" class="btn btn-primary btn-circle btn-lg">
-						<i class="fab fa-facebook-f"></i>
-					</a>
-					<a href="#" class="btn btn-success btn-circle btn-lg">
-						<i class="fas fa-check"></i>
-					</a>
-					<a href="#" class="btn btn-info btn-circle btn-lg">
-						<i class="fas fa-info-circle"></i>
-					</a>
-					<a href="#" class="btn btn-warning btn-circle btn-lg">
-						<i class="fas fa-exclamation-triangle"></i>
-					</a>
-					<a href="#" class="btn btn-danger btn-circle btn-lg">
-						<i class="fas fa-trash"></i>
-					</a>
-				</div>
+		@if(session('status'))
+			<div class="alert alert-success">
+				{{ session('status') }}
 			</div>
+		@endif
+		<div class="col-md-12">
+			
 
-			<!-- Brand Buttons -->
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">Brand Buttons</h6>
+			{{--  Patient Registration Form Start   --}}
+			<form method="post" action="{{ route('patient_update_save', $patient->id) }}" enctype="multipart/form-data">
+				@csrf
+				<div class="form-group">
+					<label for="name">Patient Name <span class="required_field"> (*) </span> </label>
+					<input type="text" name="name" id="name"  required class="form-control"  value="{{ $patient->name }}">
 				</div>
-				<div class="card-body">
-					<p>Google and Facebook buttons are available featuring each company's respective
-						brand color. They are used on the user login and registration pages.</p>
-					<p>You can create more custom buttons by adding a new color variable in the
-						<code>_variables.scss</code> file and then using the Bootstrap button variant
-						mixin to create a new style, as demonstrated in the <code>_buttons.scss</code>
-						file.</p>
-					<a href="#" class="btn btn-google btn-block"><i class="fab fa-google fa-fw"></i>
-						.btn-google</a>
-					<a href="#" class="btn btn-facebook btn-block"><i
-							class="fab fa-facebook-f fa-fw"></i> .btn-facebook</a>
 
+				<div class="form-group">
+					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
+					<input type="text" name="phone" id="phone"  required class="form-control"   value="{{ $patient->phone }}"
 				</div>
-			</div>
+
+				<div class="form-group">
+					<label for="age"> Age <span class="required_field"> (*) </span> </label>
+					<input type="number" name="age" id="age" required class="form-control" value="{{ $patient->age}}">
+				</div>
+
+				<div class="form-group">
+					<label for="email"> Email  </label>
+					<input type="email" name="email" id="email" required class="form-control" value="{{ $patient->email }}">
+				</div>
+
+				<div class="form-group">
+					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<div>
+							<select class="form-control" name="gender" id="gender" required>
+							<option value="Male" <?php if( $patient->gender == 'Male' ) { echo "selected"; } ?> >Male</option>
+							<option value="Female" <?php if( $patient->gender == 'Female' ) { echo "selected"; } ?> >Female</option>
+							<option value="Other" <?php if( $patient->gender == 'Other' ) { echo "selected"; } ?> >Other</option>
+						</select>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class=" control-label"> Blood Group</label>
+					<div>
+						<select class="form-control" name="blood_group" id="blood_group">
+							<option value="A+" <?php if( $patient->blood_group == 'A+' ) { echo "selected"; } ?>>A+</option>
+							<option value="A-" <?php if( $patient->blood_group == 'A-' ) { echo "selected"; } ?>>A-</option>
+							<option value="B+" <?php if( $patient->blood_group == 'B+' ) { echo "selected"; } ?>>B+</option>
+							<option value="B-" <?php if( $patient->blood_group == 'B-' ) { echo "selected"; } ?>>B-</option>
+							<option value="O+" <?php if( $patient->blood_group == 'O+' ) { echo "selected"; } ?>>O+</option>
+							<option value="O-" <?php if( $patient->blood_group == 'O-' ) { echo "selected"; } ?>>O-</option>
+							<option value="AB+" <?php if( $patient->blood_group == 'AB+' ) { echo "selected"; } ?>>AB+</option>
+							<option value="AB-" <?php if( $patient->blood_group == 'AB-' ) { echo "selected"; } ?>>AB-</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="address"> Patient Address  </label>
+					<input type="text" name="address" id="address" class="form-control"   value="{{ $patient->address }}" >
+				</div>
+
+				<fieldset>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<h2>Please select Illness as following</h2>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="control-label"> Heart Diseases </label>
+							<div class="">
+								<select class="form-control" name="heart_disease">
+									<option value="Yes" <?php if( $patient->heart_disease == 'Yes' ) { echo "selected"; } ?> >Yes</option>
+									<option value="No" <?php if( $patient->heart_disease == 'No' ) { echo "selected"; } ?> >No</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label class=" control-label"> HighBlood Pressure</label>
+							<div class="">
+								<select class="form-control" name="high_blood">
+									<option value="Yes" <?php if( $patient->high_blood == 'Yes' ) { echo "selected"; } ?>>Yes</option>
+									<option value="No" <?php if( $patient->high_blood == 'No' ) { echo "selected"; } ?>>No</option>
+								</select>
+							</div>
+						</div>
+		
+						<div class="form-group col-md-4">
+							<label class=" control-label"> Diabetic</label>
+							<div>
+								<select class="form-control" name="diabetic">
+									<option value="Yes" <?php if( $patient->diabetic == 'Yes' ) { echo "selected"; } ?> >Yes</option>
+									<option value="No" <?php if( $patient->diabetic == 'No' ) { echo "selected"; } ?>>No</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group col-md-12">
+							<label class="control-label" for="note"> Note </label>
+							<div>
+								<textarea class="form-control" rows="2" name="note" id="note">{{ $patient->note }}</textarea>
+							</div>
+						</div>
+					</div> 
+
+				</fieldset>
+
+				<button type="submit" class="btn btn-primary">Update</button>
+			</form>
+			{{--  Patient Registration Form Start   --}}
 
 		</div>
-
-		<div class="col-lg-6">
-
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">Split Buttons with Icon</h6>
-				</div>
-				<div class="card-body">
-					<p>Works with any button colors, just use the <code>.btn-icon-split</code> class and
-						the markup in the examples below. The examples below also use the
-						<code>.text-white-50</code> helper class on the icons for additional styling,
-						but it is not required.</p>
-					<a href="#" class="btn btn-primary btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-flag"></i>
-						</span>
-						<span class="text">Split Button Primary</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-success btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-check"></i>
-						</span>
-						<span class="text">Split Button Success</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-info btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-info-circle"></i>
-						</span>
-						<span class="text">Split Button Info</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-warning btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-exclamation-triangle"></i>
-						</span>
-						<span class="text">Split Button Warning</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-danger btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-trash"></i>
-						</span>
-						<span class="text">Split Button Danger</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-secondary btn-icon-split">
-						<span class="icon text-white-50">
-							<i class="fas fa-arrow-right"></i>
-						</span>
-						<span class="text">Split Button Secondary</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-light btn-icon-split">
-						<span class="icon text-gray-600">
-							<i class="fas fa-arrow-right"></i>
-						</span>
-						<span class="text">Split Button Light</span>
-					</a>
-					<div class="mb-4"></div>
-					<p>Also works with small and large button classes!</p>
-					<a href="#" class="btn btn-primary btn-icon-split btn-sm">
-						<span class="icon text-white-50">
-							<i class="fas fa-flag"></i>
-						</span>
-						<span class="text">Split Button Small</span>
-					</a>
-					<div class="my-2"></div>
-					<a href="#" class="btn btn-primary btn-icon-split btn-lg">
-						<span class="icon text-white-50">
-							<i class="fas fa-flag"></i>
-						</span>
-						<span class="text">Split Button Large</span>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
 	</div>
 
 </div>
