@@ -19,7 +19,7 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			{{--  Doctor List  Start   --}}
+			{{--  notice List  Start   --}}
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4">
 
@@ -28,33 +28,35 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									<th>ID</th>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Create At</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									<th>ID</th>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Create At</th>
+									<th>Action</th>
 								</tr>
 							</tfoot>
 							<tbody>
-								@foreach( $data['notices'] as $doctor )
+								@foreach( $data['notices'] as $notice )
 									<tr>
-										<td>{{ $doctor->title }}</td>
-										<td>{{ $doctor->title }}</td>
-										<td>{{ $doctor->title }}</td>
-										<td>{{ $doctor->title }}</td>
-										<td>{{ $doctor->title }}</td>
-										<td>{{ $doctor->title }}</td>
+										<td>{{ $notice->id }}</td>
+										<td>{{ $notice->title }}</td>
+										<td>{{ Str::words( $notice->description, 8, ' (...)') }}</td>
+										<td>{{ $notice->created_at }}</td>
+										<td>
+											<a class="btn btn-xs btn-info" href="{{ route('notice_show', $notice->id) }}"><i class="fa fa-eye"></i></a>
+											<a class="btn btn-xs btn-success" href="{{ route('notice_edit', $notice->id) }}"><i class="fa fa-edit"></i></a>
+											<a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('notice_delete', $notice->id) }}"><i class="fa fa-trash"></i></a>
+
+										</td>
 									</tr
 								@endforeach
 
@@ -64,7 +66,7 @@
 				</div>
 			</div>
 
-			{{--  Doctor List  Start   --}}
+			{{--  notice List  Start   --}}
 
 		</div>
 	</div>

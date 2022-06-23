@@ -83,7 +83,7 @@ class PatientController extends Controller
             'patient' => $patient
         ];
 
-		return view( 'backend.layout.patient.show' , compact(  ) );
+		return view( 'backend.layout.patient.show' , compact( 'data' ) );
 		
     }
 

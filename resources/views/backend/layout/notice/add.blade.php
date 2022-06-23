@@ -30,7 +30,7 @@
 
 				<div class="form-group">
 					<label for="image"> Image  <span class="required_field"> </span> </label>
-					<input type="text" name="password" id="image"  required class="form-control">
+					<input type="file" name="image" id="image"  required class="form-control">
 				</div>
 
 				<button type="submit" class="btn btn-primary">Submit</button>

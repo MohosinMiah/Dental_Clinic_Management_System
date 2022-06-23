@@ -166,8 +166,14 @@ class DoctorController extends Controller
 	 * @param  \App\Models\Doctor  $doctor
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Doctor $doctor)
+	public function destroy( $doctorID )
 	{
-		//
+		$status = Doctor::destroy( $patientID );
+		
+		if( $status )
+		{
+			return redirect( route('doctor_list') );
+		}
+	
 	}
 }

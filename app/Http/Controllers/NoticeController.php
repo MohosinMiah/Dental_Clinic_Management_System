@@ -6,6 +6,8 @@ use App\Models\Notice;
 // use App\Http\Requests\StoreNoticeRequest;
 // use App\Http\Requests\UpdateNoticeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use DB;
 
 class NoticeController extends Controller
 {
@@ -53,8 +55,13 @@ class NoticeController extends Controller
 
 		$notice->title = $request->title;
 		$notice->description = $request->description;
-		$notice->image = $request->image;
-		
+		if( $request->hasfile('image') )
+		{
+			$image = $request->image;
+			$imageName= time().'_'.$image->getClientOriginalName();
+			$image->move(public_path().'/images/', $imageName);  
+			$notice->image =  $imageName;
+		}
 
 		$notice->save();
 
@@ -67,9 +74,16 @@ class NoticeController extends Controller
 	 * @param  \App\Models\Notice  $notice
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Notice $notice)
+	public function show( $noticeID )
 	{
-		//
+		$notice = DB::table( 'notices' )->where( 'id' , $noticeID )->first();
+
+		$data = [
+            'notice' => $notice
+        ];
+
+		return view( 'backend.layout.notice.show' , compact( 'data' ) );
+		
 	}
 
 	/**
@@ -78,9 +92,14 @@ class NoticeController extends Controller
 	 * @param  \App\Models\Notice  $notice
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Notice $notice)
+	public function edit( $noticeID )
 	{
-		//
+		$notice = DB::table( 'notices' )->where( 'id' , $noticeID )->first();
+		$data = [
+			'notice' => $notice
+		];
+
+		return view( 'backend.layout.notice.edit' , compact( 'data' ) );
 	}
 
 	/**
@@ -92,20 +111,28 @@ class NoticeController extends Controller
 	 */
 	public function update( Request $request, $noticeID )
 	{
-		$validatedData = $request->validate([
-			'title' => 'required',
-			'description' => 'required',
+
+		$validatedData     = $request->validate([
+			'title'        => 'required',
+			'description'  => 'required',
 		]);
+ 
+		$notice               = Notice::find( $noticeID );
 
-		$notice = Notice::find( $noticeID );
+		$notice->title        = $request->title;
+		$notice->description  = $request->description;
 
-		$notice->title = $request->title;
-		$notice->description = $request->description;
-		$notice->image = $request->image;
-		
+		if( $request->hasfile('image') )
+		{
+			$image = $request->image;
+			$imageName= time().'_'.$image->getClientOriginalName();
+			$image->move(public_path().'/images/', $imageName);  
+			$notice->image =  $imageName;
+		}
+
 		$notice->save();
 
-		return redirect(route('notice_added_form'))->with('status', 'Form Data Has Been Inserted');
+		return redirect( route('notice_edit', $noticeID ) )->with('status', 'Form Data Has Been Updated');
 	}
 
 	/**
@@ -114,8 +141,14 @@ class NoticeController extends Controller
 	 * @param  \App\Models\Notice  $notice
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Notice $notice)
+	public function destroy( $noticeID )
 	{
-		//
+		$status = Notice::destroy( $noticeID );
+		
+		if( $status )
+		{
+			return redirect( route('notice_list') );
+		}
+
 	}
 }
