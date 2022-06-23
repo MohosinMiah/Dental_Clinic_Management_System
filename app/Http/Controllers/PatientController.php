@@ -78,14 +78,13 @@ class PatientController extends Controller
      */
     public function show( $patientID )
     {
-return "SHOW";
-		// $patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
+		$patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
 
-		// $data = [
-        //     'patient' => $patient
-        // ];
+		$data = [
+            'patient' => $patient
+        ];
 
-		// return view( 'backend.layout.patient.show' , compact( $data ) );
+		return view( 'backend.layout.patient.show' , compact( 'data' ) );
 		
     }
 

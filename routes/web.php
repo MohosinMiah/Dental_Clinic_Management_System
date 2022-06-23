@@ -71,6 +71,7 @@ Route::post( '/patient/add_new/post', [ PatientController::class, 'store'] )->na
 Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] )->name('patient_update_save');
 Route::get( '/patient/list', [ PatientController::class, 'index'] )->name('patient_list');
 
+Route::get( '/patient/show/{id}', [ PatientController::class, 'show'] )->name('patient_show');
 Route::get( '/patient/edit/{id}', [ PatientController::class, 'edit'] )->name('patient_edit');
 Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
 
