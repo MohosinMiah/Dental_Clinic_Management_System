@@ -29,7 +29,7 @@
 
 				<div class="form-group">
 					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="password" name="password" id="password"  required class="form-control"  placeholder="Doctor Password">
+					<input type="text" name="password" id="password"  required class="form-control"  placeholder="Doctor Password">
 				</div>
 
 				<div class="form-group">
@@ -73,14 +73,32 @@
 
 
 				<div class="form-group">
-					<label for="gender"> gender </label>
-					<input type="text" name="gender" id="gender" class="form-control"   placeholder="Doctor Gender">
+					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<div>
+							<select class="form-control" name="gender" id="gender" required>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
 				</div>
 
 
+
 				<div class="form-group">
-					<label for="blood_group"> blood_group  </label>
-					<input type="text" name="blood_group" id="blood_group" class="form-control"   placeholder="Doctor Blood Group">
+					<label class=" control-label"> Blood Group</label>
+					<div>
+						<select class="form-control" name="blood_group" id="blood_group">
+							<option value="A+" selected>A+</option>
+							<option value="A-">A-</option>
+							<option value="B+">B+</option>
+							<option value="B-">B-</option>
+							<option value="O+">O+</option>
+							<option value="O-">O-</option>
+							<option value="AB+">AB+</option>
+							<option value="AB-">AB-</option>
+						</select>
+					</div>
 				</div>
 
 
@@ -98,10 +116,10 @@
 
 				<div class="form-group">
 					<label for="profile_pic"> Doctor Image  </label>
-					<input type="text" name="profile_pic" id="profile_pic" class="form-control"   placeholder="Doctor Image">
+					<input type="file" name="profile_pic" id="profile_pic" class="form-control"   placeholder="Doctor Image">
 				</div>
 
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary">Add</button>
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 

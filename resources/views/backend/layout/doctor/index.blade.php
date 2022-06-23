@@ -28,33 +28,37 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
+									<th>ID</th>
 									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									<th>Phone</th>
+									<th>Department</th>
+									<th>Gender</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
+									<th>ID</th>
 									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									<th>Phone</th>
+									<th>Department</th>
+									<th>Gender</th>
+									<th>Action</th>
 								</tr>
 							</tfoot>
 							<tbody>
 								@foreach( $data['doctors'] as $doctor )
 									<tr>
+										<td>{{ $doctor->id }}</td>
 										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->name }}</td>
+										<td>{{ $doctor->phone }}</td>
+										<td>{{ $doctor->department }}</td>
+										<td>{{ $doctor->gender }}</td>
+										<td>
+											<a class="btn btn-xs btn-info" href="{{ route('doctor_show', $doctor->id) }}"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-xs btn-success" href="{{ route('doctor_edit', $doctor->id) }}"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('doctor_delete', $doctor->id) }}"><i class="fa fa-trash"></i></a>
+										</td>
 									</tr
 								@endforeach
 

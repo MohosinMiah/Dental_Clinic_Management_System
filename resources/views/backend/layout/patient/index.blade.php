@@ -52,9 +52,9 @@
 										<td>{{ date('d-m-Y', strtotime( $patient->created_at  )) }}</td>
 										<td>{{ $patient->age }}</td>
 										<td>
-                                            <a class="btn btn-xs btn-info" href="{{ route('patient_show', $patient->id) }}"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-xs btn-success" href="{{ route('patient_edit', $patient->id) }}"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('patient_delete', $patient->id) }}"><i class="fa fa-trash"></i></a>
+											<a class="btn btn-xs btn-info" href="{{ route('patient_show', $patient->id) }}"><i class="fa fa-eye"></i></a>
+											<a class="btn btn-xs btn-success" href="{{ route('patient_edit', $patient->id) }}"><i class="fa fa-edit"></i></a>
+											<a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('patient_delete', $patient->id) }}"><i class="fa fa-trash"></i></a>
                                         </td>
 									</tr
 								@endforeach

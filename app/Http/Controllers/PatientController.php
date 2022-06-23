@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
@@ -84,7 +83,7 @@ class PatientController extends Controller
             'patient' => $patient
         ];
 
-		return view( 'backend.layout.patient.show' , compact( 'data' ) );
+		return view( 'backend.layout.patient.show' , compact(  ) );
 		
     }
 

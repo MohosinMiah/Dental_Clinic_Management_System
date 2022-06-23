@@ -27,6 +27,10 @@ Route::get( '/doctor/register', [ DoctorController::class, 'create'] )->name('do
 Route::post( '/doctor/register/post', [ DoctorController::class, 'store'] )->name('doctor_registration_save');
 Route::get( '/doctor/list', [ DoctorController::class, 'index'] )->name('doctor_list');
 
+Route::post( '/doctor/update/post/{id}', [ DoctorController::class, 'update'] )->name('doctor_update_save');
+Route::get( '/doctor/show/{id}', [ DoctorController::class, 'show'] )->name('doctor_show');
+Route::get( '/doctor/edit/{id}', [ DoctorController::class, 'edit'] )->name('doctor_edit');
+Route::get( '/doctor/delete/{id}', [ DoctorController::class, 'destroy'] )->name('doctor_delete');
 
 // ********************    DOCTOR MODULE END ********************************
 
@@ -36,6 +40,11 @@ Route::get( '/notice/add_new', [ NoticeController::class, 'create'] )->name('not
 Route::post( '/notice/add_new/post', [ NoticeController::class, 'store'] )->name('notice_added_save');
 Route::get( '/notice/list', [ NoticeController::class, 'index'] )->name('notice_list');
 
+
+Route::post( '/notice/update/post/{id}', [ NoticeController::class, 'update'] )->name('notice_update_save');
+Route::get( '/notice/show/{id}', [ NoticeController::class, 'show'] )->name('notice_show');
+Route::get( '/notice/edit/{id}', [ NoticeController::class, 'edit'] )->name('notice_edit');
+Route::get( '/notice/delete/{id}', [ NoticeController::class, 'destroy'] )->name('notice_delete');
 
 // ********************    NOTICE MODULE END ********************************
 
@@ -68,9 +77,9 @@ Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_s
 
 Route::get( '/patient/add_new', [ PatientController::class, 'create'] )->name('patient_registration_form');
 Route::post( '/patient/add_new/post', [ PatientController::class, 'store'] )->name('patient_registration_save');
-Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] )->name('patient_update_save');
 Route::get( '/patient/list', [ PatientController::class, 'index'] )->name('patient_list');
 
+Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] )->name('patient_update_save');
 Route::get( '/patient/show/{id}', [ PatientController::class, 'show'] )->name('patient_show');
 Route::get( '/patient/edit/{id}', [ PatientController::class, 'edit'] )->name('patient_edit');
 Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
