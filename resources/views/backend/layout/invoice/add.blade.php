@@ -211,6 +211,7 @@
 									<td colspan="3"><b>Due:</b></td>
 									<td class="text-right">
 										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0.00" readonly="readonly" type="text">
+										
 									</td>
 								</tr>
 
@@ -246,7 +247,7 @@
 							</div>
 						</div>
 					</div>
-
+					<input type="hidden" id="last_service_id"  />
 					<div class="form-group row">
 						<div class="col-sm-offset-4 col-sm-4">
 							<input type="submit"  class="btn btn-success"  value="Save And Paid" type="button" >
