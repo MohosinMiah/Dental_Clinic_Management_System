@@ -8,6 +8,7 @@
 	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
+	<script src="{{ asset('js/custom.js')}}"></script>
 
 	<div class="row">
 		@if(session('status'))
@@ -27,7 +28,7 @@
 								<label for="customer_name" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
 									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" type="number">
-									<span id="csc" class="text-center invlid_patient_id">Phone Number</span>
+									<span id="csc" class="text-center invlid_patient_id">Search With Phone Number</span>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -37,13 +38,13 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
+								<label for="patient_address" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
 									<input required="" name="patient_address" id="patient_address"  class="form-control" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
-
+							<input type="hidden" name="isRegistered" id="isRegistered" value="No">
 						</div>
 					  
 						<div class="col-md-6">
@@ -247,7 +248,7 @@
 							</div>
 						</div>
 					</div>
-					<input type="hidden" id="last_service_id"  />
+					<input type="hidden" name="last_service_id" id="last_service_id"  value="1"/>
 					<div class="form-group row">
 						<div class="col-sm-offset-4 col-sm-4">
 							<input type="submit"  class="btn btn-success"  value="Save And Paid" type="button" >
@@ -265,3 +266,5 @@
 </div>
 
 @endsection
+
+

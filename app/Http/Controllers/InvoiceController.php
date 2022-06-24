@@ -11,7 +11,11 @@ use DB;
 class InvoiceController extends Controller
 {
 
-
+public function get_patient_list_based_phone( $phone )
+{
+	$patient =  DB::table('patients')->where('phone', $phone)->orderBy( 'id', 'DESC')->first();
+	return response()->json( $patient );
+}
 public function retrieve_service(Request $request)
 {
 	$service =  DB::table('services')->where('id', $request->product_id)->first();
@@ -84,6 +88,7 @@ public function store(Request $request)
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
 	$invoice->due_total = $request->due_amount;
+	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
 	$invoice->payment_method = $request->payment_method;
 	$invoice->payment_method_note = $request->payment_method_note;
@@ -158,6 +163,7 @@ public function update( Request $request, $invoiceID )
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
 	$invoice->due_total = $request->due_amount;
+	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
 	$invoice->payment_method = $request->payment_method;
 	$invoice->payment_method_note = $request->payment_method_note;

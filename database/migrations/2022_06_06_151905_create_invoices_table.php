@@ -33,7 +33,7 @@ return new class extends Migration
 			$table->float('paid_amount')->default(0);
 			$table->float('due_total')->default(0);
 
-
+            $table->string('isRegistered')->default('No');
             $table->string('payment_note')->nullable();
             $table->string('payment_method')->default('Cash');
             $table->string('payment_method_note')->nullable();

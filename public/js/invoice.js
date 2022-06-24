@@ -6,17 +6,20 @@ function addInputField(t) {
     
     var lastServiceNumber = null;
    
-	// try{
-	// 	lastServiceNumber = document.getElementById( 'last_service_id' ).value;
-	// 	if( lastServiceNumber != null )
-	// 	{
-	// 		count = ( parseInt( lastServiceNumber ) + 1 );
-	// 	}
-	// }catch(e) {
-	// 	console.log(e);
-	// }
+	try{
+		lastServiceNumber = document.getElementById( 'last_service_id' ).value;
+		if( lastServiceNumber != null )
+		{
+			count = ( parseInt( lastServiceNumber ) + 1 );
+            console.log( 'lastServiceNumber '+ lastServiceNumber );
+            console.log( 'count '+ count );
+            document.getElementById( 'last_service_id' ).value = count;
+            console.log( 'count Set  '+ document.getElementById( 'last_service_id' ).value );
+		}
+	}catch(e) {
+		console.log(e);
+	}
    
-    document.getElementById( 'last_service_id' ).value = count;
 
     if (count == limits) alert("You have reached the limit of adding " + count + " inputs");
     else {

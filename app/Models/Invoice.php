@@ -32,6 +32,7 @@ class Invoice extends Model
         'grand_total',
         'paid_amount',
         'due_total',
+        'isRegistered',
         'payment_note',
         'payment_method',
         'payment_method_note',

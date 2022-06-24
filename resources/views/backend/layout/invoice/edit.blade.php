@@ -43,7 +43,18 @@
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id">
+							<input type="hidden" name="isRegistered" id="isRegistered" value="{{ $data['invoice']->isRegistered  }}">
 
+							<?php
+							$totalInvoice =  count( $data['invoiceDetails'] );
+
+							if(  $totalInvoice < 10 )
+							{
+							?>
+								<input type="hidden" id="last_service_id" value="{{ $totalInvoice }}" >
+							<?php
+							}
+							?>
 						</div>
 					  
 						<div class="col-md-6">
@@ -87,9 +98,7 @@
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
-							<?php 
-							$totalInvoice =  count( $data['invoiceDetails'] );
-							?>
+						
 							@foreach( $data['invoiceDetails'] as $i=>$invoiceDetail )
 							
 							<tbody id="addinvoiceItem">
@@ -184,15 +193,6 @@
 									</td>
 
 								</tr>
-								<?php 
-								if( ++$i === $totalInvoice )
-								{
-								?>
-									<input type="hidden" id="last_service_id" value="{{ $i }}" >
-								<?php
-								}
-								?>
-
 
 							</tbody>
 							@endforeach
