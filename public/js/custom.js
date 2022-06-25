@@ -5,29 +5,46 @@ $(document).ready(function() {
 	var base_url = $('.baseUrl').val();
 	$('.add-invoice').prop('disabled', true);
 
-	$('body').on('keyup change', '#phone', function() {
-
-		var phone = $(this).val();
-		if(phone.length > 0)
+	$('body').on('keyup change', '#patient_id', function() {
+		var due_total = 0.00;
+		var patient_id = $(this).val();
+		if(patient_id.length > 0)
 		$.ajax({
 
-			'url': base_url + '/get_patient_list_based_phone/'+phone,
+			'url': base_url + '/get_patient_list_based_patient_id/'+patient_id,
 			'type': 'GET',
 			'dataType': 'JSON',
 			'success': function(data){ 
 
-				if (data.id) {
+				if( data['invoice'] != null )
+				{
+					due_total = data['invoice'].due_total;
+				}
+	
+				if ( data['patient'].id ) {
 
-					$('#patient_name').val(data.name);
-					$('#patient_address').val(data.address);
-					$('#patient_id').val(data.id);
+					$('#patient_name').val(data['patient'].name);
+					$('#patient_address').val(data['patient'].address);
+					$('#patient_phone').val(data['patient'].phone);
+					$('#patient_id_set').val(data['patient'].id);
 					$('#isRegistered').val('Yes');
+
+					$('#previous_due').text( due_total )
+					$('#previous_due_set').val( due_total )
+					$('#dueAmmount').val( due_total );
 					$('#csc').removeClass('text-danger');
-					$(".invlid_patient_id").text(' Patient Phone Number is Valid').addClass("text-success");
+					$(".invlid_patient_id").text(' Patient ID is Valid').addClass("text-success");
 					
 				} else {
+
+					$('#patient_name').val('');
+					$('#patient_address').val('');
+					$('#patient_phone').val('');
+					$('#isRegistered').val('No');
+					$('#patient_id_set').val('');
+
 					$('#csc').removeClass('text-success');
-					$(".invlid_patient_id").text('Patient Is Not Registered ').addClass("text-danger");
+					$(".invlid_patient_id").text('Patient  Is Not Registered ').addClass("text-danger");
 				}
 			}, error   : function() {
 				alert('failed!');
@@ -36,7 +53,14 @@ $(document).ready(function() {
 		});
 	});
 
+
+
+
+
+
+
 });
+
 
 
 

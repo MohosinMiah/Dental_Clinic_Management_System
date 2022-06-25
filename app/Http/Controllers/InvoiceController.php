@@ -11,10 +11,17 @@ use DB;
 class InvoiceController extends Controller
 {
 
-public function get_patient_list_based_phone( $phone )
+public function get_patient_list_based_patient_id( $id )
 {
-	$patient =  DB::table('patients')->where('phone', $phone)->orderBy( 'id', 'DESC')->first();
-	return response()->json( $patient );
+
+	$patient =  DB::table('patients')->where( 'id', $id )->first();
+	$invoice = DB::table('invoices')->where( 'patient_id', $id )->orderBy( 'id', 'DESC' )->first();
+
+	$data = [
+		'patient' => $patient,
+		'invoice' => $invoice
+	];
+	return response()->json( $data );
 }
 public function retrieve_service(Request $request)
 {
@@ -76,18 +83,20 @@ public function store(Request $request)
 
 	$invoice = new Invoice;
 
-	$invoice->patient_id =11;
+	$invoice->patient_id =$request->patient_id;
 	$invoice->doctor_id = $request->doctor_id;
 	$invoice->added_by_id = $request->added_by_id;
 	$invoice->patient_phone = $request->patient_phone;
 	$invoice->patient_name = $request->patient_name;
 	$invoice->patient_address = $request->patient_address;
 	$invoice->payment_date = $request->payment_date;
-	$invoice->total = 111;
+	$invoice->total_payment = 111;
 	$invoice->tax_total = $request->total_tax;
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
 	$invoice->due_total = $request->due_amount;
+	$invoice->previous_due = $request->previous_due;
+	$invoice->isClose = $request->isClose;
 	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
 	$invoice->payment_method = $request->payment_method;

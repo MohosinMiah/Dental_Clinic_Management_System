@@ -69,7 +69,7 @@ Route::get( '/invoice/invoice_delete/{id}', [ InvoiceController::class, 'destroy
 Route::post( '/retrieve_service', [ InvoiceController::class, 'retrieve_service'] )->name('retrieve_service');
 Route::get( '/get/retrieve_service', [ InvoiceController::class, 'get_retrieve_service'] )->name('get_retrieve_service');
 
-Route::get( '/get_patient_list_based_phone/{phone}', [ InvoiceController::class, 'get_patient_list_based_phone'] )->name('get_patient_list_based_phone');
+Route::get( '/get_patient_list_based_patient_id/{id}', [ InvoiceController::class, 'get_patient_list_based_patient_id'] )->name('get_patient_list_based_patient_id');
 // ********************    INVOICE MODULE END ********************************
 
 

@@ -25,10 +25,16 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group row">
-								<label for="customer_name" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
+								<label for="patient_id" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" type="number">
+									<input  autocomplete="off"  id="patient_id" class="form-control" type="number">
 									<span id="csc" class="text-center invlid_patient_id">Search With Phone Number</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="patient_phone" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
+								<div class="col-sm-7">
+									<input required  name="patient_phone" id="patient_phone" class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -43,7 +49,7 @@
 									<input required="" name="patient_address" id="patient_address"  class="form-control" type="text">
 								</div>
 							</div>
-							<input type="hidden" name="patient_id" id="patient_id">
+							<input type="hidden" name="patient_id" id="patient_id_set" onchange="patientID();">
 							<input type="hidden" name="isRegistered" id="isRegistered" value="No">
 						</div>
 					  
@@ -209,13 +215,19 @@
 										<input id="add-invoice-item" class="btn btn-info" name="add-invoice-item" onclick="addInputField('addinvoiceItem');" value="Add New Service" type="button">
 										<input name="baseUrl" class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
 									</td>
-									<td colspan="3"><b>Due:</b></td>
+									<td colspan="3"><b>Due:</b>  
+										<select name="isClose" >
+											<option value="">-Due Status-</option>
+											<option value="0">Close</option>
+											<option value="1">Continue</option>
+										</select>
+										<input type="hidden" name="previous_due" id="previous_due_set" value="0.00"> 
+										<bold>Previous Due Was : <span id="previous_due" > </span> <bold>
+									</td>
 									<td class="text-right">
-										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0.00" readonly="readonly" type="text">
-										
+										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0.00" readonly="readonly" type="text"> 
 									</td>
 								</tr>
-
 							</tfoot>
 						</table>
 					</div>

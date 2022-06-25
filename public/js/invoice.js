@@ -30,7 +30,9 @@ function addInputField(t) {
 
 }
 
-
+function patientID(){
+    console.log("patientID")
+}
 
 // https://newclinic365.bdtask.com/new/assets/my-assets/invoice.js
 
@@ -79,9 +81,19 @@ function calculateSum() {
 
 function invoice_paidamount() {
     'use strict';
-    var t = $("#grandTotal").val(),
-        a = $("#paidAmount").val(),
-        e = t - a;
+    var t = $("#grandTotal").val();
+    var a = $("#paidAmount").val();
+    var previous_due = parseInt( $("#previous_due_set").val() );
+    
+	if( previous_due > 1 )
+	{
+		t = previous_due + parseInt( t );
+	}else if( previous_due < - 1 ){
+		t = parseInt( t )  + previous_due;
+	}
+
+	var e = t - a;
+	
     $("#dueAmmount").val(e)
 }
 
