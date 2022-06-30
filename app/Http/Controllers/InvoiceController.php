@@ -21,12 +21,13 @@ public function get_patient_list_based_patient_id( $id )
 		'patient' => $patient,
 		'invoice' => $invoice
 	];
+
 	return response()->json( $data );
 }
 public function retrieve_service(Request $request)
 {
-	$service =  DB::table('services')->where('id', $request->product_id)->first();
-	return response()->json($service);
+	$service =  DB::table( 'services' )->where( 'id', $request->product_id )->first();
+	return response()->json( $service );
 }
 
 public function get_retrieve_service()

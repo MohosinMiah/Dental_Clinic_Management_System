@@ -21,7 +21,7 @@ $(document).ready(function() {
 					due_total = data['invoice'].due_total;
 				}
 	
-				if ( data['patient'].id ) {
+				if ( data['patient'] != null ) {
 
 					$('#patient_name').val(data['patient'].name);
 					$('#patient_address').val(data['patient'].address);
@@ -47,7 +47,14 @@ $(document).ready(function() {
 					$(".invlid_patient_id").text('Patient  Is Not Registered ').addClass("text-danger");
 				}
 			}, error   : function() {
-				alert('failed!');
+					$('#patient_name').val('');
+					$('#patient_address').val('');
+					$('#patient_phone').val('');
+					$('#isRegistered').val('No');
+					$('#patient_id_set').val('');
+
+					$('#csc').removeClass('text-success');
+					$(".invlid_patient_id").text('Patient  Is Not Registered ').addClass("text-danger");
 			} 
 			
 		});
