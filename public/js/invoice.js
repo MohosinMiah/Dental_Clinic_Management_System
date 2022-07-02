@@ -84,6 +84,7 @@ function invoice_paidamount() {
     var t = $("#grandTotal").val();
     var a = $("#paidAmount").val();
     var previous_due = parseInt( $("#previous_due_set").val() );
+    var decreaseAmount = parseInt( $("#decreaseAmount").val() );
     
 	if( previous_due > 1 )
 	{
@@ -93,7 +94,10 @@ function invoice_paidamount() {
 	}
 
 	var e = t - a;
-	
+	if( decreaseAmount >= 0 )
+    {
+        e = e - decreaseAmount;
+    }
     $("#dueAmmount").val(e)
 }
 

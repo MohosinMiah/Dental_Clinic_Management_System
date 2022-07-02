@@ -133,7 +133,7 @@
 										<input
 											name="product_rate[]"
 											readonly=""
-											value="0.00"
+											value="0"
 											id="price_item_1"
 											class="price_item1 form-control text-right"
 											type="text"
@@ -149,7 +149,7 @@
 											id="discount_1"
 											class="form-control text-right"
 											placeholder="Discount"
-											value="0.00"
+											value="0"
 											min="0"
 											type="number"
 										/>
@@ -160,7 +160,7 @@
 											class="total_price form-control text-right"
 											name="total_price[]"
 											id="total_price_1"
-											value="0.00"
+											value="0"
 											tabindex="-1"
 											readonly="readonly"
 											type="text"
@@ -169,8 +169,8 @@
 
 									 <td>
 										<!-- Tax calculate start-->
-										<input id="total_tax_1" class="total_tax_1" name="service_total_tax[]" value="0.00"  type="hidden">
-										<input id="all_tax_1" class=" total_tax" name="service_all_tax[]" value="0.00" type="hidden">
+										<input id="total_tax_1" class="total_tax_1" name="service_total_tax[]" value="0"  type="hidden">
+										<input id="all_tax_1" class=" total_tax" name="service_all_tax[]" value="0" type="hidden">
 										<!-- Tax calculate end -->
 								
 										<button
@@ -191,14 +191,14 @@
 								<tr>
 									<td colspan="4"><b>Total Tax:</b></td>
 									<td class="text-right">
-										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="0.00" readonly="readonly" type="text">
+										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="0" readonly="readonly" type="text">
 									</td>
 								</tr>
 
 								<tr>
 									<td colspan="4"><b>Grand Total:</b></td>
 									<td class="text-right">
-										<input id="grandTotal" tabindex="-1" class="form-control text-right" name="grand_total_price" value="0.00" readonly="readonly" type="text">
+										<input id="grandTotal" tabindex="-1" class="form-control text-right" name="grand_total_price" value="0" readonly="readonly" type="text">
 									</td>
 								</tr>
 
@@ -206,7 +206,7 @@
 									
 									<td colspan="4"><b>Paid Ammount:</b></td>
 									<td class="text-right">
-										<input id="paidAmount" onkeyup="invoice_paidamount();" tabindex="-1" class="form-control text-right" name="paid_amount" value="0.00" type="text">
+										<input id="paidAmount" onkeyup="invoice_paidamount();" tabindex="-1" class="form-control text-right" name="paid_amount" value="0" type="text">
 									</td>
 								</tr>
 
@@ -220,11 +220,11 @@
 											<option value="1">Continue</option>
 											<option value="0">Close</option>
 										</select>
-										<input type="hidden" name="previous_due" id="previous_due_set" value="0.00"> 
+										<input type="hidden" name="previous_due" id="previous_due_set" value="0"> 
 										<bold>Previous Due Was : <span id="previous_due" > </span> <bold>
 									</td>
 									<td class="text-right">
-										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0.00" readonly="readonly" type="text"> 
+										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0" readonly="readonly" type="text">
 									</td>
 								</tr>
 							</tfoot>
@@ -233,6 +233,13 @@
 
 					<div class="row">
 						<div class="col-md-8">
+
+							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+								</div>
+							</div>
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Payment Notes</label>

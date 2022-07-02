@@ -31,6 +31,7 @@ class Invoice extends Model
         'tax_total',
         'grand_total',
         'paid_amount',
+        'decrease',
         'due_total',
         'isRegistered',
         'payment_note',

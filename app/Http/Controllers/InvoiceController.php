@@ -96,7 +96,10 @@ public function store(Request $request)
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
 	$invoice->previous_due = $request->previous_due;
-	
+	if( !empty( $request->decrease ) )
+	{
+		$invoice->decrease = $request->decrease;
+	}
 	if( $request->isClose == 1 )
 	{
 		$invoice->due_total = $request->due_amount;

@@ -66,14 +66,76 @@ $(document).ready(function() {
 
 // isClose = 0 Selected     
 $(document).ready(function() {  
-	
 	$('body').on('keyup change', '#isClose', function() {
 		var isClose = $('#isClose').val();
 		if( parseInt(isClose) === 0)
 		{
-			console.log('Close Selected');
-		}else{
-			console.log("Continiue Selected");
+		
+			$('#decreaseAmountDisplay').css("display", "");
+
+			$("#decreaseAmount").on('keyup change', function(){
+
+				var grandTotal       = parseInt( $('#grandTotal').val() );
+				var paidAmount       = parseInt( document.getElementById('paidAmount').value );
+				var dueAmmount = parseInt( document.getElementById('dueAmmount').value );
+				var previous_due_set = parseInt( $('#previous_due_set').val() );
+				
+				var decreaseAmountValue = parseInt( $('#decreaseAmount').val() );
+
+
+		
+				if( previous_due_set > 0 )
+				{
+					 finalDue =  Math.abs( ( grandTotal + previous_due_set ) ) - paidAmount ;
+	
+				}else{
+					 finalDue = grandTotal - Math.abs( ( paidAmount - previous_due_set ) );
+				}
+
+				if( paidAmount < 0 )
+				{
+					paidAmount = 0;
+				}
+				// Id dueAmmount is greater than 0  
+
+				if(  decreaseAmountValue >= 0 && dueAmmount > 0  )
+				{
+				
+					console.log("previous_due_set = "+ previous_due_set)
+					console.log("Paid =  " + ( paidAmount + previous_due_set ));
+				
+					console.log( decreaseAmountValue );
+					$('#dueAmmount').val( finalDue - decreaseAmountValue);
+
+				}
+
+			});
+
+		}
+		else
+		{
+			var grandTotal       = parseInt( $('#grandTotal').val() );
+			var paidAmount       = parseInt( document.getElementById('paidAmount').value );
+			var previous_due_set = parseInt( $('#previous_due_set').val() );
+
+			$('#decreaseAmountDisplay').css("display", "none");
+			
+			console.log( Math.abs( ( paidAmount + previous_due_set ) ) );
+			if( previous_due_set > 0 )
+			{
+				 finalDue =  Math.abs( ( grandTotal + previous_due_set ) ) - paidAmount ;
+
+			}else{
+				 finalDue = grandTotal - Math.abs( ( paidAmount - previous_due_set ) );
+			}
+
+			if( paidAmount < 0 )
+			{
+				paidAmount = 0;
+			}
+
+			$('#dueAmmount').val( finalDue );
+			$('#decreaseAmount').val(0);
 		}
 	});
 });

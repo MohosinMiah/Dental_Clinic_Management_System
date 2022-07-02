@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2022 at 09:59 PM
+-- Generation Time: Jul 02, 2022 at 09:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -86,6 +86,7 @@ CREATE TABLE `invoices` (
   `grand_total` double(8,2) NOT NULL DEFAULT 0.00,
   `total_payment` int(11) NOT NULL,
   `paid_amount` double(8,2) NOT NULL DEFAULT 0.00,
+  `decrease` int(11) DEFAULT 0,
   `isClose` int(11) NOT NULL,
   `due_total` double(8,2) NOT NULL DEFAULT 0.00,
   `previous_due` int(11) NOT NULL,
@@ -102,8 +103,26 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `patient_id`, `doctor_id`, `added_by_id`, `patient_phone`, `patient_name`, `patient_address`, `payment_date`, `total`, `tax_total`, `grand_total`, `total_payment`, `paid_amount`, `isClose`, `due_total`, `previous_due`, `isRegistered`, `payment_note`, `payment_method`, `payment_method_note`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1520.00, 111, 120.00, 1, 1400.00, 0, 'Yes', 'Payment Notes', 'master_card', 'Payment Method Notes', NULL, '2022-06-30 13:59:07', '2022-06-30 13:59:07');
+INSERT INTO `invoices` (`id`, `patient_id`, `doctor_id`, `added_by_id`, `patient_phone`, `patient_name`, `patient_address`, `payment_date`, `total`, `tax_total`, `grand_total`, `total_payment`, `paid_amount`, `decrease`, `isClose`, `due_total`, `previous_due`, `isRegistered`, `payment_note`, `payment_method`, `payment_method_note`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1520.00, 111, 120.00, 0, 1, 1400.00, 0, 'Yes', 'Payment Notes', 'master_card', 'Payment Method Notes', NULL, '2022-06-30 13:59:07', '2022-06-30 13:59:07'),
+(2, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 2500.00, 0, 1, -590.00, 1400, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:04:35', '2022-06-30 14:04:35'),
+(3, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, -1200.00, 0, 0, 1120.00, -590, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:18:22', '2022-06-30 14:18:22'),
+(4, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 1010.00, 111, -10.00, 0, 0, 0.00, 1120, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:27:05', '2022-06-30 14:27:05'),
+(5, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 40.00, 2540.00, 111, 500.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:00:59', '2022-07-02 07:00:59'),
+(6, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1520.00, 111, 500.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:02:28', '2022-07-02 07:02:28'),
+(7, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:06:53', '2022-07-02 07:06:53'),
+(8, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 1000.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:10:38', '2022-07-02 07:10:38'),
+(9, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 2000.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:11:42', '2022-07-02 07:11:42'),
+(10, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 40.00, 2040.00, 111, 4500.00, 0, 0, 0.00, 2000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:17:11', '2022-07-02 07:17:11'),
+(11, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1500.00, 0, 1, -480.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:36:35', '2022-07-02 11:36:35'),
+(12, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 2020.00, 111, 1000.00, 0, 1, 540.00, -480, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:37:31', '2022-07-02 11:37:31'),
+(13, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1560.00, 0, 0, 0.00, 540, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:38:15', '2022-07-02 11:38:15'),
+(14, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 10.00, 0, 0, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:13', '2022-07-02 12:21:13'),
+(15, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 1000.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:39', '2022-07-02 12:21:39'),
+(16, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 2000.00, 0, 1, -490.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:57', '2022-07-02 12:21:57'),
+(17, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 10.00, 0, 1, 10.00, -490, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:40:43', '2022-07-02 12:40:43'),
+(18, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 1010.00, 111, 500.00, 0, 0, 0.00, 10, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 13:00:31', '2022-07-02 13:00:31'),
+(19, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 500.00, 111, 500.00, 0, 0, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 13:02:31', '2022-07-02 13:02:31');
 
 -- --------------------------------------------------------
 
@@ -133,7 +152,27 @@ CREATE TABLE `invoice_details` (
 
 INSERT INTO `invoice_details` (`id`, `invoice_id`, `service_id`, `service_name`, `quantity`, `discount`, `rate`, `total`, `service_total_tax`, `service_all_tax`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(2, 1, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL);
+(2, 1, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
+(3, 2, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(4, 3, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(5, 4, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
+(6, 5, 8, 'Covic-19 test(C9)', 3, 0, 500, 1500, 10, 30, NULL, NULL, NULL),
+(7, 5, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
+(8, 6, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(9, 6, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
+(10, 7, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(11, 8, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(12, 9, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(13, 10, 8, 'Covic-19 test(C9)', 4, 0, 500, 2000, 10, 40, NULL, NULL, NULL),
+(14, 11, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(15, 12, 9, 'Regular Check-up(RC)', 2, 0, 1000, 2000, 10, 20, NULL, NULL, NULL),
+(16, 13, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(17, 14, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(18, 15, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(19, 16, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(20, 17, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(21, 18, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
+(22, 19, 8, 'Covic-19 test(C9)', 1, 10, 500, 490, 10, 10, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -375,13 +414,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `migrations`
