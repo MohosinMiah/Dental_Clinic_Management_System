@@ -216,10 +216,9 @@
 										<input name="baseUrl" class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
 									</td>
 									<td colspan="3"><b>Due:</b>  
-										<select name="isClose" >
-											<option value="">-Due Status-</option>
-											<option value="0">Close</option>
+										<select name="isClose" id="isClose">
 											<option value="1">Continue</option>
+											<option value="0">Close</option>
 										</select>
 										<input type="hidden" name="previous_due" id="previous_due_set" value="0.00"> 
 										<bold>Previous Due Was : <span id="previous_due" > </span> <bold>

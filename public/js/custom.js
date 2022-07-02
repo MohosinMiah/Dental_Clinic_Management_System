@@ -1,7 +1,7 @@
 
 
 $(document).ready(function() {  
-
+	isClose
 	var base_url = $('.baseUrl').val();
 	$('.add-invoice').prop('disabled', true);
 
@@ -60,15 +60,23 @@ $(document).ready(function() {
 		});
 	});
 
-
-
-
-
-
-
 });
 
 
+
+// isClose = 0 Selected     
+$(document).ready(function() {  
+	
+	$('body').on('keyup change', '#isClose', function() {
+		var isClose = $('#isClose').val();
+		if( parseInt(isClose) === 0)
+		{
+			console.log('Close Selected');
+		}else{
+			console.log("Continiue Selected");
+		}
+	});
+});
 
 
 //print a div

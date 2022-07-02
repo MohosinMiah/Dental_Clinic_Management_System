@@ -95,8 +95,16 @@ public function store(Request $request)
 	$invoice->tax_total = $request->total_tax;
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
-	$invoice->due_total = $request->due_amount;
 	$invoice->previous_due = $request->previous_due;
+	
+	if( $request->isClose == 1 )
+	{
+		$invoice->due_total = $request->due_amount;
+
+	}else{
+		$invoice->due_total = 0;
+
+	}
 	$invoice->isClose = $request->isClose;
 	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
