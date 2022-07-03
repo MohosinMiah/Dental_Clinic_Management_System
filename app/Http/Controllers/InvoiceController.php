@@ -96,6 +96,8 @@ public function store(Request $request)
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
 	$invoice->previous_due = $request->previous_due;
+
+
 	if( !empty( $request->decrease ) )
 	{
 		$invoice->decrease = $request->decrease;
@@ -108,6 +110,8 @@ public function store(Request $request)
 		$invoice->due_total = 0;
 
 	}
+
+
 	$invoice->isClose = $request->isClose;
 	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
@@ -118,6 +122,7 @@ public function store(Request $request)
 
 	$insertedInvoiceID = $invoice->id;
 
+	$totalDiscount = 0;
 	foreach( $request->product_name as  $index=>$product  )
 	{
 
@@ -132,7 +137,16 @@ public function store(Request $request)
 			'service_total_tax' => $request->service_total_tax[$index],
 			'service_all_tax' => $request->service_all_tax[$index],
 		]);
+
+		$totalDiscount += $request->discount[$index];
+
 	}
+
+	// Updated Total Discount
+	$invoice = Invoice::find( $insertedInvoiceID );
+	$invoice->total_discount = $totalDiscount;
+	$invoice->save();
+	
 
 	return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
 

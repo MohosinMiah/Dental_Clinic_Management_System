@@ -98,7 +98,7 @@ $(document).ready(function() {
 				}
 				// Id dueAmmount is greater than 0  
 
-				if(  decreaseAmountValue >= 0 && dueAmmount > 0  )
+				if(  decreaseAmountValue >= 0 )
 				{
 				
 					console.log("previous_due_set = "+ previous_due_set)
