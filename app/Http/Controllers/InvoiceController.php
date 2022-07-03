@@ -186,43 +186,74 @@ public function update( Request $request, $invoiceID )
 {
 
 	$invoice = Invoice::find( $invoiceID );
-	$invoice->patient_id =11;
+	$invoice->patient_id =$request->patient_id;
 	$invoice->doctor_id = $request->doctor_id;
 	$invoice->added_by_id = $request->added_by_id;
 	$invoice->patient_phone = $request->patient_phone;
 	$invoice->patient_name = $request->patient_name;
 	$invoice->patient_address = $request->patient_address;
 	$invoice->payment_date = $request->payment_date;
-	$invoice->total = 111;
+	$invoice->total_payment = 111;
 	$invoice->tax_total = $request->total_tax;
 	$invoice->grand_total = $request->grand_total_price;
 	$invoice->paid_amount = $request->paid_amount;
-	$invoice->due_total = $request->due_amount;
+	$invoice->previous_due = $request->previous_due;
+
+
+	if( !empty( $request->decrease ) )
+	{
+		$invoice->decrease = $request->decrease;
+	}
+	if( $request->isClose == 1 )
+	{
+		$invoice->due_total = $request->due_amount;
+
+	}else{
+		$invoice->due_total = 0;
+
+	}
+
+
+	$invoice->isClose = $request->isClose;
 	$invoice->isRegistered = $request->isRegistered;
 	$invoice->payment_note = $request->payment_note;
 	$invoice->payment_method = $request->payment_method;
 	$invoice->payment_method_note = $request->payment_method_note;
+
 	$invoice->save();
 
 
 	DB::table('invoice_details')
 		->where( 'invoice_id', $invoiceID )
 		->delete();
-		
-		foreach( $request->product_name as  $index=>$product  )
-		{
-			DB::table('invoice_details')->insert([ 
-				'invoice_id' => $invoiceID,
-				'service_id' => $request->product_id[$index],
-				'service_name' => $request->product_name[$index],
-				'quantity' => $request->product_quantity[$index],
-				'discount' => $request->discount[$index],
-				'rate' => $request->product_rate[$index],
-				'total' => $request->total_price[$index],
-				'service_total_tax' => $request->service_total_tax[$index],
-				'service_all_tax' => $request->service_all_tax[$index],
-			]);
-		}
+
+
+	$totalDiscount = 0;
+
+	foreach( $request->product_name as  $index=>$product  )
+	{
+		DB::table('invoice_details')->insert([ 
+			'invoice_id' => $invoiceID,
+			'service_id' => $request->product_id[$index],
+			'service_name' => $request->product_name[$index],
+			'quantity' => $request->product_quantity[$index],
+			'discount' => $request->discount[$index],
+			'rate' => $request->product_rate[$index],
+			'total' => $request->total_price[$index],
+			'service_total_tax' => $request->service_total_tax[$index],
+			'service_all_tax' => $request->service_all_tax[$index],
+		]);
+
+		$totalDiscount += $request->discount[$index];
+	}
+
+	// Updated Total Discount
+	$invoice = Invoice::find( $invoiceID );
+	$invoice->total_discount = $totalDiscount;
+	$invoice->save();
+
+
+	
 	return redirect( route( 'single_edit_invoice', $invoiceID ) )->with( 'status', 'Form Data Has Been Updated' );
 
 

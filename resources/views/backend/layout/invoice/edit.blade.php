@@ -8,6 +8,7 @@
 	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
+	<script src="{{ asset('js/custom.js')}}"></script>
 
 	<div class="row">
 		@if(session('status'))
@@ -24,9 +25,17 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group row">
-								<label for="customer_name" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
+								<label for="patient_id" class="col-sm-5">Patient ID <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" autocomplete="off" name="patient_phone" id="phone" class="form-control" value="{{ $data['invoice']->patient_phone }}" type="number">
+									<input  autocomplete="off"  id="patient_id" class="form-control" type="number" value="{{ $data['invoice']->patient_id }}">
+									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="patient_phone" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
+								<div class="col-sm-7">
+									<input required="" autocomplete="off" name="patient_phone" id="patient_phone" class="form-control" value="{{ $data['invoice']->patient_phone }}" type="number">
 									<span id="csc" class="text-center invlid_patient_id">Phone Number</span>
 								</div>
 							</div>
@@ -42,8 +51,8 @@
 									<input required="" name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>
 							</div>
-							<input type="hidden" name="patient_id" id="patient_id">
-							<input type="hidden" name="isRegistered" id="isRegistered" value="{{ $data['invoice']->isRegistered  }}">
+							<input type="hidden" name="patient_id" id="patient_id_set" onchange="patientID();" value="{{ $data['invoice']->patient_id }}" >
+							<input type="hidden" name="isRegistered" id="isRegistered" value="No">
 
 							<?php
 							$totalInvoice =  count( $data['invoiceDetails'] );
@@ -103,7 +112,6 @@
 							
 							<tbody id="addinvoiceItem">
 								<tr>
-									<h1>{{ $i + 1 }}
 									<td>
 										<input
 											name="product_name[]"
@@ -224,7 +232,16 @@
 										<input id="add-invoice-item" class="btn btn-info" name="add-invoice-item" onclick="addInputField('addinvoiceItem');" value="Add New Service" type="button">
 										<input name="baseUrl" class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
 									</td>
-									<td colspan="3"><b>Due:</b></td>
+
+									<td colspan="3"><b>Due:</b>  
+										<select name="isClose" id="isClose">
+											<option value="1">Continue</option>
+											<option value="0">Close</option>
+										</select>
+										<input type="hidden" name="previous_due" id="previous_due_set" value="0"> 
+										<bold>Previous Due Was : <span id="previous_due" > {{ $data['invoice']->previous_due }} </span> <bold>
+									</td>
+
 									<td class="text-right">
 										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="{{ $data['invoice']->due_total }}" readonly="readonly" type="text">
 									</td>
@@ -236,6 +253,13 @@
 
 					<div class="row">
 						<div class="col-md-8">
+
+							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+								</div>
+							</div>
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Payment Notes</label>
