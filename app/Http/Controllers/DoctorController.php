@@ -43,12 +43,12 @@ class DoctorController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$validatedData = $request->validate([
-			'name' => 'required',
-			'phone' => 'required|unique:doctors|max:18',
-			'password' => 'required',
-		]);
-
+		// $validatedData = $request->validate([
+		// 	'name' => 'required',
+		// 	'phone' => 'required|unique:doctors|max:18',
+		// 	'password' => 'required',
+		// ]);
+	
 		$doctor = new Doctor;
 
 		$doctor->name = $request->name;
@@ -74,7 +74,9 @@ class DoctorController extends Controller
 			$profileImage->move(public_path().'/images/', $imageName);  
 			$doctor->profile_pic =  $imageName;
 		}
-		$doctor->save();
+	 $doctor->save();
+
+	
 
 		return redirect(route('doctor_registration_form'))->with('status', 'Form Data Has Been Inserted');
 	}
@@ -168,7 +170,7 @@ class DoctorController extends Controller
 	 */
 	public function destroy( $doctorID )
 	{
-		$status = Doctor::destroy( $patientID );
+		$status = Doctor::destroy( $doctorID );
 		
 		if( $status )
 		{

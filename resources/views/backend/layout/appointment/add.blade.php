@@ -1,5 +1,10 @@
 @extends('backend.home')
 
+@section('css')
+
+@endsection
+
+
 @section('content')
 
 <div class="container-fluid">
@@ -17,65 +22,60 @@
 			{{--  Doctor Registration Form Start   --}}
 			<form method="post" action="{{ route('doctor_registration_save') }}" enctype="multipart/form-data">
 				@csrf
+
+				
 				<div class="form-group">
-					<label for="name">Doctor Name <span class="required_field"> (*) </span> </label>
-					<input type="text" name="name" id="name"  required class="form-control"  placeholder="Doctor Name">
-				</div>
-
-				<div class="form-group">
-					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="phone" id="phone"  required class="form-control"  placeholder="Doctor Phone">
-				</div>
-
-				<div class="form-group">
-					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="password" id="password"  required class="form-control"  placeholder="Doctor Password">
-				</div>
-
-				<div class="form-group">
-					<label for="email"> Doctor Email  </label>
-					<input type="email" name="email" id="email"  class="form-control"  placeholder="Doctor Email">
-				</div>
-
-				<div class="form-group">
-					<label for="designation"> Doctor Designation  </label>
-					<input type="text" name="designation" id="designation" class="form-control"   placeholder="Doctor Designation">
-				</div>
-
-				<div class="form-group">
-					<label for="personal_home_page"> Personal Portfolio URL  </label>
-					<input type="text" name="personal_home_page" id="personal_home_page" class="form-control"   placeholder="Doctor Portfolio URL">
-				</div>
-
-
-				<div class="form-group">
-					<label for="degress"> Doctor Degress  </label>
-					<input type="text" name="degress" id="degress" class="form-control"   placeholder="Doctor Degress">
-				</div>
-
-
-				<div class="form-group">
-					<label for="department"> Doctor Department </label>
-					<input type="text" name="department" id="department" class="form-control"   placeholder="Doctor Department">
-				</div>
-
-
-				<div class="form-group">
-					<label for="specialist"> Doctor Specility </label>
-					<input type="text" name="specialist" id="specialist" class="form-control"   placeholder="Doctor Specility">
-				</div>
-
-
-				<div class="form-group">
-					<label for="date_of_birth"> Doctor Date Of Birth </label>
-					<input type="text" name="date_of_birth" id="date_of_birth" class="form-control"   placeholder="Doctor DateOfBirth">
-				</div>
-
-
-				<div class="form-group">
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<label class=" control-label"> Is Patient Registered ? <span class="required_field"> (*) </span></label>
 					<div>
-							<select class="form-control" name="gender" id="gender" required>
+						<select class="form-control" name="blood_group" id="blood_group">
+							<option value="No">No</option>
+							<option value="Yes">Yes</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="patient_phone"> Patient Phone Number  <span class="required_field"> (*) </span> </label>
+					<input type="text" name="patient_phone" id="patient_phone"  required class="form-control"  placeholder="Patient Phone Number">
+				</div>
+
+				<div class="form-group">
+					<label for="name">Patient Name <span class="required_field"> (*) </span> </label>
+					<input type="text" name="name" id="name"  required class="form-control"  placeholder="Patient Name">
+				</div>
+				
+
+				<div class="form-group">
+					<label class=" control-label"> Data And Time <span class="required_field"> (*) </span></label>
+						<div class='col-sm-3'>
+							<div class="form-group">
+								<div class='input-group date' id='datetimepicker1'>
+									<input type='date' class="form-control"  required pattern="\d{2}-\d{2}-\d{4}" />
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type='time' class="form-control" />
+								</div>
+							</div>
+						</div>
+				</div>
+
+				<div class="form-group " >
+					<label class=" control-label"> Select Doctor <span class="required_field"> (*) </span></label>
+					<div>
+						<select class="form-control" name="blood_group" id="blood_group">
+							@foreach( $data['doctors'] as $doctor )
+
+							<option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+ 
+							@endforeach
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group" >
+					<label class=" control-label"> Gender <span class="required_field"> (*) </span></label>
+					<div>
+						<select class="form-control" name="blood_group" id="blood_group">
 							<option value="Male">Male</option>
 							<option value="Female">Female</option>
 							<option value="Other">Other</option>
@@ -83,43 +83,15 @@
 					</div>
 				</div>
 
-
-
+				
 				<div class="form-group">
-					<label class=" control-label"> Blood Group</label>
-					<div>
-						<select class="form-control" name="blood_group" id="blood_group">
-							<option value="A+" selected>A+</option>
-							<option value="A-">A-</option>
-							<option value="B+">B+</option>
-							<option value="B-">B-</option>
-							<option value="O+">O+</option>
-							<option value="O-">O-</option>
-							<option value="AB+">AB+</option>
-							<option value="AB-">AB-</option>
-						</select>
-					</div>
+					<label for="name">Note </span> </label>
+				</br>
+					<textarea cols="50" rows="5"> Note</textarea>
 				</div>
 
-
-				<div class="form-group">
-					<label for="address"> Doctor Address  </label>
-					<input type="text" name="address" id="address" class="form-control"   placeholder="Doctor Address">
-				</div>
-
-
-				<div class="form-group">
-					<label for="about_me"> Doctor Bio  </label>
-					<input type="text" name="about_me" id="about_me" class="form-control"   placeholder="About Doctor">
-				</div>
-
-
-				<div class="form-group">
-					<label for="profile_pic"> Doctor Image  </label>
-					<input type="file" name="profile_pic" id="profile_pic" class="form-control"   placeholder="Doctor Image">
-				</div>
-
-				<button type="submit" class="btn btn-primary">Add</button>
+				
+				<button type="submit" class="btn btn-primary">Add New</button>
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 
@@ -127,5 +99,11 @@
 	</div>
 
 </div>
+
+@endsection
+
+
+@section('js')
+	
 
 @endsection
