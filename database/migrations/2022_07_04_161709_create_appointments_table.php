@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('patient_phone');
 			$table->string('date');
+            $table->string('name');
 			$table->string('gender')->nullable();
             $table->string('email')->nullable();
 			$table->integer('doctor_id');
+            $table->integer('patient_id')->nullable();
             $table->string('note')->nullable();
             $table->string('isRegistered')->nullable();
             $table->softDeletes();
