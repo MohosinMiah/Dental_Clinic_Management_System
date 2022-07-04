@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2022 at 09:09 PM
+-- Generation Time: Jul 04, 2022 at 06:24 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `dev_dental_clinic`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `patient_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isRegistered` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -86,6 +106,7 @@ CREATE TABLE `invoices` (
   `grand_total` double(8,2) NOT NULL DEFAULT 0.00,
   `total_payment` int(11) NOT NULL,
   `paid_amount` double(8,2) NOT NULL DEFAULT 0.00,
+  `total_discount` int(11) DEFAULT 0,
   `decrease` int(11) DEFAULT 0,
   `isClose` int(11) NOT NULL,
   `due_total` double(8,2) NOT NULL DEFAULT 0.00,
@@ -103,26 +124,13 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `patient_id`, `doctor_id`, `added_by_id`, `patient_phone`, `patient_name`, `patient_address`, `payment_date`, `total`, `tax_total`, `grand_total`, `total_payment`, `paid_amount`, `decrease`, `isClose`, `due_total`, `previous_due`, `isRegistered`, `payment_note`, `payment_method`, `payment_method_note`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1520.00, 111, 120.00, 0, 1, 1400.00, 0, 'Yes', 'Payment Notes', 'master_card', 'Payment Method Notes', NULL, '2022-06-30 13:59:07', '2022-06-30 13:59:07'),
-(2, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 2500.00, 0, 1, -590.00, 1400, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:04:35', '2022-06-30 14:04:35'),
-(3, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, -1200.00, 0, 0, 1120.00, -590, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:18:22', '2022-06-30 14:18:22'),
-(4, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 1010.00, 111, -10.00, 0, 0, 0.00, 1120, 'Yes', NULL, 'master_card', NULL, NULL, '2022-06-30 14:27:05', '2022-06-30 14:27:05'),
-(5, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 40.00, 2540.00, 111, 500.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:00:59', '2022-07-02 07:00:59'),
-(6, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1520.00, 111, 500.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:02:28', '2022-07-02 07:02:28'),
-(7, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:06:53', '2022-07-02 07:06:53'),
-(8, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 1000.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:10:38', '2022-07-02 07:10:38'),
-(9, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 2000.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:11:42', '2022-07-02 07:11:42'),
-(10, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 40.00, 2040.00, 111, 4500.00, 0, 0, 0.00, 2000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 07:17:11', '2022-07-02 07:17:11'),
-(11, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1500.00, 0, 1, -480.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:36:35', '2022-07-02 11:36:35'),
-(12, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 2020.00, 111, 1000.00, 0, 1, 540.00, -480, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:37:31', '2022-07-02 11:37:31'),
-(13, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1560.00, 0, 0, 0.00, 540, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 11:38:15', '2022-07-02 11:38:15'),
-(14, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 10.00, 0, 0, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:13', '2022-07-02 12:21:13'),
-(15, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 1, 1000.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:39', '2022-07-02 12:21:39'),
-(16, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 2000.00, 0, 1, -490.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:21:57', '2022-07-02 12:21:57'),
-(17, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 10.00, 0, 1, 10.00, -490, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 12:40:43', '2022-07-02 12:40:43'),
-(18, '1', 8, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 1010.00, 111, 500.00, 0, 0, 0.00, 10, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 13:00:31', '2022-07-02 13:00:31'),
-(19, '1', 7, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 500.00, 111, 500.00, 0, 0, 0.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-02 13:02:31', '2022-07-02 13:02:31');
+INSERT INTO `invoices` (`id`, `patient_id`, `doctor_id`, `added_by_id`, `patient_phone`, `patient_name`, `patient_address`, `payment_date`, `total`, `tax_total`, `grand_total`, `total_payment`, `paid_amount`, `total_discount`, `decrease`, `isClose`, `due_total`, `previous_due`, `isRegistered`, `payment_note`, `payment_method`, `payment_method_note`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(27, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 20.00, 0, 0, 1, 1000.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:38:27', '2022-07-03 12:38:27'),
+(28, '2', 7, NULL, '01857126452', 'Hamza Khan', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 410.00, 111, 10.00, 100, 0, 1, 400.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:39:04', '2022-07-03 12:39:04'),
+(29, '1', 10, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 1500.00, 0, 200, 0, 0.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:40:59', '2022-07-03 12:40:59'),
+(30, '2', 9, NULL, '01857126452', 'Hamza Khan', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1500.00, 0, 0, 1, -480.00, 0, 'No', NULL, 'master_card', NULL, NULL, '2022-07-03 12:41:29', '2022-07-03 12:45:19'),
+(31, '2', 8, NULL, '01857126452', 'Hamza Khan', 'Dhaka', '2022-06-06', 0.00, 10.00, 510.00, 111, 0.00, 0, 0, 0, 0.00, -590, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:41:55', '2022-07-03 12:41:55'),
+(32, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1000.00, 0, 0, 1, 20.00, 0, 'No', NULL, 'master_card', NULL, NULL, '2022-07-03 12:46:12', '2022-07-03 12:47:07');
 
 -- --------------------------------------------------------
 
@@ -151,28 +159,13 @@ CREATE TABLE `invoice_details` (
 --
 
 INSERT INTO `invoice_details` (`id`, `invoice_id`, `service_id`, `service_name`, `quantity`, `discount`, `rate`, `total`, `service_total_tax`, `service_all_tax`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(2, 1, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
-(3, 2, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(4, 3, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(5, 4, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
-(6, 5, 8, 'Covic-19 test(C9)', 3, 0, 500, 1500, 10, 30, NULL, NULL, NULL),
-(7, 5, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
-(8, 6, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(9, 6, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
-(10, 7, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(11, 8, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(12, 9, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(13, 10, 8, 'Covic-19 test(C9)', 4, 0, 500, 2000, 10, 40, NULL, NULL, NULL),
-(14, 11, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(15, 12, 9, 'Regular Check-up(RC)', 2, 0, 1000, 2000, 10, 20, NULL, NULL, NULL),
-(16, 13, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(17, 14, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(18, 15, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
-(19, 16, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(20, 17, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(21, 18, 9, 'Regular Check-up(RC)', 1, 0, 1000, 1000, 10, 10, NULL, NULL, NULL),
-(22, 19, 8, 'Covic-19 test(C9)', 1, 10, 500, 490, 10, 10, NULL, NULL, NULL);
+(35, 27, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(36, 28, 8, 'Covic-19 test(C9)', 1, 100, 500, 400, 10, 10, NULL, NULL, NULL),
+(37, 29, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(39, 31, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(40, 30, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
+(43, 32, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(44, 32, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -198,7 +191,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2022_05_30_192752_create_doctors_table', 1),
 (6, '2022_06_01_195252_create_notices_table', 1),
 (7, '2022_06_06_151905_create_invoices_table', 1),
-(8, '2022_06_14_182925_create_patients_table', 1);
+(8, '2022_06_14_182925_create_patients_table', 1),
+(9, '2022_07_04_161709_create_appointments_table', 2);
 
 -- --------------------------------------------------------
 
@@ -257,7 +251,8 @@ CREATE TABLE `patients` (
 --
 
 INSERT INTO `patients` (`id`, `name`, `phone`, `age`, `gender`, `email`, `blood_group`, `address`, `heart_disease`, `high_blood`, `diabetic`, `note`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'MD MOHOSIN MIAH', '01773193256', 24, 'Male', 'hamza1610330816@gmail.com', 'B+', 'HOUSE-39, KHAIRTUL, SHATAISH', 'No', 'No', 'No', 'short notes', NULL, '2022-06-30 13:47:29', '2022-06-30 13:47:29');
+(1, 'MD MOHOSIN MIAH', '01773193256', 24, 'Male', 'hamza1610330816@gmail.com', 'B+', 'HOUSE-39, KHAIRTUL, SHATAISH', 'No', 'No', 'No', 'short notes', NULL, '2022-06-30 13:47:29', '2022-06-30 13:47:29'),
+(2, 'Hamza Khan', '01857126452', 30, 'Male', 'hamza161033@gmail.com', 'B+', NULL, 'No', 'No', 'No', NULL, NULL, '2022-07-03 08:43:06', '2022-07-03 08:43:06');
 
 -- --------------------------------------------------------
 
@@ -323,6 +318,12 @@ CREATE TABLE `users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `doctors`
@@ -399,6 +400,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -414,19 +421,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `notices`
@@ -438,7 +445,7 @@ ALTER TABLE `notices`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
