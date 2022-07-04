@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\Appointment;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,16 @@ use App\Http\Controllers\PatientController;
 Route::get('/', function () {
     return view('backend.layout.dashboard.index');
 });
+
+
+// ********************    APPOINTMENT MODULE START ********************************
+
+Route::get( '/appointment/create', [ Appointment::class, 'create'] )->name('appointment_registration_form');
+Route::post( '/appointment/create/post', [ Appointment::class, 'store'] )->name('appointment_registration_save');
+Route::get( '/appointment/list', [ Appointment::class, 'index'] )->name('appointment_list');
+
+// ********************    APPOINTMENT MODULE START ********************************
+
 
 
 // ********************    DOCTOR MODULE START ********************************

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
-use App\Http\Requests\StoreAppointmentRequest;
-use App\Http\Requests\UpdateAppointmentRequest;
+// use App\Http\Requests\StoreAppointmentRequest;
+// use App\Http\Requests\UpdateAppointmentRequest;
+use Illuminate\Http\Request;
+use DB;
 
 class AppointmentController extends Controller
 {
