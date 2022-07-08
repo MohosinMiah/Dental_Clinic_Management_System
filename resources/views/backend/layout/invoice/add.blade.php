@@ -28,7 +28,7 @@
 								<label for="patient_id" class="col-sm-5">Patient ID <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
 									<input  autocomplete="off"  id="patient_id" class="form-control" type="number">
-									<span id="csc" class="text-center invlid_patient_id">Search With Phone Number</span>
+									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
 								</div>
 							</div>
 							<div class="form-group row">

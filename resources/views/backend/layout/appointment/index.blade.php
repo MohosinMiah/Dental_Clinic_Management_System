@@ -15,11 +15,11 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Doctor List</h1>
+	<h1 class="h3 mb-4 text-gray-800"> appointment List</h1>
 
 	<div class="row">
 		<div class="col-md-12">
-			{{--  Doctor List  Start   --}}
+			{{--  appointment List  Start   --}}
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4">
 
@@ -41,23 +41,23 @@
 									<th>ID</th>
 									<th>Name</th>
 									<th>Phone</th>
-									<th>Department</th>
+									<th>Date/Time</th>
 									<th>Gender</th>
 									<th>Action</th>
 								</tr>
 							</tfoot>
 							<tbody>
-								@foreach( $data['doctors'] as $doctor )
+								@foreach( $data['appointments'] as $appointment )
 									<tr>
-										<td>{{ $doctor->id }}</td>
-										<td>{{ $doctor->name }}</td>
-										<td>{{ $doctor->phone }}</td>
-										<td>{{ $doctor->department }}</td>
-										<td>{{ $doctor->gender }}</td>
+										<td>{{ $appointment->id }}</td>
+										<td>{{ $appointment->name }}</td>
+										<td>{{ $appointment->patient_phone }}</td>
+										<td>{{ $appointment->date }} - {{ $appointment->time }}</td>
+										<td>{{ $appointment->gender }}</td>
 										<td>
-											<a class="btn btn-xs btn-info" href="{{ route('doctor_show', $doctor->id) }}"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-xs btn-success" href="{{ route('doctor_edit', $doctor->id) }}"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('doctor_delete', $doctor->id) }}"><i class="fa fa-trash"></i></a>
+											<a class="btn btn-xs btn-info" href="{{ route('appointment_show', $appointment->id) }}"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-xs btn-success" href="{{ route('appointment_edit', $appointment->id) }}"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('appointment_delete', $appointment->id) }}"><i class="fa fa-trash"></i></a>
 										</td>
 									</tr
 								@endforeach
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 
-			{{--  Doctor List  Start   --}}
+			{{--  appointment List  Start   --}}
 
 		</div>
 	</div>

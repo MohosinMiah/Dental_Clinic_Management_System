@@ -28,6 +28,13 @@ Route::get( '/appointment/create', [ AppointmentController::class, 'create'] )->
 Route::post( '/appointment/create/post', [ AppointmentController::class, 'store'] )->name('appointment_registration_save');
 Route::get( '/appointment/list', [ AppointmentController::class, 'index'] )->name('appointment_list');
 
+
+
+Route::post( '/appointment/update/post/{id}', [ AppointmentController::class, 'update'] )->name('appointment_update_save');
+Route::get( '/appointment/show/{id}', [ AppointmentController::class, 'show'] )->name('appointment_show');
+Route::get( '/appointment/edit/{id}', [ AppointmentController::class, 'edit'] )->name('appointment_edit');
+Route::get( '/appointment/delete/{id}', [ AppointmentController::class, 'destroy'] )->name('appointment_delete');
+
 // ********************    APPOINTMENT MODULE START ********************************
 
 

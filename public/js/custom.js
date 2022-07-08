@@ -1,7 +1,6 @@
 
 
 $(document).ready(function() {  
-	isClose
 	var base_url = $('.baseUrl').val();
 	$('.add-invoice').prop('disabled', true);
 
@@ -140,6 +139,28 @@ $(document).ready(function() {
 	});
 });
 
+
+// Appointment Patient ID Field Conditional Display
+
+// isRegistered     
+$(document).ready(function() {  
+	$('body').on('keyup change', '#isRegistered', function() {
+		var isRegistered = $('#isRegistered').val();
+		$('#patient_phone').val( '' );
+		$('#patient_name').val( '' );
+		$('#patient_id').val( '' );
+		if( isRegistered == "Yes" )
+		{
+			$('#patient_id_display').css('display','');
+		}
+		else
+		{
+			$('#patient_id_display').css('display','none');
+			
+		}
+
+	});
+});
 
 //print a div
 function printContent(el){
