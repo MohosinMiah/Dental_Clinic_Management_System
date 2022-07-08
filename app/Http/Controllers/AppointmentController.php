@@ -81,13 +81,16 @@ class AppointmentController extends Controller
 	 */
 	public function show( $doctorID )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
+		$appointment = DB::table( 'appointments' )->where( 'id' , $doctorID )->first();
+        $doctors = Doctor::all();
 
 		$data = [
-			'doctor' => $doctor
+			'appointment' => $doctor,
+			'doctors' => $doctors
+
 		];
 
-		return view( 'backend.layout.doctor.show' , compact( 'data' ) );
+		return view( 'backend.layout.appointment.show' , compact( 'appointment' ) );
 	}
 
 	/**
@@ -98,12 +101,15 @@ class AppointmentController extends Controller
 	 */
 	public function edit(  $doctorID  )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
+		$appointment = DB::table( 'appointments' )->where( 'id' , $doctorID )->first();
+        $doctors = Doctor::all();
+
 		$data = [
-			'doctor' => $doctor
+			'appointment' => $appointment,
+			'doctors' => $doctors
 		];
 
-		return view( 'backend.layout.doctor.edit' , compact( 'data' ) );
+		return view( 'backend.layout.appointment.edit' , compact( 'data' ) );
 
 	}
 

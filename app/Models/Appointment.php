@@ -9,26 +9,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    use HasFactory,SoftDeletes;
+	use HasFactory,SoftDeletes;
 
-    protected $table = 'appointments';
+	protected $table = 'appointments';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array<int, string>
+	 */
 
-    protected $fillable = [
-        'patient_id',
-        'patient_phone',
-        'name',
-        'date',
-        'gender',
-        'email',
-        'doctor_id',
-        'note',
-        'isRegistered'
-    ];
+	protected $fillable = [
+		'patient_id',
+		'patient_phone',
+		'name',
+		'date',
+		'time',
+		'gender',
+		'email',
+		'doctor_id',
+		'note',
+		'isRegistered'
+	];
 
 }

@@ -52,7 +52,7 @@
 										<td>{{ $appointment->id }}</td>
 										<td>{{ $appointment->name }}</td>
 										<td>{{ $appointment->patient_phone }}</td>
-										<td>{{ $appointment->date }} - {{ $appointment->time }}</td>
+										<td>Date: {{ $appointment->date }} / Time:  {{ $appointment->time }}</td>
 										<td>{{ $appointment->gender }}</td>
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('appointment_show', $appointment->id) }}"><i class="fa fa-eye"></i></a>
