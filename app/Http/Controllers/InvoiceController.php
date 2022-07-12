@@ -44,7 +44,7 @@ public function get_retrieve_service()
  */
 public function index()
 {
-	$invoices = Invoice::all();
+	$invoices = Invoice::orderBy('id','DESC')->get();
 	$data = [
 		'invoices' => $invoices
 	];

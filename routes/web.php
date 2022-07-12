@@ -21,6 +21,13 @@ Route::get('/', function () {
     return view('backend.layout.dashboard.index');
 });
 
+// ********************    Authentication MODULE START ********************************
+
+Route::get( '/login', [ AuthenticationController::class, 'login'] )->name('login_form');
+
+// ********************    Authentication MODULE End ********************************
+
+
 
 // ********************    APPOINTMENT MODULE START ********************************
 
@@ -35,7 +42,7 @@ Route::get( '/appointment/show/{id}', [ AppointmentController::class, 'show'] )-
 Route::get( '/appointment/edit/{id}', [ AppointmentController::class, 'edit'] )->name('appointment_edit');
 Route::get( '/appointment/delete/{id}', [ AppointmentController::class, 'destroy'] )->name('appointment_delete');
 
-// ********************    APPOINTMENT MODULE START ********************************
+// ********************    APPOINTMENT MODULE End ********************************
 
 
 

@@ -19,13 +19,29 @@ class AppointmentController extends Controller
 	public function index(Request $request)
 	{
 
-		$appointments = Appointment::all();
+		// Filter By Date  Appointment::orderBy('id','DESC')->get();
+		if( !empty( $_GET['date'] ) )
+		{
+			$date = $_GET['date'];
+			$appointments = DB::table('appointments')
+			->select('doctors.name as doctor_name ', 'appointments.*')
+			->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+			->where( 'appointments.date', $date )
+			->orderBy('appointments.id','DESC')
+			->get();
+		}
+		else
+		{
+			$appointments = DB::table('appointments')
+			->select('doctors.name as doctor_name ', 'appointments.*')
+			->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+			->orderBy('appointments.id','DESC')
+			->get();
+		}
+
 		$data = [
 			'appointments' => $appointments
 		];
-
-
-
 
 		return view('backend.layout.appointment.index', compact('data'));
 
@@ -163,7 +179,7 @@ class AppointmentController extends Controller
 		
 		if( $status )
 		{
-			return redirect( route('doctor_list') );
+			return redirect( route('appointment_list') );
 		}
 	
 	}

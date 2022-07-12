@@ -25,7 +25,30 @@
 
 				<div class="card-body">
 					<div class="table-responsive">
+						
+						<div class="row">
+						
+							<div class="col-md-12">
+								<form method="GET" >
+								<div class="form-group">
+									<label class=" control-label"> Filter By Data</label>
+									<div class='col-sm-3'>
+										<div class="form-group">
+											<div class='input-group date' id='datetimepicker1'>
+												<input type="date" name="date" class="form-control"  required pattern="\d{2}-\d{2}-\d{4}" onchange="this.form.submit()" />
+											</div>
+											<a type="button" href="{{ route('appointment_list') }}" class="close" aria-label="Close" tooltip="Clear Filter">
+												<span aria-hidden="true">&times;</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							
 							<thead>
 								<tr>
 									<th>ID</th>

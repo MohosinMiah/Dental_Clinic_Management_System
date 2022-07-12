@@ -28,6 +28,7 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
+									<th>ID</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Registered</th>
@@ -37,7 +38,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Name</th>
+									<th>ID</th>
 									<th>Phone</th>
 									<th>Registered</th>
 									<th>Age</th>
@@ -47,6 +48,7 @@
 							<tbody>
 								@foreach( $data['patients'] as $patient )
 									<tr>
+										<td>{{ $patient->id }}</td>
 										<td>{{ $patient->name }}</td>
 										<td>{{ $patient->phone }}</td>
 										<td>{{ date('d-m-Y', strtotime( $patient->created_at  )) }}</td>
