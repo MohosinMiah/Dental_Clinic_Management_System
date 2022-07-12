@@ -16,12 +16,17 @@ class AppointmentController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+
 		$appointments = Appointment::all();
 		$data = [
 			'appointments' => $appointments
 		];
+
+
+
+
 		return view('backend.layout.appointment.index', compact('data'));
 
 	}
@@ -46,7 +51,7 @@ class AppointmentController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \App\Http\Requests\StoreDoctorRequest  $request
+	 * @param  \App\Http\Requests\StoreAppointmentRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request)
@@ -76,7 +81,7 @@ class AppointmentController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  \App\Models\Doctor  $doctor
+	 * @param  \App\Models\Appointment  $appointment
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show( $doctorID )
@@ -96,7 +101,7 @@ class AppointmentController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\Doctor  $doctor
+	 * @param  \App\Models\Appointment  $appointment
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit(  $doctorID  )
@@ -116,8 +121,8 @@ class AppointmentController extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \App\Http\Requests\UpdateDoctorRequest  $request
-	 * @param  \App\Models\Doctor  $doctor
+	 * @param  \App\Http\Requests\UpdateAppointmentRequest  $request
+	 * @param  \App\Models\Appointment  $appointment
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update( Request $request, $appointmentID )
@@ -149,12 +154,12 @@ class AppointmentController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  \App\Models\Doctor  $doctor
+	 * @param  \App\Models\Appointment  $appointment
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy( $doctorID )
+	public function destroy( $appointmentID )
 	{
-		$status = Doctor::destroy( $patientID );
+		$status = Appointment::destroy( $appointmentID );
 		
 		if( $status )
 		{
