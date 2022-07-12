@@ -85,12 +85,12 @@ class AppointmentController extends Controller
         $doctors = Doctor::all();
 
 		$data = [
-			'appointment' => $doctor,
+			'appointment' => $appointment,
 			'doctors' => $doctors
 
 		];
 
-		return view( 'backend.layout.appointment.show' , compact( 'appointment' ) );
+		return view( 'backend.layout.appointment.show' , compact( 'data' ) );
 	}
 
 	/**
@@ -120,44 +120,30 @@ class AppointmentController extends Controller
 	 * @param  \App\Models\Doctor  $doctor
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update( Request $request, $doctorID )
+	public function update( Request $request, $appointmentID )
 	{
 
 		$validatedData = $request->validate([
+			'patient_phone' => 'required',
 			'name' => 'required',
-			'phone' => 'required|max:18',
-			'password' => 'required',
 		]);
 
-		$doctor = Doctor::find( $doctorID );
+		$appointment = Appointment::find( $appointmentID );
 
-		$doctor->name = $request->name;
-		$doctor->phone = $request->phone;
-		$doctor->password = $request->password;
-		$doctor->email = $request->email;
-		$doctor->designation = $request->designation;
-		$doctor->personal_home_page = $request->personal_home_page;
-		$doctor->degress = $request->degress;
-		$doctor->department = $request->department;
-		$doctor->specialist = $request->specialist;
-		$doctor->experience = $request->experience;
-		$doctor->date_of_birth = $request->date_of_birth;
-		$doctor->gender = $request->gender;
-		$doctor->blood_group = $request->blood_group;
-		$doctor->address = $request->address;
-		$doctor->about_me = $request->about_me;
+		$appointment->isRegistered = $request->isRegistered;
+		$appointment->patient_id = $request->patient_id;
+		$appointment->patient_phone = $request->patient_phone;
+		$appointment->name = $request->name;
+		$appointment->date = $request->date;
+		$appointment->time = $request->time;
+		$appointment->doctor_id = $request->doctor_id;
+		$appointment->gender = $request->gender;
+		$appointment->note = $request->note;
+			
+		$appointment->save();
 
-		if( $request->hasfile('profile_pic') )
-		{
-			$profileImage = $request->profile_pic;
-			$imageName= time().'_'.$profileImage->getClientOriginalName();
-			$profileImage->move(public_path().'/images/', $imageName);  
-			$doctor->profile_pic =  $imageName;
-		}
+		return redirect( route( 'appointment_edit', $appointmentID ) )->with('status', 'Form Data Has Been Updated');
 
-		$doctor->save();
-
-		return redirect( route('doctor_edit' , $doctorID ))->with('status', 'Form Data Has Been Inserted');
 	}
 
 	/**

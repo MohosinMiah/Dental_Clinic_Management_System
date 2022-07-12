@@ -25,7 +25,7 @@
 
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
-			<form method="post" action="{{ route('appointment_registration_save') }}" enctype="multipart/form-data">
+			<form method="post" action="{{ route('appointment_update_save', $data['appointment']->id ) }}" enctype="multipart/form-data">
 				@csrf
 
 				
@@ -41,8 +41,11 @@
 						</select>
 					</div>
 				</div>
-
-				<div class="form-group" id="patient_id_display" style="display:none">
+				<?php
+				if( $data['appointment']->isRegistered == 'Yes' )
+				{
+					?>
+				<div class="form-group" id="patient_id_display" style="display:block">
 					<label for="patient_id" class="control-label">Patient ID <i class="text-danger">*</i></label>
 					<div class="">
 						<input  autocomplete="off"  id="patient_id" name="patient_id"  class="form-control" type="number" value="{{ $data['appointment']->patient_id }}" />
@@ -51,7 +54,9 @@
 
 					</div>
 				</div>
-				
+				<?php
+				}
+				?>
 				<div class="form-group">
 					<label for="patient_phone"> Patient Phone Number  <span class="required_field"> (*) </span> </label>
 					<input type="text" name="patient_phone" id="patient_phone"  required class="form-control" value="{{ $data['appointment']->patient_phone }}" />
@@ -111,7 +116,8 @@
 				</div>
 
 				
-				<button type="submit" class="btn btn-primary">Add New</button>
+				<button type="submit" class="btn btn-primary">Update</button> || <a class="btn btn-primary" href="{{ route('appointment_list') }}">Back To List</a>
+
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 

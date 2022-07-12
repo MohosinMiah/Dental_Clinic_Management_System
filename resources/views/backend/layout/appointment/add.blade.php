@@ -106,7 +106,7 @@
 				</div>
 
 				
-				<button type="submit" class="btn btn-primary">Add New</button>
+				<button type="submit" class="btn btn-primary">Add New</button> 
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 

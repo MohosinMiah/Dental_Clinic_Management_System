@@ -1,12 +1,20 @@
 @extends('backend.home')
 
+@section('css')
+
+@endsection
+
+
 @section('content')
 
 <div class="container-fluid">
-	<?php $doctor = $data['doctor']; ?>
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">View doctor : {{ $doctor->name }} , ID: {{  $doctor->id }}</h1>
+	<h1 class="h3 mb-4 text-gray-800"> View Appointment</h1>
+
+	<script src="{{ asset('js/invoice.js')}}"></script>
+	<script src="{{ asset('js/services.js')}}"></script>
+	<script src="{{ asset('js/custom.js')}}"></script>
 
 	<div class="row">
 		@if(session('status'))
@@ -14,114 +22,101 @@
 				{{ session('status') }}
 			</div>
 		@endif
+
 		<div class="col-md-12">
-			{{--  Doctor Registration Form Start   --}}
-			<form  enctype="multipart/form-data">
+			{{--  Appointment View   --}}
+			<form method="post">
 				@csrf
+
+				
 				<div class="form-group">
-					<label for="name">Doctor Name <span class="required_field"> (*) </span> </label>
-					<input type="text" readonly name="name" id="name"  required class="form-control" value="{{ $doctor->name }}">
-				</div>
-
-				<div class="form-group">
-					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
-					<input type="text" readonly name="phone" id="phone"  required class="form-control"  value="{{ $doctor->phone }}">
-				</div>
-
-				<div class="form-group">
-					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="text" readonly name="password" id="password"  required class="form-control"  value="{{ $doctor->password }}">
-				</div>
-
-				<div class="form-group">
-					<label for="email"> Doctor Email  </label>
-					<input type="email" readonly name="email" id="email"  class="form-control"  value="{{ $doctor->email }}">
-				</div>
-
-				<div class="form-group">
-					<label for="designation"> Doctor Designation  </label>
-					<input type="text" readonly name="designation" id="designation" class="form-control"   value="{{ $doctor->designation }}">
-				</div>
-
-				<div class="form-group">
-					<label for="personal_home_page"> Personal Portfolio URL  </label>
-					<input type="text" readonly name="personal_home_page" id="personal_home_page" class="form-control"   value="{{ $doctor->personal_home_page }}">
-				</div>
-
-
-				<div class="form-group">
-					<label for="degress"> Doctor Degress  </label>
-					<input type="text" readonly name="degress" id="degress" class="form-control" value="{{ $doctor->degress }}">
-				</div>
-
-
-				<div class="form-group">
-					<label for="department"> Doctor Department </label>
-					<input type="text" readonly name="department" id="department" class="form-control"   value="{{ $doctor->department }}">
-				</div>
-
-
-				<div class="form-group">
-					<label for="specialist"> Doctor Specility </label>
-					<input type="text" readonly name="specialist" id="specialist" class="form-control"   value="{{ $doctor->specialist }}">
-				</div>
-
-
-				<div class="form-group">
-					<label for="date_of_birth"> Doctor Date Of Birth </label>
-					<input type="text" readonly name="date_of_birth" id="date_of_birth" class="form-control"   value="{{ $doctor->date_of_birth }}">
-				</div>
-
-
-				<div class="form-group">
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<label class=" control-label"> Is Patient Registered ? <span class="required_field"> (*) </span></label>
 					<div>
-							<select class="form-control" readonly name="gender" id="gender" required>
-							<option value="Male" <?php if( $doctor->gender == 'Male' ) { echo "selected"; } ?> >Male</option>
-							<option value="Female" <?php if( $doctor->gender == 'Female' ) { echo "selected"; } ?> >Female</option>
-							<option value="Other" <?php if( $doctor->gender == 'Other' ) { echo "selected"; } ?> >Other</option>
+						<select class="form-control" name="isRegistered" id="isRegistered" readonly>
+
+							<option value="No" <?php if( $data['appointment']->isRegistered == "No"){ echo "selected"; } ?>>No</option>
+							<option value="Yes" <?php if( $data['appointment']->isRegistered == "Yes"){ echo "selected"; } ?>>Yes</option>
+
+
+						</select>
+					</div>
+				</div>
+				<?php
+				if( $data['appointment']->isRegistered == 'Yes' )
+				{
+					?>
+				<div class="form-group" id="patient_id_display" style="display:block">
+					<label for="patient_id" class="control-label">Patient ID <i class="text-danger">*</i></label>
+					<div class="">
+						<input  autocomplete="off"  id="patient_id" name="patient_id"  class="form-control" type="number" value="{{ $data['appointment']->patient_id }}" readonly />
+						<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
+						<input class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
+
+					</div>
+				</div>
+				<?php
+				}
+				?>
+				<div class="form-group">
+					<label for="patient_phone"> Patient Phone Number  <span class="required_field"> (*) </span> </label>
+					<input type="text" name="patient_phone" id="patient_phone"  required class="form-control" value="{{ $data['appointment']->patient_phone }}" readonly />
+				</div>
+
+				<div class="form-group">
+					<label for="name">Patient Name <span class="required_field"> (*) </span> </label>
+					<input type="text" name="name" id="patient_name"  required class="form-control"   value="{{ $data['appointment']->name }}" readonly />
+				</div>
+				
+
+				<div class="form-group">
+					<label class=" control-label"> Data And Time <span class="required_field"> (*) </span></label>
+						<div class='col-sm-3'>
+							<div class="form-group">
+								<div class='input-group date' id='datetimepicker1'>
+									<input type="date" name="date" class="form-control"  required pattern="\d{2}-\d{2}-\d{4}"  value="{{ $data['appointment']->date }}" readonly />
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+									</span>
+									<input type="time" name="time"  class="form-control"  value="{{ $data['appointment']->time }}" readonly />
+								</div>
+							</div>
+						</div>
+				</div>
+
+				<div class="form-group " >
+					<label class=" control-label"> Select Doctor <span class="required_field"> (*) </span></label>
+					<div>
+						<select class="form-control" name="doctor_id" id="doctor_id" readonly >
+							@foreach( $data['doctors'] as $doctor )
+							<?php if( $doctor->id == $data['appointment']->doctor_id ){ ?>
+							<option value="{{ $doctor->id }}" selected>{{ $doctor->name }}</option>
+							<?php }else{ ?>
+								<option value="{{ $doctor->id }}" >{{ $doctor->name }}</option>
+							<?php } ?>
+							@endforeach
 						</select>
 					</div>
 				</div>
 
-
-				<div class="form-group">
-					<label class=" control-label"> Blood Group</label>
+				<div class="form-group" >
+					<label class=" control-label"> Gender <span class="required_field"> (*) </span></label>
 					<div>
-						<select class="form-control" readonly name="blood_group" id="blood_group">
-							<option value="A+" <?php if( $doctor->blood_group == 'A+' ) { echo "selected"; } ?>>A+</option>
-							<option value="A-" <?php if( $doctor->blood_group == 'A-' ) { echo "selected"; } ?>>A-</option>
-							<option value="B+" <?php if( $doctor->blood_group == 'B+' ) { echo "selected"; } ?>>B+</option>
-							<option value="B-" <?php if( $doctor->blood_group == 'B-' ) { echo "selected"; } ?>>B-</option>
-							<option value="O+" <?php if( $doctor->blood_group == 'O+' ) { echo "selected"; } ?>>O+</option>
-							<option value="O-" <?php if( $doctor->blood_group == 'O-' ) { echo "selected"; } ?>>O-</option>
-							<option value="AB+" <?php if( $doctor->blood_group == 'AB+' ) { echo "selected"; } ?>>AB+</option>
-							<option value="AB-" <?php if( $doctor->blood_group == 'AB-' ) { echo "selected"; } ?>>AB-</option>
+						<select class="form-control" name="gender" id="gender" readonly>
+							<option value="Male" <?php if( $data['appointment']->isRegistered   == "Male" ){ echo "selected"; } ?> >Male</option>
+							<option value="Female" <?php if( $data['appointment']->isRegistered == "Female" ){ echo "selected"; } ?>>Female</option>
+							<option value="Other" <?php if( $data['appointment']->isRegistered  == "Other" ){ echo "selected"; } ?>>Other</option>
 						</select>
 					</div>
 				</div>
 
-
-
+				
 				<div class="form-group">
-					<label for="address"> Doctor Address  </label>
-					<input type="text" readonly name="address" id="address" class="form-control"   value="{{ $doctor->address }}">
+					<label for="note">Note </span> </label>
+				</br>
+					<textarea cols="50" rows="5" name="note" id="note" readonly>{{ $data['appointment']->note }}</textarea>
 				</div>
 
-
-				<div class="form-group">
-					<label for="about_me"> Doctor Bio  </label>
-					<input type="text" readonly name="about_me" id="about_me" class="form-control"   value="{{ $doctor->about_me }}">
-				</div>
-
-
-				<div class="form-group">
-					<label for="profile_pic"> Doctor Image  </label>
-					<input type="file" name="profile_pic" id="profile_pic" class="form-control" >
-					<img src="{{ asset('/images/' . $doctor->profile_pic )}}"  width="300" height="150">
-				</div>
-
-				<a  href="{{ route('doctor_list') }}" type="button" class="btn btn-primary">Back To List</a>
+				
+				<a class="btn btn-primary" href="{{ route('appointment_list') }}">Back To List</a>
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 
@@ -129,5 +124,11 @@
 	</div>
 
 </div>
+
+@endsection
+
+
+@section('js')
+	
 
 @endsection

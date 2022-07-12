@@ -151,12 +151,11 @@ $(document).ready(function() {
 		$('#patient_id').val( '' );
 		if( isRegistered == "Yes" )
 		{
-			$('#patient_id_display').css('display','');
+			$('#patient_id_display').css( 'display', '' );
 		}
 		else
 		{
-			$('#patient_id_display').css('display','none');
-			
+			$('#patient_id_display').css( 'display','none' );
 		}
 
 	});
