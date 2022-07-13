@@ -116,7 +116,7 @@
 				</div>
 
 				
-				<a class="btn btn-primary" href="{{ route('appointment_list') }}">Back To List</a>
+				<a class="btn btn-primary" href="{{ route('appointment_list') }}">Back To List</a> 
 			</form>
 			{{--  Doctor Registration Form Start   --}}
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AuthenticationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,12 +19,30 @@ use App\Http\Controllers\AppointmentController;
 */
 
 Route::get('/', function () {
-    return view('backend.layout.dashboard.index');
+
+	return view('backend.layout.dashboard.index');
 });
 
 // ********************    Authentication MODULE START ********************************
 
 Route::get( '/login', [ AuthenticationController::class, 'login'] )->name('login_form');
+
+Route::get( '/forgoten/password', [ AuthenticationController::class, 'forgoten'] )->name('forgot_form');
+
+Route::get( '/verify/otp', [ AuthenticationController::class, 'otp_verify_form'] )->name('otp_verify_form');
+
+Route::post( '/verify/otp/post', [ AuthenticationController::class, 'otp_verify'] )->name('otp_verify');
+
+
+
+Route::post( '/forgoten/password/send_otp', [ AuthenticationController::class, 'forgot_password_sent_otp'] )->name('forgot_password_sent_otp');
+
+
+Route::post( '/login/check', [ AuthenticationController::class, 'loginCheck'] )->name('login_check');
+
+Route::get( '/logout', [ AuthenticationController::class, 'logout'] )->name('logout');
+
+
 
 // ********************    Authentication MODULE End ********************************
 
