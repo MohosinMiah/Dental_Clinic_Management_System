@@ -28,8 +28,7 @@
 
 									<div class="form-group">
 										<label for="otp"> Otp Code</label>
-										<input type="text" name="otp" class="form-control form-control-user" />
-										<input type="hidden" name="phone" value="{{ session('phoneVerifyOtp') }}" required />
+										<input type="text" name="otp" class="form-control form-control-user" required />
 									</div>
 
 									<div class="form-group">
@@ -40,6 +39,7 @@
 									<div class="form-group">
 										<label for="passwordConfirmation">  Password Confirmation</label>
 										<input type="password" name="passwordConfirmation" class="form-control form-control-user" placeholder="Password Confirmation" required />
+										<input type="hidden" name="phone" value="{{ session('phoneVerifyOtp') }}" required />
 									</div>
 
 									<button type="submit" class="btn btn-primary"> Verify OTP</button>

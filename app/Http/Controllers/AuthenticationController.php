@@ -57,7 +57,7 @@ class AuthenticationController extends Controller
 		
 		$authenticatedUser = DB::table('authentications')->where( 'phone', $phone )->where( 'password', $password )->first();
 	
-		if( !empty( $authenticatedUser ) || $authenticatedUser != 'NULL'  )
+		if( !empty( $authenticatedUser )  )
 		{
 			// Store data in the session...
 			session([ 'name'    => $authenticatedUser->name ] );
@@ -65,8 +65,9 @@ class AuthenticationController extends Controller
 			session([ 'email'   => $authenticatedUser->email ] );
 			session([ 'role'    => $authenticatedUser->role ] );
 			session([ 'isLogin' => true ] );
+			return redirect('/');
 		}
-		return redirect('/');
+		return redirect( route( 'login_form' ) )->with( 'status', 'Phone Number or password not matched' );
 	}
 
 
@@ -140,24 +141,35 @@ class AuthenticationController extends Controller
 		
 		$phone = $request->phone;
 		$otp = $request->otp;
-
+        
 		// Check Password
 		$password = $request->password;
 		$passwordConfirmation = $request->passwordConfirmation;
 
-		// Check Otp Is Valid Or Not
-		
 		// Check Password Mismatch Or Not
 		if( $password != $passwordConfirmation )
 		{
 			return redirect( route('otp_verify_form') )->with( 'status', 'Password Mismatch' );
 		}
+
+		// Check Otp Is Valid Or Not
+		$checkOtp = DB::table( 'authentications' )->where( 'phone', $phone )->where( 'otp', $otp )->first();
+
+		if( !empty( $checkOtp ) )
+		{
+			
+			$updatePassword = DB::table( 'authentications' )
+							->where( 'phone', $phone )
+							->where( 'otp', $otp )
+							->update([
+								'password' => md5( $password )
+							]);
+			return redirect( route('login_form') )->with( 'status', 'Password update successfully' );
+		}
 		else
 		{
-
+			return redirect( route('otp_verify_form') )->with( 'status', 'Otp is not valid' );
 		}
-
-		return $otp;
 	}
 
 
