@@ -13,7 +13,7 @@
 				{{ session('status') }}
 			</div>
 		@endif
-		
+
 		@if (Session::has('message'))
 			<h4 class="text-info">{!! session('message') !!}</h4>
 		@endif
@@ -82,7 +82,7 @@
 
 				<div class="form-group">
 					<label for="date_of_birth"> Doctor Date Of Birth </label>
-					<input type="text" name="date_of_birth" id="date_of_birth" class="form-control"   placeholder="Doctor DateOfBirth">
+					<input type="date" format="d/m/Y" name="date_of_birth" id="date_of_birth" class="form-control"   placeholder="Doctor DateOfBirth">
 				</div>
 
 

@@ -48,23 +48,23 @@ class AuthenticationController extends Controller
 
 	public function loginCheck( Request $request )
 	{
-		$phone    = $request->phone;
-		$password = $request->password;
-
+		$phone              = $request->phone; 
+		$password           = $request->password;
 		// Convert plain text to md5() type
+		$password           = md5( $password );
 		
-		$password = md5( $password );
-		
-		$authenticatedUser = DB::table('authentications')->where( 'phone', $phone )->where( 'password', $password )->first();
+		$authenticatedUser  = DB::table('authentications')->where( 'phone', $phone )->where( 'password', $password )->first();
 	
 		if( !empty( $authenticatedUser )  )
 		{
 			// Store data in the session...
-			session([ 'name'    => $authenticatedUser->name ] );
-			session([ 'phone'   => $authenticatedUser->phone ] );
-			session([ 'email'   => $authenticatedUser->email ] );
-			session([ 'role'    => $authenticatedUser->role ] );
-			session([ 'isLogin' => true ] );
+			session( [ 'authorID'    => $authenticatedUser->id     ] );
+			session( [ 'name'        => $authenticatedUser->name   ] );
+			session( [ 'phone'       => $authenticatedUser->phone  ] );
+			session( [ 'email'       => $authenticatedUser->email  ] );
+			session( [ 'role'        => $authenticatedUser->role   ] );
+			session( [ 'isLogin'     => true                       ] );
+
 			return redirect('/');
 		}
 		return redirect( route( 'login_form' ) )->with( 'status', 'Phone Number or password not matched' );
@@ -179,13 +179,23 @@ class AuthenticationController extends Controller
 	
 	public function logout()
 	{
-		session([ 'name'    => '' ] );
-		session([ 'phone'   => '' ] );
-		session([ 'email'   => '' ] );
-		session([ 'role'    => '' ] );
-		session([ 'isLogin' => false ] );
+		session( [ 'authorID' => ''    ] );
+		session( [ 'name'     => ''    ] );
+		session( [ 'phone'    => ''    ] );
+		session( [ 'email'    => ''    ] );
+		session( [ 'role'     => ''    ] );
+		session( [ 'isLogin'  => false ] );
 
 		return redirect( route('login_form') );
+	}
+
+
+
+	public function profile()
+	{
+
+		return view( 'backend/layout/auth/profile' );
+
 	}
 
 

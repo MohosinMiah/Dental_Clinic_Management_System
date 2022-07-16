@@ -42,6 +42,9 @@ Route::post( '/login/check', [ AuthenticationController::class, 'loginCheck'] )-
 
 Route::get( '/logout', [ AuthenticationController::class, 'logout'] )->name('logout');
 
+Route::get( '/profile', [ AuthenticationController::class, 'profile'] )->name('profile');
+
+Route::get( '/profile/update/post', [ AuthenticationController::class, 'profile_update'] )->name('profile_update_post');
 
 
 // ********************    Authentication MODULE End ********************************
