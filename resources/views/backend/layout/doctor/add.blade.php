@@ -13,6 +13,20 @@
 				{{ session('status') }}
 			</div>
 		@endif
+		
+		@if (Session::has('message'))
+			<h4 class="text-info">{!! session('message') !!}</h4>
+		@endif
+
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
 			<form method="post" action="{{ route('doctor_registration_save') }}" enctype="multipart/form-data">

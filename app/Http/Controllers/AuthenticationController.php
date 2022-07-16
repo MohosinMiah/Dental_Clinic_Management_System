@@ -162,8 +162,10 @@ class AuthenticationController extends Controller
 							->where( 'phone', $phone )
 							->where( 'otp', $otp )
 							->update([
+								'otp' => null,
 								'password' => md5( $password )
 							]);
+			session( [ 'phoneVerifyOtp'   => '' ] );
 			return redirect( route('login_form') )->with( 'status', 'Password update successfully' );
 		}
 		else
