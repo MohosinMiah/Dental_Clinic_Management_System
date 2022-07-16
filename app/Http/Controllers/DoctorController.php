@@ -88,7 +88,10 @@ class DoctorController extends Controller
 				$authentication->email = $request->email;
 				$authentication->password = md5( $request->password );
 				$authentication->role = 3;
+				if( $request->hasfile('profile_pic') )
+			{
 				$authentication->profile_pic = $imageName;
+			}
 				$authentication->save();
 			}
 	

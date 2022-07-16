@@ -199,7 +199,43 @@ class AuthenticationController extends Controller
 	}
 
 
+	public function profile_update( Request $request )
+	{
 
+		$validatedData = $request->validate([
+			'name' => 'required',
+		]);
+
+		$authorID = session( 'authorID' );
+
+		$authentication       = Authentication::find( $authorID );
+		$authentication->name = $request->name;
+			
+		if( $request->hasfile('profile_pic') )
+		{
+			$profileImage = $request->profile_pic;
+			$imageName= time().'_'.$profileImage->getClientOriginalName();
+			$profileImage->move(public_path().'/images/', $imageName);  
+			$authentication->profile_pic =  $imageName;
+
+		}
+
+		$authentication->save();
+
+		return redirect()->back();
+	}
+
+
+
+	public function settings()
+	{
+		return view('backend/layout/auth/settings');
+	}
+
+
+
+
+	
 	/**
 	 * Store a newly created resource in storage.
 	 *

@@ -44,7 +44,16 @@ Route::get( '/logout', [ AuthenticationController::class, 'logout'] )->name('log
 
 Route::get( '/profile', [ AuthenticationController::class, 'profile'] )->name('profile');
 
-Route::get( '/profile/update/post', [ AuthenticationController::class, 'profile_update'] )->name('profile_update_post');
+Route::get( '/settings', [ AuthenticationController::class, 'settings'] )->name('settings');
+
+Route::post( '/profile/update/post', [ AuthenticationController::class, 'profile_update'] )->name('profile_update_post');
+
+Route::post( '/profile/setting/phone/update/post', [ AuthenticationController::class, 'profprofile_setting_update_phoneile_update'] )->name('profile_setting_update_phone');
+
+Route::post( '/profile/setting/password/update/post', [ AuthenticationController::class, 'profile_setting_update_password'] )->name('profile_setting_update_password');
+
+
+
 
 
 // ********************    Authentication MODULE End ********************************
