@@ -163,10 +163,12 @@ class AuthenticationController extends Controller
 			$updatePassword = DB::table( 'authentications' )
 							->where( 'phone', $phone )
 							->where( 'otp', $otp )
-							->update([
+							->update(
+								[
 								'otp' => null,
 								'password' => md5( $password )
-							]);
+								]
+							);
 			session( [ 'phoneVerifyOtp'   => '' ] );
 			return redirect( route('login_form') )->with( 'status', 'Password update successfully' );
 		}
@@ -250,26 +252,52 @@ class AuthenticationController extends Controller
 		$password = md5( $request->password );
 
 		// Check password  is write or not
-		$authenticatedUser = Authentication::where( 'id', $authorID )->where( 'password', $password )->first();
+		$authenticatedUser = Authentication::where( 'id', $authorID )->first();
 
 		if( $authenticatedUser->password === $password )
 		{
-			die("Good To Go");
 			$authentication = Authentication::find( $authorID );
 			$authentication->phone = $request->phone;
 			$authentication->save();
+			return redirect()->back()->with('status',"Phone Number Updated Successfully!");
 		}
 		else
 		{
-			die("Have some issues");
+			return redirect()->back()->with('status',"Your Password is wrong!");
 		}
-
-	
-
 
 
 	}
 
+
+	public function profile_setting_update_password( Request $request)
+	{
+
+		$authorID = session( 'authorID' );
+
+		$validatedData = $request->validate([
+			'newPassword' => ['required'],
+			'oldPassword' => ['required'],
+		]);
+
+		$oldPassword = md5( $request->oldPassword );
+
+		// Check password  is write or not
+		$authenticatedUser = Authentication::where( 'id', $authorID )->first();
+
+		if( $authenticatedUser->password === $oldPassword )
+		{
+			$authentication = Authentication::find( $authorID );
+			$authentication->password = $oldPassword;
+			$authentication->save();
+			return redirect()->back()->with('status',"Password Updated Successfully!");
+		}
+		else
+		{
+			return redirect()->back()->with('error',"Old Password did not Match. Please check your old password and try again!");
+		}
+
+	}
 
 	/**
 	 * Store a newly created resource in storage.

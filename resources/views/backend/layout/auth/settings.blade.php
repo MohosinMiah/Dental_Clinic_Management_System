@@ -8,9 +8,15 @@
 	<h1 class="h3 mb-4 text-gray-800">Profile Settings</h1>
 
 	<div class="row">
-			@if(session('status'))
+			<div class="col-md-12">
+				@if(session('status'))
 				<div class="alert alert-success">
 					{{ session('status') }}
+				</div>
+			@endif
+			@if(session('error'))
+				<div class="alert alert-danger">
+					{{ session('error') }}
 				</div>
 			@endif
 	
@@ -27,6 +33,7 @@
 				</ul>
 			</div>
 			@endif
+			</div>
 			<?php
 			
 			$authorID = session('authorID');
@@ -45,7 +52,7 @@
 
 						<div class="form-group" autocomplete="off">
 							<label for="password">Old  Password   </label>
-							<input type="password" autocomplete="off"  name="password" id="password" class="form-control"  />
+							<input type="password" autocomplete="off"  name="password" id="password" class="form-control"  required/>
 						</div>
 		
 						<button type="submit" class="btn btn-primary">Changed Number</button>
@@ -60,12 +67,12 @@
 
 						<div class="form-group" autocomplete="off">
 							<label for="newPassword">New  Password   </label>
-							<input type="password" autocomplete="off"  name="newPassword" id="newPassword" class="form-control"  />
+							<input type="password" autocomplete="off"  name="newPassword" id="newPassword" class="form-control" required />
 						</div>
 		
 						<div class="form-group" autocomplete="off">
 							<label for="oldPassword">Old  Password   </label>
-							<input type="password" autocomplete="off"  name="oldPassword" id="oldPassword" class="form-control"  />
+							<input type="password" autocomplete="off"  name="oldPassword" id="oldPassword" class="form-control"  required />
 						</div>
 		
 						<button type="submit" class="btn btn-primary">Changed Password</button>
