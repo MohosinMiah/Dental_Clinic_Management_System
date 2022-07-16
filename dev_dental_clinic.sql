@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2022 at 09:14 PM
+-- Generation Time: Jul 16, 2022 at 10:17 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,66 @@ SET time_zone = "+00:00";
 --
 -- Database: `dev_dental_clinic`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `patient_id` int(11) DEFAULT 0,
+  `patient_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isRegistered` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `patient_id`, `patient_phone`, `name`, `date`, `time`, `gender`, `email`, `doctor_id`, `note`, `isRegistered`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, '01773193256', 'MD MOHOSIN MIAH 111', '2022-07-14', '02:38', 'Male', NULL, 3, 'This is notes 111', 'Yes', NULL, '2022-07-08 13:38:17', '2022-07-12 08:17:21'),
+(2, 2, '01857126452', 'Hamza Khan', '2022-07-22', '05:34', 'Male', NULL, 3, 'This is ID 2 Updated', 'Yes', NULL, '2022-07-08 14:34:08', '2022-07-12 08:17:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `authentications`
+--
+
+CREATE TABLE `authentications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `otp` int(11) DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '3',
+  `profile_pic` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `authentications`
+--
+
+INSERT INTO `authentications` (`id`, `name`, `phone`, `email`, `email_verified_at`, `password`, `otp`, `role`, `profile_pic`, `remember_token`, `created_at`, `updated_at`) VALUES
+(5, 'MD MOHOSIN MIAH 111', '01857126453', 'hamza1610330816@gmail.com', NULL, '202cb962ac59075b964b07152d234b70', NULL, '3', '1657977201_monkeykingBDNinja.JPG', NULL, '2022-07-16 03:55:57', '2022-07-16 13:07:27'),
+(6, 'MD MOHOSIN MIAH 111', '01773193256', 'testmohosin@gmail.com', NULL, '202cb962ac59075b964b07152d234b70', NULL, '3', '1657977201_monkeykingBDNinja.JPG', NULL, '2022-07-16 03:55:57', '2022-07-16 07:13:21');
 
 -- --------------------------------------------------------
 
@@ -49,6 +109,13 @@ CREATE TABLE `doctors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `doctors`
+--
+
+INSERT INTO `doctors` (`id`, `name`, `phone`, `email`, `designation`, `personal_home_page`, `degress`, `department`, `specialist`, `experience`, `date_of_birth`, `gender`, `blood_group`, `address`, `about_me`, `profile_pic`, `password`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(11, 'MD MOHOSIN MIAH', '01857126452', 'hamza1610330816@gmail.com', 'Jr.Software Engineer', 'www.google.com', 'Degress', 'Dental', 'Rootcanel', NULL, '1997-10-05', 'Male', 'A+', 'HOUSE-39, KHAIRTUL, SHATAISH, TONGI, GAZIPUR, TONGI WEST, ERSHAD NAGAR - 1712, GAZIPUR', 'This is MD MOHOSIN MIAH', '1657965357_monkeykingBD.JPG', '123', NULL, '2022-07-16 03:55:57', '2022-07-16 03:55:57');
 
 -- --------------------------------------------------------
 
@@ -110,7 +177,9 @@ INSERT INTO `invoices` (`id`, `patient_id`, `doctor_id`, `added_by_id`, `patient
 (29, '1', 10, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 1500.00, 0, 200, 0, 0.00, 1000, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:40:59', '2022-07-03 12:40:59'),
 (30, '2', 9, NULL, '01857126452', 'Hamza Khan', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1500.00, 0, 0, 1, -480.00, 0, 'No', NULL, 'master_card', NULL, NULL, '2022-07-03 12:41:29', '2022-07-03 12:45:19'),
 (31, '2', 8, NULL, '01857126452', 'Hamza Khan', 'Dhaka', '2022-06-06', 0.00, 10.00, 510.00, 111, 0.00, 0, 0, 0, 0.00, -590, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-03 12:41:55', '2022-07-03 12:41:55'),
-(32, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1000.00, 0, 0, 1, 20.00, 0, 'No', NULL, 'master_card', NULL, NULL, '2022-07-03 12:46:12', '2022-07-03 12:47:07');
+(32, '1', 9, NULL, '01773193256', 'MD MOHOSIN MIAH', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 20.00, 1020.00, 111, 1000.00, 0, 0, 1, 20.00, 0, 'No', NULL, 'master_card', NULL, NULL, '2022-07-03 12:46:12', '2022-07-03 12:47:07'),
+(33, '2', 9, NULL, '01857126452', 'Hamza Khan', 'HOUSE-39, KHAIRTUL, SHATAISH', '2022-06-06', 0.00, 10.00, 510.00, 111, 10.00, 0, 0, 1, 500.00, 0, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-16 03:05:02', '2022-07-16 03:05:02'),
+(34, '2', 8, NULL, '01857126452', 'Hamza Khan', 'Dhaka', '2022-06-06', 0.00, 10.00, 510.00, 111, 1000.00, 0, 10, 0, 0.00, 500, 'Yes', NULL, 'master_card', NULL, NULL, '2022-07-16 03:06:11', '2022-07-16 03:06:11');
 
 -- --------------------------------------------------------
 
@@ -145,7 +214,9 @@ INSERT INTO `invoice_details` (`id`, `invoice_id`, `service_id`, `service_name`,
 (39, 31, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
 (40, 30, 8, 'Covic-19 test(C9)', 2, 0, 500, 1000, 10, 20, NULL, NULL, NULL),
 (43, 32, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
-(44, 32, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL);
+(44, 32, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(45, 33, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL),
+(46, 34, 8, 'Covic-19 test(C9)', 1, 0, 500, 500, 10, 10, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,7 +242,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2022_05_30_192752_create_doctors_table', 1),
 (6, '2022_06_01_195252_create_notices_table', 1),
 (7, '2022_06_06_151905_create_invoices_table', 1),
-(8, '2022_06_14_182925_create_patients_table', 1);
+(8, '2022_06_14_182925_create_patients_table', 1),
+(9, '2022_07_04_161709_create_appointments_table', 2),
+(10, '2022_07_12_174739_create_authentications_table', 3);
 
 -- --------------------------------------------------------
 
@@ -286,7 +359,9 @@ INSERT INTO `services` (`id`, `model`, `service_name`, `price`, `tax`, `descript
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` int(11) NOT NULL DEFAULT 3,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -299,10 +374,25 @@ CREATE TABLE `users` (
 --
 
 --
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `authentications`
+--
+ALTER TABLE `authentications`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `authentications_phone_unique` (`phone`),
+  ADD UNIQUE KEY `authentications_email_unique` (`email`);
+
+--
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -366,17 +456,30 @@ ALTER TABLE `services`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `authentications`
+--
+ALTER TABLE `authentications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -388,19 +491,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `notices`
