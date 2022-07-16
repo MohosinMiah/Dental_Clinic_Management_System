@@ -8,6 +8,8 @@ use App\Models\Authentication;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
+use Illuminate\Validation\Rule; //import Rule class 
+
 
 class AuthenticationController extends Controller
 {
@@ -234,8 +236,41 @@ class AuthenticationController extends Controller
 
 
 
+	public function profile_setting_update_phone( Request $request)
+	{
+		$authorID = session( 'authorID' );
+
+		$validatedData = $request->validate([
+			'phone' => [
+				'required',
+				Rule::unique('authentications')->ignore($authorID),
+			],
+		]);
+
+		$password = md5( $request->password );
+
+		// Check password  is write or not
+		$authenticatedUser = Authentication::where( 'id', $authorID )->where( 'password', $password )->first();
+
+		if( $authenticatedUser->password === $password )
+		{
+			die("Good To Go");
+			$authentication = Authentication::find( $authorID );
+			$authentication->phone = $request->phone;
+			$authentication->save();
+		}
+		else
+		{
+			die("Have some issues");
+		}
 
 	
+
+
+
+	}
+
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

@@ -48,7 +48,7 @@ Route::get( '/settings', [ AuthenticationController::class, 'settings'] )->name(
 
 Route::post( '/profile/update/post', [ AuthenticationController::class, 'profile_update'] )->name('profile_update_post');
 
-Route::post( '/profile/setting/phone/update/post', [ AuthenticationController::class, 'profprofile_setting_update_phoneile_update'] )->name('profile_setting_update_phone');
+Route::post( '/profile/setting/phone/update/post', [ AuthenticationController::class, 'profile_setting_update_phone'] )->name('profile_setting_update_phone');
 
 Route::post( '/profile/setting/password/update/post', [ AuthenticationController::class, 'profile_setting_update_password'] )->name('profile_setting_update_password');
 
