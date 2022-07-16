@@ -43,14 +43,14 @@ class DoctorController extends Controller
 	 * @param  \App\Http\Requests\StoreDoctorRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(StoreDoctorRequest $request)
 	{
-		$validatedData = $request->validate([
-			'name' => 'required',
-			'phone' => 'required|unique:doctors|max:18',
-			'email' => 'required|unique:doctors|max:30',
-			'password' => 'required',
-		]);
+		// $validatedData = $request->validate([
+		// 	'name' => 'required',
+		// 	'phone' => 'required|unique:doctors|max:18',
+		// 	'email' => 'required|unique:doctors|max:30',
+		// 	'password' => 'required',
+		// ]);
 
 
 			$doctor = new Doctor;
@@ -82,6 +82,13 @@ class DoctorController extends Controller
 			// After Doctor Register Successfully, We will create doctor roll in authentications table
 			if( $save )
 			{
+				$authentication = new Authentication;
+				$authentication->name = $request->name;
+				$authentication->phone = $request->phone;
+				$authentication->email = $request->email;
+				$authentication->password = md5( $request->password );
+				$authentication->role = 3;
+				$authentication->save();
 			}
 	
 			return redirect(route('doctor_registration_form'))->with('status', 'Form Data Has Been Inserted');
