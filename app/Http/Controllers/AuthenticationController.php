@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
 use Illuminate\Validation\Rule; //import Rule class 
+use Illuminate\Routing\Redirector;
 
 
 class AuthenticationController extends Controller
 {
+
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -37,11 +40,13 @@ class AuthenticationController extends Controller
 
 	public function login()
 	{
+		
 		return view('backend/layout/auth/login');
 	}
 
 	public function forgoten()
 	{
+
 		return view('backend/layout/auth/forgot');
 	}
 
@@ -132,6 +137,8 @@ class AuthenticationController extends Controller
 
 	public function otp_verify_form()
 	{
+	
+
 		return view('backend/layout/auth/otp');
 
 	}
@@ -141,7 +148,8 @@ class AuthenticationController extends Controller
 	public function otp_verify( Request $request )
 	{
 		
-		
+
+
 		$phone = $request->phone;
 		$otp = $request->otp;
         
@@ -199,6 +207,8 @@ class AuthenticationController extends Controller
 
 	public function profile()
 	{
+		// Validate Login Check
+		$this->validateloginCheck();
 
 		return view( 'backend/layout/auth/profile' );
 
@@ -207,6 +217,8 @@ class AuthenticationController extends Controller
 
 	public function profile_update( Request $request )
 	{
+		// Validate Login Check
+		$this->validateloginCheck();
 
 		$validatedData = $request->validate([
 			'name' => 'required',
@@ -235,6 +247,9 @@ class AuthenticationController extends Controller
 
 	public function settings()
 	{
+		// Validate Login Check
+		$this->validateloginCheck();
+
 		return view('backend/layout/auth/settings');
 	}
 
@@ -242,6 +257,9 @@ class AuthenticationController extends Controller
 
 	public function profile_setting_update_phone( Request $request)
 	{
+		// Validate Login Check
+		$this->validateloginCheck();
+
 		$authorID = session( 'authorID' );
 
 		$validatedData = $request->validate([
@@ -274,7 +292,8 @@ class AuthenticationController extends Controller
 
 	public function profile_setting_update_password( Request $request)
 	{
-
+		// Validate Login Check
+		$this->validateloginCheck();
 		$authorID = session( 'authorID' );
 
 		$validatedData = $request->validate([
@@ -355,5 +374,13 @@ class AuthenticationController extends Controller
 	public function destroy(Authentication $authentication)
 	{
 		//
+	}
+
+	public function validateloginCheck()
+	{
+		if( session( 'isLogin' ) == false or empty( session( 'name' ) ) )
+		{
+			return redirect( route( 'login_form' ) );
+		}
 	}
 }

@@ -8,9 +8,20 @@ use App\Models\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use DB;
+use Illuminate\Routing\Redirector;
 
 class NoticeController extends Controller
 {
+
+	public function __construct( Request $request, Redirector $redirect )
+	{
+		
+		if( session( 'isLogin' ) == false or empty( session( 'name' ) )  or session( 'name' ) == null )
+		{
+			$redirect->to('/login')->send();
+		}
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *

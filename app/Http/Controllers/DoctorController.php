@@ -8,9 +8,21 @@ use App\Http\Requests\StoreDoctorRequest;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Redirector;
+
 
 class DoctorController extends Controller
 {
+
+	public function __construct()
+	{
+		if( session( 'isLogin' ) == false or empty( session( 'name' ) ) )
+		{
+			return redirect( route( 'login_form' ) );
+		}
+	}
+
+
 	/**
 	 * Display a listing of the resource.
 	 *

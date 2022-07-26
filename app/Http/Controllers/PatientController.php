@@ -7,9 +7,23 @@ use App\Models\Patient;
 // use App\Http\Requests\UpdatePatientRequest;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Routing\Redirector;
+
 
 class PatientController extends Controller
 {
+
+    
+	public function __construct( Request $request, Redirector $redirect )
+	{
+		
+		if( session( 'isLogin' ) == false or empty( session( 'name' ) )  or session( 'name' ) == null )
+		{
+			$redirect->to('/login')->send();
+		}
+	}
+
+
     /**
      * Display a listing of the resource.
      *

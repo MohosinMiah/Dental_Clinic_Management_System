@@ -8,9 +8,21 @@ use App\Models\Doctor;
 // use App\Http\Requests\UpdateAppointmentRequest;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Routing\Redirector;
+
 
 class AppointmentController extends Controller
 {
+
+	public function __construct( Request $request, Redirector $redirect )
+	{
+		
+		if( session( 'isLogin' ) == false or empty( session( 'name' ) )  or session( 'name' ) == null )
+		{
+			$redirect->to('/login')->send();
+		}
+	}
+
    /**
 	 * Display a listing of the resource.
 	 *
