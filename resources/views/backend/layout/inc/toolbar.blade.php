@@ -115,8 +115,20 @@
 					}
 					?>
 				</span>
-				<img class="img-profile rounded-circle"
-					src="img/undraw_profile.svg">
+				<?php
+				if(  !empty( session( 'profile_pic' ) ) )
+				{
+					$profilePicURL = "/images/" . session( 'profile_pic' );
+				}
+				else
+				{
+					$profilePicURL = "/img/undraw_profile.svg";
+				}
+				?>
+				<img
+					class="img-profile rounded-circle"
+					src="{{ $profilePicURL }}"
+				/>
 			</a>
 
 			<!-- Dropdown - User Information -->

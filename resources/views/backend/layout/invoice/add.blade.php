@@ -242,9 +242,9 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="date" class="col-sm-4 col-form-label">Payment Notes</label>
+								<label for="date" class="col-sm-4 col-form-label">Treatment Notes</label>
 								<div class="col-sm-8">
-									<textarea name="payment_note" class="form-control" placeholder="Payment Notes"></textarea>
+									<textarea name="payment_note" class="form-control" placeholder="Treatment Notes"></textarea>
 								</div>
 							</div>
 

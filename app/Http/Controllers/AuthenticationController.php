@@ -65,6 +65,7 @@ class AuthenticationController extends Controller
 			session( [ 'phone'       => $authenticatedUser->phone  ] );
 			session( [ 'email'       => $authenticatedUser->email  ] );
 			session( [ 'role'        => $authenticatedUser->role   ] );
+			session( [ 'profile_pic' => $authenticatedUser->profile_pic ] );
 			session( [ 'isLogin'     => true                       ] );
 
 			return redirect('/');
@@ -183,12 +184,13 @@ class AuthenticationController extends Controller
 	
 	public function logout()
 	{
-		session( [ 'authorID' => ''    ] );
-		session( [ 'name'     => ''    ] );
-		session( [ 'phone'    => ''    ] );
-		session( [ 'email'    => ''    ] );
-		session( [ 'role'     => ''    ] );
-		session( [ 'isLogin'  => false ] );
+		session( [ 'authorID'    => ''    ] );
+		session( [ 'name'        => ''    ] );
+		session( [ 'phone'       => ''    ] );
+		session( [ 'email'       => ''    ] );
+		session( [ 'role'        => ''    ] );
+		session( [ 'profile_pic' => ''    ] );
+		session( [ 'isLogin'     => false ] );
 
 		return redirect( route('login_form') );
 	}
