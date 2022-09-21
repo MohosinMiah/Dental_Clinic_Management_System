@@ -16,10 +16,10 @@ class InvoiceController extends Controller
     public function __construct( Request $request, Redirector $redirect )
 	{
 		
-		if( session( 'isLogin' ) == false or empty( session( 'name' ) )  or session( 'name' ) == null )
-		{
-			$redirect->to('/login')->send();
-		}
+		// if( session( 'isLogin' ) == false or empty( session( 'name' ) )  or session( 'name' ) == null )
+		// {
+		// 	$redirect->to('/login')->send();
+		// }
 	}
 
 		

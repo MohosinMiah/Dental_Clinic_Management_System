@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2022 at 10:17 PM
+-- Generation Time: Sep 21, 2022 at 09:32 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -78,7 +78,7 @@ CREATE TABLE `authentications` (
 --
 
 INSERT INTO `authentications` (`id`, `name`, `phone`, `email`, `email_verified_at`, `password`, `otp`, `role`, `profile_pic`, `remember_token`, `created_at`, `updated_at`) VALUES
-(5, 'MD MOHOSIN MIAH 111', '01857126453', 'hamza1610330816@gmail.com', NULL, '202cb962ac59075b964b07152d234b70', NULL, '3', '1657977201_monkeykingBDNinja.JPG', NULL, '2022-07-16 03:55:57', '2022-07-16 13:07:27'),
+(5, 'MD MOHOSIN MIAH 111', '01857126452', 'hamza1610330816@gmail.com', NULL, '202cb962ac59075b964b07152d234b70', NULL, '3', '1657977201_monkeykingBDNinja.JPG', NULL, '2022-07-16 03:55:57', '2022-07-16 13:07:27'),
 (6, 'MD MOHOSIN MIAH 111', '01773193256', 'testmohosin@gmail.com', NULL, '202cb962ac59075b964b07152d234b70', NULL, '3', '1657977201_monkeykingBDNinja.JPG', NULL, '2022-07-16 03:55:57', '2022-07-16 07:13:21');
 
 -- --------------------------------------------------------

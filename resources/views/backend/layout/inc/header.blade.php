@@ -27,6 +27,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset( 'css/style.css' ) }}" rel="stylesheet">
 
     {{--  Services Product List Use Only   --}}
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>

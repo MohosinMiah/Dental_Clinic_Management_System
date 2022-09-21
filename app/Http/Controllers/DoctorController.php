@@ -16,10 +16,10 @@ class DoctorController extends Controller
 
 	public function __construct()
 	{
-		if( session( 'isLogin' ) == false or empty( session( 'name' ) ) )
-		{
-			return redirect( route( 'login_form' ) );
-		}
+		// if( session( 'isLogin' ) == false or empty( session( 'name' ) ) )
+		// {
+		// 	return redirect( route( 'login_form' ) );
+		// }
 	}
 
 

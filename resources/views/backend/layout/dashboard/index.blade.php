@@ -4,65 +4,78 @@
 
 <div class="container-fluid">
 	
-	<div class="row">
-		<div class="col-md-3">
-			<div class="card" style="width: 18rem;">
-				<a href="{{ route( 'patient_list') }}">
-				<img class="card-img-top" src="/images/settings.png" alt="Card image cap" />
-				</a>
-				<div class="card-body">
-				  <a href="{{ route( 'patient_list') }}" class="btn btn-primary">Patients</a>
-				</div>
-			  </div>
-		</div>
-		
-		<div class="col-md-3">
-			<div class="card" style="width: 18rem;">
-				<a href="{{ route( 'appointment_list') }}">
-				<img class="card-img-top" src="/images/settings.png" alt="Card image cap" />
-				</a>
-				<div class="card-body">
-				  <a href="{{ route( 'appointment_list') }}" class="btn btn-primary">Appointments</a>
-				</div>
-			  </div>
-		</div>
-
+	<div class="service-icons">
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Patients">
+			</div>
+			<p>Patients</p>
+		</a>
 	
-
-		<div class="col-md-3">
-			
-			<div class="card" style="width: 18rem;">
-				<a href="{{ route( 'notice_list') }}">
-				<img class="card-img-top" src="/images/settings.png" alt="Card image cap" />
-				</a>
-				<div class="card-body">
-				  <a href="{{ route( 'notice_list') }}" class="btn btn-primary">Notices</a>
-				</div>
-			  </div>
-		</div>
-
-		<div class="col-md-3">
-			<div class="card" style="width: 18rem;">
-				<a href="{{ route( 'invoice_list') }}">
-				<img class="card-img-top" src="/images/settings.png" alt="Card image cap" />
-				</a>
-				<div class="card-body">
-				  <a href="{{ route( 'invoice_list' ) }}" class="btn btn-primary">Invoices</a>
-				</div>
-			  </div>
-		</div>
-
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
 	
-		<div class="col-md-3">
-			<div class="card" style="width: 18rem;">
-				<a href="{{ route( 'doctor_list') }}">
-				<img class="card-img-top" src="/images/settings.png" alt="Card image cap" />
-				</a>
-				<div class="card-body">
-				  <a href="{{ route( 'doctor_list' ) }}" class="btn btn-primary">Doctors</a>
-				</div>
-			  </div>
-		</div>
+				<img src="/images/settings.png" alt="Appointments">
+	
+			</div>
+			<p>Appointments</p>
+		</a>
+	
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+	
+				<img src="/images/settings.png" alt="Notices">
+	
+			</div>
+			<p>Notices</p>
+		</a>
+	
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Invoices">
+	
+			</div>
+			<p>Invoices</p>
+		</a>
+	
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Doctors">
+	
+			</div>
+			<p>Doctors</p>
+		</a>
+	
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Dummy">
+	
+			</div>
+			<p>Dummy</p>
+		</a>
+	
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Dummy">
+	
+			</div>
+			<p>Dummy</p>
+		</a>
+		<a href="{{ route( 'patient_list') }}" class="service-card ">
+			<div class="overlay"></div>
+			<div class="circle">
+				<img src="/images/settings.png" alt="Dummy">
+	
+			</div>
+			<p>Dummy</p>
+		</a>
 	</div>
 	<hr>
 	
