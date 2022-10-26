@@ -10,17 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>
-    <?php
-        if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) )
-        {
-            echo session( 'name' );
-        }else{
-            header('Location: http://127.0.0.1:8000/login');
-            exit;
-        }
-    ?>
-</title>
+    <title> Dental Clinic Automation System</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

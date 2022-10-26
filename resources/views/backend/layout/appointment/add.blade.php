@@ -40,11 +40,12 @@
 				</div>
 
 				<div class="form-group" id="patient_id_display" style="display:none">
-					<label for="patient_id" class="control-label">Patient ID <i class="text-danger">*</i></label>
+					<label for="patient_id" class="control-label">Patient ID | Phone  <i class="text-danger">*</i></label>
 					<div class="">
-						<input  autocomplete="off"  id="patient_id" name="patient_id"  class="form-control" type="number">
+						<input  autocomplete="off"  id="patient_id"   class="form-control" type="number">
 						<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
 						<input class="baseUrl" value="{{ URL::to('/'); }}" type="hidden">
+						<input type="hidden" name="patient_id" id="patient_id_set" onchange="patientID();">
 
 					</div>
 				</div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,10 +70,11 @@ Route::get( '/appointment/list', [ AppointmentController::class, 'index'] )->nam
 
 
 Route::post( '/appointment/update/post/{id}', [ AppointmentController::class, 'update'] )->name('appointment_update_save');
+Route::get( '/appointment/filter', [ AppointmentController::class, 'appoinment_report_filter_appointment'] )->name('appoinment_report_filter_appointment');
+
 Route::get( '/appointment/show/{id}', [ AppointmentController::class, 'show'] )->name('appointment_show');
 Route::get( '/appointment/edit/{id}', [ AppointmentController::class, 'edit'] )->name('appointment_edit');
 Route::get( '/appointment/delete/{id}', [ AppointmentController::class, 'destroy'] )->name('appointment_delete');
-
 // ********************    APPOINTMENT MODULE End ********************************
 
 
@@ -139,6 +141,27 @@ Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] 
 Route::get( '/patient/show/{id}', [ PatientController::class, 'show'] )->name('patient_show');
 Route::get( '/patient/edit/{id}', [ PatientController::class, 'edit'] )->name('patient_edit');
 Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
+Route::get( '/patient/service/history/{id}', [ PatientController::class, 'service_history'] )->name('patient_service_history');
 
 
 // ********************    PATIENT MODULE END ********************************
+
+
+// ********************    Report MODULE START ********************************
+Route::get( '/report/payment', [ ReportController::class, 'payment_report'] )->name('payment_report_index');
+Route::get( '/report/payment/filter', [ ReportController::class, 'payment_report_filter'] )->name('payment_report_filter');
+
+
+Route::get( '/report/patient', [ ReportController::class, 'patient_report'] )->name('patient_report_index');
+Route::get( '/report/patient/filter', [ ReportController::class, 'patient_report_filter' ] )->name('patient_report_filter');
+
+
+Route::get( '/report/appointment', [ ReportController::class, 'appoinment_report'] )->name('appoinment_report_index');
+Route::get( '/report/appointment/filter', [ ReportController::class, 'appoinment_report_filter'] )->name('appoinment_report_filter');
+
+
+Route::get( '/report/graphical', [ ReportController::class, 'graphical_report_all'] )->name('graphical_report_all');
+
+// ********************    Report MODULE END ********************************
+
+

@@ -15,8 +15,6 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Patient List</h1>
-
 	<div class="row">
 		<div class="col-md-12">
 			{{--  Doctor List  Start   --}}
@@ -24,6 +22,32 @@
 			<div class="card shadow mb-4">
 
 				<div class="card-body">
+								<!-- Page Heading -->
+			<h1 class="h3 mb-4 text-gray-800"> Patient Report</h1>
+			<form method="GET" action="{{ route('patient_report_filter') }}">
+			<!-- @csrf -->
+				<div class="row">
+					<div class="col">
+						<input type="date" name="start_date" class="form-control" value="<?php if( !empty($_GET['start_date'])) { echo $_GET['start_date']; } ?>"  placeholder="From" >
+					</div>
+					<div class="col">
+						<input type="date" name="end_date" class="form-control" value="<?php if( !empty($_GET['end_date'])) { echo $_GET['end_date']; } ?>" placeholder="To">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<input  type="submit" value="Filter">
+					</div>
+				</div>
+			</form>
+
+			<br>
+			<h3>
+				Total Patient Number  :
+				<strong> {{ $data['total_patient'] }} </strong>
+			</h3>
+
+
 					<div class="table-responsive">
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
@@ -49,7 +73,7 @@
 								@foreach( $data['patients'] as $patient )
 									<tr>
 										<td>{{ $patient->id }}</td>
-										<td><a href='{{ route("patient_service_history", $patient->id ) }}'> {{ $patient->name }} </a></td>
+										<td><a href='{{ route("patient_service_history", $patient->id ) }}'>{{ $patient->name }} </a></td>
 										<td>{{ $patient->phone }}</td>
 										<td>{{ date('d-m-Y', strtotime( $patient->created_at  )) }}</td>
 										<td>{{ $patient->age }}</td>

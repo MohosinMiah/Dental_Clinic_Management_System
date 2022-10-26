@@ -22,9 +22,19 @@
 			$table->string('email')->nullable();
 			$table->string('blood_group')->nullable();
 			$table->string('address')->nullable();
-			$table->string('heart_disease')->nullable();
-			$table->string('high_blood')->nullable();
-			$table->string('diabetic')->nullable();
+
+			$table->string('db')->nullable();
+			$table->string('htn')->nullable();
+			$table->string('cardiac_disease')->nullable();
+			$table->string('renal_disease')->nullable();
+			$table->string('hepatitis')->nullable();
+			$table->string('asthma')->nullable();
+			$table->string('rheumatic_fever')->nullable();
+			$table->string('bleeding_disorder')->nullable();
+			$table->string('drug_allergy')->nullable();
+			$table->string('pregnant_women')->nullable();
+			$table->string('lactating_mother')->nullable();
+
 			$table->string('note')->nullable();
 
 			$table->softDeletes();

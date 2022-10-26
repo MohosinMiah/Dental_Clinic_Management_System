@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDoctorRequest extends FormRequest
+class UpdateReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreDoctorRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-			'phone' => 'required|unique:doctors|max:18',
-			'email' => 'required|unique:doctors|max:30',
+            //
         ];
     }
 }

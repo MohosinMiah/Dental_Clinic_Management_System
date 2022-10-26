@@ -33,7 +33,8 @@ $(document).ready(function() {
 					$('#dueAmmount').val( due_total );
 					$('#csc').removeClass('text-danger');
 					$(".invlid_patient_id").text(' Patient ID is Valid').addClass("text-success");
-					
+					var previous_due = parseInt( $("#previous_due_set").val() );
+					 $("#grandTotalWithDue").val(previous_due)	
 				} else {
 
 					$('#patient_name').val('');

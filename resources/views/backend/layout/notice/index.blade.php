@@ -54,7 +54,7 @@
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('notice_show', $notice->id) }}"><i class="fa fa-eye"></i></a>
 											<a class="btn btn-xs btn-success" href="{{ route('notice_edit', $notice->id) }}"><i class="fa fa-edit"></i></a>
-											<a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('notice_delete', $notice->id) }}"><i class="fa fa-trash"></i></a>
+											<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('notice_delete', $notice->id) }}"><i class="fa fa-trash"></i></a> -->
 
 										</td>
 									</tr

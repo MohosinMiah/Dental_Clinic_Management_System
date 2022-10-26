@@ -7,11 +7,26 @@
 	<!-- Page Heading -->
 	<h1 class="h3 mb-4 text-gray-800">Register New Patient</h1>
 
+
 	<div class="row">
 		@if(session('status'))
 			<div class="alert alert-success">
 				{{ session('status') }}
 			</div>
+		@endif
+
+		@if (Session::has('message'))
+			<h4 class="text-info">{!! session('message') !!}</h4>
+		@endif
+
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
 		@endif
 		<div class="col-md-12">
 			
@@ -72,44 +87,131 @@
 					<input type="text" name="address" id="address" class="form-control"   value="{{ $patient->address }}" >
 				</div>
 
+
 				<fieldset>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<h2>Please select Illness as following</h2>
 						</div>
-						<div class="form-group col-md-4">
-							<label class="control-label"> Heart Diseases </label>
+						<div class="form-group col-md-3">
+							<label class="control-label"> DB </label>
 							<div class="">
-								<select class="form-control" name="heart_disease">
-									<option value="Yes" <?php if( $patient->heart_disease == 'Yes' ) { echo "selected"; } ?> >Yes</option>
-									<option value="No" <?php if( $patient->heart_disease == 'No' ) { echo "selected"; } ?> >No</option>
+								<select class="form-control" name="db">
+									<option value="No" <?php if( $patient->db == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->db == "Yes" ) { echo "selected"; } ?>>Yes</option>
 								</select>
 							</div>
 						</div>
-						<div class="form-group col-md-4">
-							<label class=" control-label"> HighBlood Pressure</label>
+						<div class="form-group col-md-3">
+							<label class=" control-label"> HTN</label>
 							<div class="">
-								<select class="form-control" name="high_blood">
-									<option value="Yes" <?php if( $patient->high_blood == 'Yes' ) { echo "selected"; } ?>>Yes</option>
-									<option value="No" <?php if( $patient->high_blood == 'No' ) { echo "selected"; } ?>>No</option>
+								<select class="form-control" name="htn">
+									<option value="No" <?php if( $patient->htn == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->htn == "Yes" ) { echo "selected"; } ?>>Yes</option>
+
 								</select>
 							</div>
 						</div>
 		
-						<div class="form-group col-md-4">
-							<label class=" control-label"> Diabetic</label>
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Cardiac Diseases</label>
 							<div>
-								<select class="form-control" name="diabetic">
-									<option value="Yes" <?php if( $patient->diabetic == 'Yes' ) { echo "selected"; } ?> >Yes</option>
-									<option value="No" <?php if( $patient->diabetic == 'No' ) { echo "selected"; } ?>>No</option>
+								<select class="form-control" name="cardiac_disease">
+									<option value="No" <?php if( $patient->cardiac_disease == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->cardiac_disease == "Yes" ) { echo "selected"; } ?>>Yes</option>
 								</select>
 							</div>
 						</div>
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Renal Disease</label>
+							<div>
+								<select class="form-control" name="renal_disease">
+									<option value="No" <?php if( $patient->renal_disease == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes"  <?php if( $patient->renal_disease == "Yes" ) { echo "selected"; } ?> >Yes</option>
+								</select>
+							</div>
+						</div>
+
 						
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Hepatitis</label>
+							<div>
+								<select class="form-control" name="hepatitis">
+									<option value="No" <?php if( $patient->hepatitis == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->hepatitis == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Asthma</label>
+							<div>
+								<select class="form-control" name="asthma">
+									<option value="No" <?php if( $patient->asthma == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->asthma == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Rheumatic fever</label>
+							<div>
+								<select class="form-control" name="rheumatic_fever">
+									<option value="No" <?php if( $patient->rheumatic_fever == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->rheumatic_fever == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Bleeding disorder</label>
+							<div>
+								<select class="form-control" name="bleeding_disorder">
+									<option value="No" <?php if( $patient->bleeding_disorder == "No" ) { echo "selected"; } ?> >No</option>
+									<option value="Yes" <?php if( $patient->bleeding_disorder == "Yes" ) { echo "selected"; } ?> >Yes</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Drug allergy</label>
+							<div>
+								<select class="form-control" name="drug_allergy">
+									<option value="No" <?php if( $patient->drug_allergy == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->drug_allergy == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Pregnant ( women )</label>
+							<div>
+								<select class="form-control" name="pregnant_women">
+									<option value="No" <?php if( $patient->pregnant_women == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->pregnant_women == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group col-md-3">
+							<label class=" control-label"> Lactating ( mother )</label>
+							<div>
+								<select class="form-control" name="lactating_mother">
+									<option value="No" <?php if( $patient->lactating_mother == "No" ) { echo "selected"; } ?>>No</option>
+									<option value="Yes" <?php if( $patient->lactating_mother == "Yes" ) { echo "selected"; } ?>>Yes</option>
+								</select>
+							</div>
+						</div>
+
 						<div class="form-group col-md-12">
 							<label class="control-label" for="note"> Note </label>
 							<div>
-								<textarea class="form-control" rows="2" name="note" id="note">{{ $patient->note }}</textarea>
+								<textarea class="form-control" rows="2" name="note" id="note">{{ $patient->note }} </textarea>
 							</div>
 						</div>
 					</div> 

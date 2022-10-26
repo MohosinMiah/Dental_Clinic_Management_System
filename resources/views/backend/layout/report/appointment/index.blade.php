@@ -28,7 +28,7 @@
 						
 							<div class="col-md-12">
 							<h1 class="h3 mb-4 text-gray-800"> Appointment Report</h1>
-				<form method="GET" action="{{ route('appoinment_report_filter_appointment') }}">
+				<form method="GET" action="{{ route('appoinment_report_filter') }}">
 				<!-- @csrf -->
 					<div class="row">
 						<div class="col">
@@ -45,7 +45,6 @@
 					</div>
 				</form>
 			<br>
-			<?php if( !empty($_GET['start_date']) ) ?>
 			<h3>
 				Total Appointment Number  :
 				<strong> {{ $data['total_appointment'] }} </strong>

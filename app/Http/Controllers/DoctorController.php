@@ -92,20 +92,20 @@ class DoctorController extends Controller
 			}
 			$save =  $doctor->save();
 			// After Doctor Register Successfully, We will create doctor roll in authentications table
-			if( $save )
-			{
-				$authentication = new Authentication;
-				$authentication->name = $request->name;
-				$authentication->phone = $request->phone;
-				$authentication->email = $request->email;
-				$authentication->password = md5( $request->password );
-				$authentication->role = 3;
-				if( $request->hasfile('profile_pic') )
-			{
-				$authentication->profile_pic = $imageName;
-			}
-				$authentication->save();
-			}
+			// if( $save )
+			// {
+			// 	$authentication = new Authentication;
+			// 	$authentication->name = $request->name;
+			// 	$authentication->phone = $request->phone;
+			// 	$authentication->email = $request->email;
+			// 	$authentication->password = md5( $request->password );
+			// 	$authentication->role = 3;
+			// 	if( $request->hasfile('profile_pic') )
+			// {
+			// 	$authentication->profile_pic = $imageName;
+			// }
+			// 	$authentication->save();
+			// }
 	
 			return redirect(route('doctor_registration_form'))->with('status', 'Form Data Has Been Inserted');
 		

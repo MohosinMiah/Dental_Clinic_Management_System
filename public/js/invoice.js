@@ -68,6 +68,7 @@ function quantity_calculate(t) {
 
 function calculateSum() {
     'use strict';
+    var previous_due = parseInt( $("#previous_due_set").val() ); 
     var t = 0,
         a = 0,
         e = 0,
@@ -76,7 +77,7 @@ function calculateSum() {
         isNaN(this.value) || 0 == this.value.length || (a += parseFloat(this.value))
     }), $("#total_tax_ammount").val(a.toFixed(0)), $(".total_price").each(function() {
         isNaN(this.value) || 0 == this.value.length || (t += parseFloat(this.value))
-    }), o = a.toFixed(0), e = t.toFixed(0), $("#grandTotal").val(+o + +e)
+    }), o = a.toFixed(0), e = t.toFixed(0), $("#grandTotal").val(+o + +e) , $("#grandTotalWithDue").val(+o + +e + +previous_due)
 }
 
 function invoice_paidamount() {

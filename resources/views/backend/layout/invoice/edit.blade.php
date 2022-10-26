@@ -25,10 +25,10 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group row">
-								<label for="patient_id" class="col-sm-5">Patient ID <i class="text-danger">*</i></label>
+							<label for="patient_id" class="col-sm-5">Patient ID | Phone <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
 									<input  autocomplete="off"  id="patient_id" class="form-control" type="number" value="{{ $data['invoice']->patient_id }}">
-									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
+									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID Or Phone</span>
 								</div>
 							</div>
 
@@ -36,7 +36,6 @@
 								<label for="patient_phone" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
 									<input required="" autocomplete="off" name="patient_phone" id="patient_phone" class="form-control" value="{{ $data['invoice']->patient_phone }}" type="number">
-									<span id="csc" class="text-center invlid_patient_id">Phone Number</span>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -48,7 +47,7 @@
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
+									<input  name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id_set" onchange="patientID();" value="{{ $data['invoice']->patient_id }}" >
@@ -70,7 +69,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Date <i class="text-danger">*</i></label>
 								<div class="col-sm-8">
-									   <input class="form-control" size="50" name="payment_date" id="payment_date" required="" value="2022-06-06" type="text">
+									   <input class="form-control" size="50" name="payment_date" id="payment_date" required="" value="2022-06-06" type="date" />
 								</div>
 							</div>
 
@@ -78,14 +77,9 @@
 								<label for="date" class="col-sm-4 col-form-label">Doctor<i class="text-danger">*</i></label>
 								<div class="col-sm-8">
 									<select name="doctor_id" class=" form-control" required="">
-										<option value="">Doctor</option>
-										<option value="7">Adword Lewis</option>
-										<option value="8">Jenifer Nelson</option>
-										<option value="9">Robinson Walker</option>
-										<option value="10">Alice  Jessica</option>
-										<option value="11">Clarke Jackson</option>
-										<option value="12">Eliza Freya </option>
-										<option value="17">Nicolas Juliea </option>
+									@foreach( $data['doctors'] as $doctor )
+										<option value="{{ $doctor->id }}" <?php if(  $doctor->id == $data['invoice']->doctor_id ) { echo "selected"; } ?>> {{ $doctor->name }} </option>
+									@endforeach									
 									</select>
 								</div>
 							</div>
@@ -235,10 +229,10 @@
 
 									<td colspan="3"><b>Due:</b>  
 										<select name="isClose" id="isClose">
-											<option value="1">Continue</option>
-											<option value="0">Close</option>
+											<option value="1" <?php if( $data['invoice']->isClose == 1 ) { echo "selected"; } ?> >Continue</option>
+											<option value="0" <?php if( $data['invoice']->isClose == 0 ) { echo "selected"; } ?>>Close</option>
 										</select>
-										<input type="hidden" name="previous_due" id="previous_due_set" value="0"> 
+										<input type="hidden" name="previous_due" id="previous_due_set" value="{{ $data['invoice']->previous_due }}"> 
 										<bold>Previous Due Was : <span id="previous_due" > {{ $data['invoice']->previous_due }} </span> <bold>
 									</td>
 
@@ -253,29 +247,32 @@
 
 					<div class="row">
 						<div class="col-md-8">
-
-							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
+						<?php 
+							if( $data['invoice']->isClose == 0 )
+							{
+							?>
+							<div class="form-group row" id="decreaseAmountDisplay">
 								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
 								<div class="col-sm-8">
-									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+									<input type="number" min="0" max="20000" value="{{ $data['invoice']->decrease }}" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
 								</div>
 							</div>
+							<?php } ?>
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Treatment Notes</label>
 								<div class="col-sm-8">
-									<textarea name="payment_note" class="form-control" placeholder="Treatment Notes">
-										{{ $data['invoice']->payment_note }}
-									</textarea>
+									<textarea name="payment_note" class="form-control" placeholder="Treatment Notes">{{ $data['invoice']->payment_note }}</textarea>
 								</div>
 							</div>
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Select payment method </label>
 								<div class="col-sm-8">
-									<select name="payment_method" class=" form-control">
+									<select name="payment_method" class=" form-control" required>
 										<option value="">-Select-</option>
-										<option value="master_card">Master Card</option>
+										<option value="master_card" <?php if( $data['invoice']->payment_method == "Cash" ) { echo "selected"; } ?>>Cash</option>
+										<option value="master_card" <?php if( $data['invoice']->payment_method == "Others" ) { echo "selected"; } ?>>Others</option>
 									</select>
 								</div>
 							</div>

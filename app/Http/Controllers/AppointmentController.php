@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Routing\Redirector;
+use Carbon\Carbon;
 
 
 class AppointmentController extends Controller
@@ -31,33 +32,51 @@ class AppointmentController extends Controller
 	public function index(Request $request)
 	{
 
-		// Filter By Date  Appointment::orderBy('id','DESC')->get();
-		if( !empty( $_GET['date'] ) )
-		{
-			$date = $_GET['date'];
-			$appointments = DB::table('appointments')
-			->select('doctors.name as doctor_name ', 'appointments.*')
-			->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-			->where( 'appointments.date', $date )
-			->orderBy('appointments.id','DESC')
-			->get();
-		}
-		else
-		{
-			$appointments = DB::table('appointments')
-			->select('doctors.name as doctor_name ', 'appointments.*')
-			->leftJoin('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-			->orderBy('appointments.id','DESC')
-			->get();
-		}
-
+		$appointments = Appointment::orderBy( 'id','DESC' )->get();
 		$data = [
-			'appointments' => $appointments
+			'appointments'          => $appointments,
+			'total_appointment'     => Appointment::count( 'id' )
 		];
 
 		return view('backend.layout.appointment.index', compact('data'));
 
 	}
+
+	public function appoinment_report_filter_appointment()
+{
+	$appointments = DB::table('appointments')->select( '*' );
+	if( !empty( $_GET[ 'start_date' ] ) )
+	{
+		$startDate  = $_GET[ 'start_date' ];
+	}
+
+	if( !empty( $_GET[ 'end_date' ] ) )
+	{
+		$endDate    = $_GET[ 'end_date' ];
+	}
+
+	if( !empty( $startDate ) )
+	{	
+		$appointments->where( 'date', '>=', $startDate );
+	}
+
+	if( !empty( $endDate ) )
+	{
+		$appointments->where('date', '<=', $endDate);
+
+	}
+	else
+	{
+		$appointments->where( 'date', '<=', date( 'Y-m-d', strtotime( Carbon::now() ) ) );
+	}
+
+	$data = [
+		'appointments'          => $appointments->get(),
+		'total_appointment' => $appointments->count( 'id' )
+	];
+	return view('backend.layout.appointment.index', compact('data'));
+}
+
 
 	/**
 	 * Show the form for creating a new resource.

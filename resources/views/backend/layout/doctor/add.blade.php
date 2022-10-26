@@ -33,7 +33,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="name">Doctor Name <span class="required_field"> (*) </span> </label>
-					<input type="text" name="name" id="name"  required class="form-control"  placeholder="Doctor Name">
+					<input type="text" name="name" id="name"  required class="form-control"  placeholder="Doctor Name" >
 				</div>
 
 				<div class="form-group">
@@ -41,11 +41,7 @@
 					<input type="text" name="phone" id="phone"  required class="form-control"  placeholder="Doctor Phone">
 				</div>
 
-				<div class="form-group">
-					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="password" id="password"  required class="form-control"  placeholder="Doctor Password">
-				</div>
-
+				
 				<div class="form-group">
 					<label for="email"> Doctor Email  </label>
 					<input type="email" name="email" id="email"  class="form-control"  placeholder="Doctor Email">
@@ -81,8 +77,8 @@
 
 
 				<div class="form-group">
-					<label for="date_of_birth"> Doctor Date Of Birth </label>
-					<input type="date" format="d/m/Y" name="date_of_birth" id="date_of_birth" class="form-control"   placeholder="Doctor DateOfBirth">
+					<label for="date_of_birth"> Doctor Date Of Birth <span class="required_field"> (*) </span> </label>
+					<input type="date" format="d/m/Y" name="date_of_birth" id="date_of_birth" class="form-control"   placeholder="Doctor DateOfBirth" required>
 				</div>
 
 
@@ -100,9 +96,9 @@
 
 
 				<div class="form-group">
-					<label class=" control-label"> Blood Group</label>
+					<label class=" control-label"> Blood Group <span class="required_field"> (*) </span></label>
 					<div>
-						<select class="form-control" name="blood_group" id="blood_group">
+						<select class="form-control" name="blood_group" id="blood_group" required>
 							<option value="A+" selected>A+</option>
 							<option value="A-">A-</option>
 							<option value="B+">B+</option>
@@ -117,8 +113,8 @@
 
 
 				<div class="form-group">
-					<label for="address"> Doctor Address  </label>
-					<input type="text" name="address" id="address" class="form-control"   placeholder="Doctor Address">
+					<label for="address"> Doctor Address  <span class="required_field"> (*) </span></label>
+					<input type="text" name="address" id="address" class="form-control"   placeholder="Doctor Address" required>
 				</div>
 
 

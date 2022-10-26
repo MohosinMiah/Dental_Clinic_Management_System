@@ -23,22 +23,26 @@
                         <div class="row">
                                 
                             <div class="col-sm-8">
-                                <img src="https://newclinic365.bdtask.com/new/./assets/uploads/images/2docto1.png" class="img img-responsive" alt="">
+                                <img src="/images/fcdz.jpg" class="img img-responsive" alt="Family Care Dental Zone" height="100" width="100">
                                     <br>
-                                    <span class="label label-success-outline m-r-15 p-10">Billing From</span>
+                                    <span class="label label-success-outline m-r-15">Billing From</span>
                                     <address>
                                         <strong>Address</strong>
-                                           {{ $data['invoice']->patient_address }}<br>
-                                        <abbr>Phone Number:</abbr> {{ $data['invoice']->patient_phone }}<br>
+                                        Uttara, Sector 10, Road 12, House 24
+                                        <br>
+                                        <abbr>Phone Number:</abbr> 01682 683811<br>
                                         <abbr>Email Address:</abbr> 
-                                        {{ $data['invoice']->patient_phone }}<br>
+                                        familicaredental@gmail.com
+                                        <br>
                                     </address>
                                 </div>
                                 
                                 <div class="col-sm-4 text-left">                                   
                                     <div>Invoice No: {{ $data['invoice']->id }}</div>
                                     <div class="m-b-15">{{ $data['invoice']->payment_date }}</div>
-
+                                    <strong>Doctor : </strong>
+                                        {{ $data['doctor']->name }}
+                                        <br>
                                     <span class="label label-success-outline m-r-15">Billing To</span>
 
 									<address>  
@@ -49,7 +53,8 @@
 										</p>
 										<abbr>Phone Number: </abbr>
 										{{ $data['invoice']->patient_phone }}
-											<br>
+                                        <br>
+                                       
 										<abbr>Email Address:</abbr> 
 										{{ $data['invoice']->patient_phone }}
 									</address>
@@ -70,10 +75,11 @@
                                     </thead>
 
                                     <tbody>
-
+                                        <?php $i = 0; ?>
 										@foreach ($data['invoiceDetails'] as $invoiceDetail )
+                                        <?php $i++; ?>
                                         <tr>
-                                            <td>2</td>
+                                            <td>{{ $i }}</td>
                                             <td><div><strong>{{ $invoiceDetail->service_name }}</strong></div></td>
                                             <td>{{ $invoiceDetail->quantity }}</td>
                                             <td>{{ $invoiceDetail->rate }}</td>
@@ -102,20 +108,45 @@
                                                     <td>{{ $data['invoice']->tax_total }}</td> </td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="grand_total">Grand Total :</th>
-                                                    <td class="grand_total">{{ $data['invoice']->grand_total }}</td>
+                                                    <th>Previous Due : </th>
+                                                    <td>{{ $data['invoice']->previous_due }}</td> </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th class="grand_total">Discount Amount :</th>
+                                                    <td class="grand_total">
+                                                        {{ $data['invoice']->decrease }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                    <abbr title="Grand Total = ( Previous Due + Current Services Total Amount ) - Discount Amount ">Grand Total :</abbr>
+                                                    </th>
+                                                    <td>
+                                                        {{ ( $data['invoice']->grand_total + $data['invoice']->previous_due ) - $data['invoice']->decrease }}
+                                                        
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Paid Ammount: </th>
                                                     <td>{{ $data['invoice']->paid_amount }}</td>
-                                                </tr>                
+                                                </tr> 
+
                                                 <tr>
                                                     <th>Due : </th>
                                                     <td>{{ $data['invoice']->due_total }}</td>
                                                 </tr>
+
+                                                <tr>
+                                                    <th>Status : </th>
+                                                    <td>
+                                                        <p style="color:red;font-weight:bold">{{ $data['invoice']->isClose == 1 ? "Continue" : "Close" }}</p>
+                                                    </td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
-                                        <div>Authorised By </div>
+                                        <div>Authorised By : fcdzbd.com</div>
                                     </div>
                                 </div>
                             </div>

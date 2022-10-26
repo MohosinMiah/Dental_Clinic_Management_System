@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Invoice;
 // use App\Http\Requests\StoreInvoiceRequest;
 // use App\Http\Requests\UpdateInvoiceRequest;
@@ -26,8 +27,8 @@ class InvoiceController extends Controller
 	public function get_patient_list_based_patient_id( $id )
 	{
 
-		$patient =  DB::table('patients')->where( 'id', $id )->first();
-		$invoice = DB::table('invoices')->where( 'patient_id', $id )->orderBy( 'id', 'DESC' )->first();
+		$patient =  DB::table('patients')->where( 'id', $id )->orWhere( 'phone', $id )->first();
+		$invoice = DB::table('invoices')->where( 'patient_id', $patient->id )->orderBy( 'id', 'DESC' )->first();
 
 		$data = [
 			'patient' => $patient,
@@ -70,7 +71,12 @@ class InvoiceController extends Controller
 	 */
 	public function create()
 	{
-		return view('backend.layout.invoice.add');
+		
+		$doctors = Doctor::orderBy('id','ASC')->get();
+		$data = [
+			'doctors' => $doctors
+		];
+		return view( 'backend.layout.invoice.add' , compact('data') );
 	}
 
 	/**
@@ -105,7 +111,7 @@ class InvoiceController extends Controller
 		$invoice->payment_date = $request->payment_date;
 		$invoice->total_payment = 111;
 		$invoice->tax_total = $request->total_tax;
-		$invoice->grand_total = $request->grand_total_price;
+		$invoice->grand_total = $request->grandTotalWithDue;
 		$invoice->paid_amount = $request->paid_amount;
 		$invoice->previous_due = $request->previous_due;
 
@@ -281,6 +287,8 @@ class InvoiceController extends Controller
 		
 		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
 
+		$doctor = DB::table( 'doctors' )->where( 'id', $invoice->doctor_id )->first();
+
 		// echo '<pre>';
 
 		// var_dump( $invoiceDetails );
@@ -290,6 +298,7 @@ class InvoiceController extends Controller
 		$data = [
 			'invoice' => $invoice,
 			'invoiceDetails' => $invoiceDetails,
+			'doctor' => $doctor
 		];
 
 		return view('backend.layout.invoice.details', compact('data') );
@@ -301,6 +310,7 @@ class InvoiceController extends Controller
 		
 		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
 
+		$doctors = Doctor::all();
 		// echo '<pre>';
 
 		// var_dump( $invoiceDetails );
@@ -310,6 +320,7 @@ class InvoiceController extends Controller
 		$data = [
 			'invoice' => $invoice,
 			'invoiceDetails' => $invoiceDetails,
+			'doctors'  => $doctors
 		];
 
 		return view('backend.layout.invoice.edit', compact('data') );

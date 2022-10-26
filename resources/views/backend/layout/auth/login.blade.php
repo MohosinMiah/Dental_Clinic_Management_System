@@ -1,4 +1,4 @@
-	@include('backend.layout.inc.header')
+	@include('backend.layout.inc.header_authentication')
 	<body class="bg-gradient-primary">
 
 	<div class="container">

@@ -1,5 +1,50 @@
 
-var productList = [{"label":"Doctor Visit(DV)","value":"1"},{"label":"X-RAY(digital)","value":"2"},{"label":"CT-Scan(CS)","value":"5"},{"label":"Blood Test (BT)","value":"6"},{"label":"Delivery (DV)","value":"7"},{"label":"Covic-19 test(C9)","value":"8"},{"label":"Regular Check-up(RC)","value":"9"},{"label":"Physio therapy  (PT)","value":"10"},{"label":"Baby Vaccine (BV)","value":"11"},{"label":"Dialysis (DL)","value":"12"}] ; 
+var productList = [
+	{
+		"label":"Fillings",
+		"value":"4"
+	},
+	{
+		"label":"Root Canals",
+		"value":"4"
+	},
+	{
+		"label":"Root Canals Normal",
+		"value":"4"
+	},
+	{
+		"label":"Root Canals Premium",
+		"value":"4"
+	},
+	{
+		"label":"Implants ",
+		"value":"5"
+	},
+	{
+		"label":"Bridges",
+		"value":"4"
+	},
+	{
+		"label":"Orthodontics",
+		"value":"4"
+	},
+	{
+		"label":"Complete Exams",
+		"value":"4"
+	},
+	{
+		"label":"X-rays",
+		"value":"4"
+	},
+	{
+		"label":"Dental Cleanings",
+		"value":"4"
+	},
+	{
+		"label":"Continue Previous Srvice",
+		"value":"10"
+	}
+] ; 
 
 
 APchange = function( event, ui )

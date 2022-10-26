@@ -25,28 +25,28 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group row">
-								<label for="patient_id" class="col-sm-5">Patient ID <i class="text-danger">*</i></label>
+								<label for="patient_id" class="col-sm-5">Patient ID | Phone <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input  autocomplete="off"  id="patient_id" class="form-control" type="number">
-									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID</span>
+									<input  autocomplete="off"  id="patient_id" class="form-control" type="number" required>
+									<span id="csc" class="text-center invlid_patient_id">Search With Patient ID Or Phone</span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="patient_phone" class="col-sm-5">Phone Number <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required  name="patient_phone" id="patient_phone" class="form-control" type="text">
+									<input required  name="patient_phone" id="patient_phone" class="form-control" type="text" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="customer_name" class="col-sm-5">Patient Name <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="patient_name" id="patient_name" class="form-control" type="text">
+									<input required="" name="patient_name" id="patient_name" class="form-control" type="text" required>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="patient_address" class="col-sm-5">Address <i class="text-danger">*</i></label>
+								<label  class="col-sm-5">Address <i class="text-danger">*</i></label>
 								<div class="col-sm-7">
-									<input required="" name="patient_address" id="patient_address"  class="form-control" type="text">
+									<input  name="patient_address" id="patient_address"  class="form-control" type="text" >
 								</div>
 							</div>
 							<input type="hidden" name="patient_id" id="patient_id_set" onchange="patientID();">
@@ -57,22 +57,17 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Date <i class="text-danger">*</i></label>
 								<div class="col-sm-8">
-									   <input class="form-control" size="50" name="payment_date" id="payment_date" required="" value="2022-06-06" type="text">
+									   <input type="date" class="form-control"  name="payment_date" id="payment_date" value="<?php echo  date('Y-m-d'); ?>"  placeholder="From"  required/>
 								</div>
 							</div>
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Doctor<i class="text-danger">*</i></label>
 								<div class="col-sm-8">
-									<select name="doctor_id" class=" form-control" required="">
-										<option value="">Doctor</option>
-										<option value="7">Adword Lewis</option>
-										<option value="8">Jenifer Nelson</option>
-										<option value="9">Robinson Walker</option>
-										<option value="10">Alice  Jessica</option>
-										<option value="11">Clarke Jackson</option>
-										<option value="12">Eliza Freya </option>
-										<option value="17">Nicolas Juliea </option>
+									<select name="doctor_id" class=" form-control" required>
+									@foreach( $data['doctors'] as $doctor )
+										<option value="{{ $doctor->id }}"> {{ $doctor->name }} </option>
+									@endforeach	
 									</select>
 								</div>
 							</div>
@@ -196,12 +191,17 @@
 								</tr>
 
 								<tr>
-									<td colspan="4"><b>Grand Total:</b></td>
+									<td colspan="4"><b> Total:</b></td>
 									<td class="text-right">
 										<input id="grandTotal" tabindex="-1" class="form-control text-right" name="grand_total_price" value="0" readonly="readonly" type="text">
 									</td>
 								</tr>
-
+								<tr>
+									<td colspan="4"><b>Grand Total:</b></td>
+									<td class="text-right">
+										<input id="grandTotalWithDue" tabindex="-1" class="form-control text-right" name="grandTotalWithDue" value="0" readonly="readonly" type="text">
+									</td>
+								</tr>
 								<tr>
 									
 									<td colspan="4"><b>Paid Ammount:</b></td>
@@ -251,9 +251,10 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Select payment method </label>
 								<div class="col-sm-8">
-									<select name="payment_method" class=" form-control">
+									<select name="payment_method" class=" form-control" required>
 										<option value="">-Select-</option>
-										<option value="master_card">Master Card</option>
+										<option value="Cash">Cash</option>
+										<option value="Others">Others</option>
 									</select>
 								</div>
 							</div>

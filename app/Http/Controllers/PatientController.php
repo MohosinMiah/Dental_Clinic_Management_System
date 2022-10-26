@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePatientRequest;
 use App\Models\Patient;
 
 // use App\Http\Requests\StorePatientRequest;
@@ -55,14 +56,9 @@ class PatientController extends Controller
      * @param  \App\Http\Requests\StorePatientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePatientRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'phone' => 'required|max:18',
-            'age' => 'required',
-            'gender' => 'required',
-          ]);
+
    
           $patient = new Patient;
    
@@ -130,7 +126,7 @@ class PatientController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required',
-            'phone' => 'required|max:18',
+            'phone' => 'required|unique:patients,phone,'.$patientID,
             'age' => 'required',
             'gender' => 'required',
           ]);
@@ -154,6 +150,21 @@ class PatientController extends Controller
 
 
           return redirect(route('patient_edit', $patientID ))->with('status', 'Form Data Has Been Updated');
+    }
+
+
+    function service_history( $patientID )
+    {
+		$patient    = DB::table( 'patients' )->where( 'id' , $patientID )->first();
+		$invoices   = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->get();
+		$total_paid = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->sum( 'paid_amount' );
+
+		$data = [
+            'patient'    => $patient,
+			'invoices'   => $invoices,
+			'total_paid' => $total_paid
+        ];
+		return view( 'backend.layout.patient.service_history' , compact( 'data' ) );
     }
 
     /**

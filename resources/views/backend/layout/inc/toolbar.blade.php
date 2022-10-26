@@ -29,7 +29,7 @@
 		<?php
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) )
 		{
-			echo '<h3>User Name : ' . session( 'name' ) . '</h3>';
+			echo '<h3>Hello : <strong>' . session( 'name' ) . '</strong></h3>';
 		}
 		?>
 	

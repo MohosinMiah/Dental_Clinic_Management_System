@@ -7,19 +7,45 @@
 
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
-
 @endsection
 
 @section('content')
-
 <div class="container-fluid">
-
-	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Invoice List</h1>
-
 	<div class="row">
 		<div class="col-md-12">
-			{{--  Doctor List  Start   --}}
+			<!-- Page Heading -->
+			<h1 class="h3 mb-4 text-gray-800"> Invoice Report</h1>
+			<form method="GET" action="{{ route('payment_report_filter') }}">
+			<!-- @csrf -->
+				<div class="row">
+					<div class="col">
+						<input type="date" name="start_date" class="form-control"  value="<?php if( !empty($_GET['start_date'])) { echo $_GET['start_date']; } ?>"   placeholder="From" >
+					</div>
+					<div class="col">
+						<input type="date" name="end_date" class="form-control"  value="<?php if( !empty($_GET['end_date'])) { echo $_GET['end_date']; } ?>"  placeholder="To">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<input  type="submit" value="Filter">
+					</div>
+				</div>
+			</form>
+			<br>
+			<h3>
+				Total Paid Amount :
+				<?php
+				echo $data['total_paid_amount'] . ' TK';
+				?>
+			</h3>
+
+		</div>
+	</div>
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			{{--  Invoice List  Start   --}}
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4">
 
@@ -35,7 +61,6 @@
 									<th>Due</th>
 									<th>IsClose</th>
 									<th>Date</th>
-									<th>Action</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -47,7 +72,6 @@
 									<th>Due</th>
 									<th>IsClose</th>
 									<th>Date</th>
-									<th>Action</th>
 								</tr>
 							</tfoot>
 							<tbody>
@@ -72,11 +96,6 @@
 										?>
 										</td>
 										<td>{{ date('d-m-Y', strtotime( $invoice->created_at  )) }}</td>
-										<td>
-											<a class="btn btn-xs btn-info" href="{{ route('single_view_invoice', $invoice->id) }}"><i class="fa fa-eye"></i></a>
-											<a class="btn btn-xs btn-success" href="{{ route('single_edit_invoice', $invoice->id) }}"><i class="fa fa-edit"></i></a>
-											<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('single_delete_invoice', $invoice->id) }}"><i class="fa fa-trash"></i></a> -->
-                                        </td>
 									</tr
 								@endforeach
 
@@ -86,7 +105,7 @@
 				</div>
 			</div>
 
-			{{--  Doctor List  Start   --}}
+			{{--  Invoice List  Start   --}}
 
 		</div>
 	</div>

@@ -28,10 +28,7 @@
 					<input type="text" name="phone" id="phone"  required class="form-control"  value="{{ $doctor->phone }}">
 				</div>
 
-				<div class="form-group">
-					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="password" id="password"  required class="form-control"  value="{{ $doctor->password }}">
-				</div>
+			
 
 				<div class="form-group">
 					<label for="email"> Doctor Email  </label>

@@ -113,6 +113,23 @@
 		</div>
 	</li>
 
+	<li class="nav-item">
+		<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true"
+			aria-controls="collapseSix">
+			<i class="fas fa-fw fa-cog"></i>
+			<span>Report</span>
+		</a>
+		<div id="collapseSix" class="collapse" aria-labelledby="headingSix"
+			data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+			<a class="collapse-item" href="{{ route('graphical_report_all') }}">Graphically Summary</a>
+			<a class="collapse-item" href="{{ route('payment_report_index') }}">Payment Summary</a>
+		<a class="collapse-item" href="{{ route('patient_report_index') }}">Patient Summary</a>
+			<a class="collapse-item" href="{{ route('appoinment_report_index') }}">Appointment Summary</a>
+			</div>
+		</div>
+	</li>
+
 	<!-- Sidebar Toggler (Sidebar) -->
 	<div class="text-center d-none d-md-inline">
 		<button class="rounded-circle border-0" id="sidebarToggle"></button>
