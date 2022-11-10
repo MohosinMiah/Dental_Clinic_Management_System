@@ -3,9 +3,10 @@
 @section('content')
 
 <div class="container-fluid">
-
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
+	<h3 class="text text-info">Add New Invoice</h3>
+	<a href="{{ route('invoice_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Invoice List</a>
+
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
 	<script src="{{ asset('js/custom.js')}}"></script>
@@ -44,7 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label  class="col-sm-5">Address <i class="text-danger">*</i></label>
+								<label  class="col-sm-5">Address </label>
 								<div class="col-sm-7">
 									<input  name="patient_address" id="patient_address"  class="form-control" type="text" >
 								</div>
@@ -252,8 +253,7 @@
 								<label for="date" class="col-sm-4 col-form-label">Select payment method </label>
 								<div class="col-sm-8">
 									<select name="payment_method" class=" form-control" required>
-										<option value="">-Select-</option>
-										<option value="Cash">Cash</option>
+										<option value="Cash" selected>Cash</option>
 										<option value="Others">Others</option>
 									</select>
 								</div>

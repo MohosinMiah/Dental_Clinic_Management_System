@@ -24,14 +24,14 @@
 			<p>Patient Reports</p>
 		</a>
 
-		<a href="{{ route( 'graphical_report_all') }}" class="service-card ">
+		<!-- <a href="{{ route( 'graphical_report_all') }}" class="service-card ">
 			<div class="overlay"></div>
 			<div class="circle">
 				<img src="/images/graphical.png" alt="Graphical Report">
 	
 			</div>
 			<p>Graphical Reports</p>
-		</a>
+		</a> -->
 
 
 		<a href="{{ route( 'appoinment_report_index' ) }}" class="service-card ">

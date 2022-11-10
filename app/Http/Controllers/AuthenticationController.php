@@ -65,6 +65,7 @@ class AuthenticationController extends Controller
 		if( !empty( $authenticatedUser )  )
 		{
 			// Store data in the session...
+			session( [ 'clinicID'    => $authenticatedUser->clinic_id     ] );
 			session( [ 'authorID'    => $authenticatedUser->id     ] );
 			session( [ 'name'        => $authenticatedUser->name   ] );
 			session( [ 'phone'       => $authenticatedUser->phone  ] );
@@ -147,9 +148,6 @@ class AuthenticationController extends Controller
 
 	public function otp_verify( Request $request )
 	{
-		
-
-
 		$phone = $request->phone;
 		$otp = $request->otp;
         
@@ -193,6 +191,7 @@ class AuthenticationController extends Controller
 	public function logout()
 	{
 		session( [ 'authorID'    => ''    ] );
+		session( [ 'clinicID'    => ''    ] );
 		session( [ 'name'        => ''    ] );
 		session( [ 'phone'       => ''    ] );
 		session( [ 'email'       => ''    ] );
@@ -226,7 +225,8 @@ class AuthenticationController extends Controller
 
 		$authorID = session( 'authorID' );
 
-		$authentication       = Authentication::find( $authorID );
+		$authentication       = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $authorID )->firstOrFail();
+
 		$authentication->name = $request->name;
 			
 		if( $request->hasfile('profile_pic') )
@@ -235,7 +235,6 @@ class AuthenticationController extends Controller
 			$imageName= time().'_'.$profileImage->getClientOriginalName();
 			$profileImage->move(public_path().'/images/', $imageName);  
 			$authentication->profile_pic =  $imageName;
-
 		}
 
 		$authentication->save();
@@ -304,11 +303,11 @@ class AuthenticationController extends Controller
 		$oldPassword = md5( $request->oldPassword );
 
 		// Check password  is write or not
-		$authenticatedUser = Authentication::where( 'id', $authorID )->first();
+		$authenticatedUser = Authentication::where( 'id', $authorID )->where( 'clinic_id' , session( 'clinicID' ) )->first();
 
 		if( $authenticatedUser->password === $oldPassword )
 		{
-			$authentication = Authentication::find( $authorID );
+			$authentication = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $authorID )->firstOrFail();
 			$authentication->password = $oldPassword;
 			$authentication->save();
 			return redirect()->back()->with('status',"Password Updated Successfully!");

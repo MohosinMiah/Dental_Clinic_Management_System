@@ -9,7 +9,8 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Routing\Redirector;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PatientController extends Controller
 {
@@ -31,13 +32,12 @@ class PatientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
-		$patients = Patient::all();
+    {
+		$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
         $data = [
             'patients' => $patients
         ];
 		return view( 'backend.layout.patient.index',compact('data'));
-
     }
 
 	/**
@@ -60,19 +60,28 @@ class PatientController extends Controller
     {
 
    
-          $patient = new Patient;
-   
-          $patient->name               = $request->name;
-          $patient->phone              = $request->phone;
-          $patient->age                = $request->age;
-          $patient->gender             = $request->gender;
-		  $patient->email              = $request->email;
-          $patient->blood_group        = $request->blood_group;
-          $patient->address            = $request->address;
-          $patient->heart_disease      = $request->heart_disease;
-          $patient->high_blood         = $request->high_blood;
-          $patient->diabetic           = $request->diabetic;
-          $patient->note               = $request->note;
+		$patient = new Patient;
+
+		$patient->clinic_id = session( 'clinicID' );
+		$patient->name               = $request->name;
+		$patient->phone              = $request->phone;
+		$patient->age                = $request->age;
+		$patient->gender             = $request->gender;
+		$patient->email              = $request->email;
+		$patient->blood_group        = $request->blood_group;
+		$patient->address            = $request->address;
+
+		$patient->db                  = $request->db;
+		$patient->htn                 = $request->htn;
+		$patient->cardiac_disease     = $request->cardiac_disease;
+		$patient->hepatitis           = $request->hepatitis;
+		$patient->asthma              = $request->asthma;
+		$patient->rheumatic_fever     = $request->rheumatic_fever;
+		$patient->bleeding_disorder   = $request->bleeding_disorder;
+		$patient->drug_allergy        = $request->drug_allergy;
+		$patient->pregnant_women      = $request->pregnant_women;
+		$patient->lactating_mother    = $request->lactating_mother;
+		$patient->note                = $request->note;
    
           $patient->save();
    
@@ -87,7 +96,7 @@ class PatientController extends Controller
      */
     public function show( $patientID )
     {
-		$patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
+		$patient = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
 
 		$data = [
             'patient' => $patient
@@ -105,7 +114,7 @@ class PatientController extends Controller
      */
     public function edit( $patientID )
     {
-        $patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
+        $patient = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
 
 		$data = [
             'patient' => $patient
@@ -124,40 +133,59 @@ class PatientController extends Controller
     public function update(Request $request, $patientID )
     {
         
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'phone' => 'required|unique:patients,phone,'.$patientID,
+          $validator =  Validator::make($request->all(), [
+            'phone'    => [
+              'required',
+              'max:11',
+              Rule::unique('patients')->ignore( $patientID ),
+            ],
+            'name'     => 'required',
             'age' => 'required',
             'gender' => 'required',
           ]);
-		  $patient = Patient::find( $patientID );
- 
-		   
-          $patient->name               = $request->name;
-          $patient->phone              = $request->phone;
-          $patient->age                = $request->age;
-          $patient->gender             = $request->gender;
-		  $patient->email              = $request->email;
-          $patient->blood_group        = $request->blood_group;
-          $patient->address            = $request->address;
-          $patient->heart_disease      = $request->heart_disease;
-          $patient->high_blood         = $request->high_blood;
-          $patient->diabetic           = $request->diabetic;
-          $patient->note               = $request->note;
-   
-          $patient->save();
-   
 
+		if( $validator->fails() )
+		{
+			return redirect(route('patient_edit', $patientID ))->with('status', 'Phone number alrady used and other errors.');
+		}
+		else
+		{
+			$patient = Patient::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $patientID )->firstOrFail();
+		
+			$patient->name               = $request->name;
+			$patient->phone              = $request->phone;
+			$patient->age                = $request->age;
+			$patient->gender             = $request->gender;
+			$patient->email              = $request->email;
+			$patient->blood_group        = $request->blood_group;
+			$patient->address            = $request->address;
 
+			$patient->db                  = $request->db;
+			$patient->htn                 = $request->htn;
+			$patient->cardiac_disease     = $request->cardiac_disease;
+			$patient->hepatitis           = $request->hepatitis;
+			$patient->asthma              = $request->asthma;
+			$patient->rheumatic_fever     = $request->rheumatic_fever;
+			$patient->bleeding_disorder   = $request->bleeding_disorder;
+			$patient->drug_allergy        = $request->drug_allergy;
+			$patient->pregnant_women      = $request->pregnant_women;
+			$patient->lactating_mother    = $request->lactating_mother;
+			$patient->note                = $request->note;
+
+			$patient->note               = $request->note;
+	
+			$patient->save();
+   
           return redirect(route('patient_edit', $patientID ))->with('status', 'Form Data Has Been Updated');
+		}
     }
 
 
     function service_history( $patientID )
     {
-		$patient    = DB::table( 'patients' )->where( 'id' , $patientID )->first();
-		$invoices   = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->get();
-		$total_paid = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->sum( 'paid_amount' );
+		$patient    = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
+		$invoices   = DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id' , $patientID )->get();
+		$total_paid = DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id' , $patientID )->sum( 'paid_amount' );
 
 		$data = [
             'patient'    => $patient,
@@ -175,13 +203,12 @@ class PatientController extends Controller
      */
     public function destroy( $patientID )
     {
-        $status = Patient::destroy( $patientID );
-		
+		$status = Patient::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->firstOrFail();
+		$status->destroy();
 		if( $status )
 		{
 			return redirect( route('patient_list') );
 		}
-	
 
     }
 }

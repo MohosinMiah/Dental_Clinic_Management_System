@@ -7,7 +7,10 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ClinicSettingController;
 use App\Http\Controllers\ReportController;
+use App\Models\ClinicSetting;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,7 +77,7 @@ Route::get( '/appointment/filter', [ AppointmentController::class, 'appoinment_r
 
 Route::get( '/appointment/show/{id}', [ AppointmentController::class, 'show'] )->name('appointment_show');
 Route::get( '/appointment/edit/{id}', [ AppointmentController::class, 'edit'] )->name('appointment_edit');
-Route::get( '/appointment/delete/{id}', [ AppointmentController::class, 'destroy'] )->name('appointment_delete');
+// Route::get( '/appointment/delete/{id}', [ AppointmentController::class, 'destroy'] )->name('appointment_delete');
 // ********************    APPOINTMENT MODULE End ********************************
 
 
@@ -88,7 +91,7 @@ Route::get( '/doctor/list', [ DoctorController::class, 'index'] )->name('doctor_
 Route::post( '/doctor/update/post/{id}', [ DoctorController::class, 'update'] )->name('doctor_update_save');
 Route::get( '/doctor/show/{id}', [ DoctorController::class, 'show'] )->name('doctor_show');
 Route::get( '/doctor/edit/{id}', [ DoctorController::class, 'edit'] )->name('doctor_edit');
-Route::get( '/doctor/delete/{id}', [ DoctorController::class, 'destroy'] )->name('doctor_delete');
+// Route::get( '/doctor/delete/{id}', [ DoctorController::class, 'destroy'] )->name('doctor_delete');
 
 // ********************    DOCTOR MODULE END ********************************
 
@@ -102,7 +105,7 @@ Route::get( '/notice/list', [ NoticeController::class, 'index'] )->name('notice_
 Route::post( '/notice/update/post/{id}', [ NoticeController::class, 'update'] )->name('notice_update_save');
 Route::get( '/notice/show/{id}', [ NoticeController::class, 'show'] )->name('notice_show');
 Route::get( '/notice/edit/{id}', [ NoticeController::class, 'edit'] )->name('notice_edit');
-Route::get( '/notice/delete/{id}', [ NoticeController::class, 'destroy'] )->name('notice_delete');
+// Route::get( '/notice/delete/{id}', [ NoticeController::class, 'destroy'] )->name('notice_delete');
 
 // ********************    NOTICE MODULE END ********************************
 
@@ -116,7 +119,7 @@ Route::get( '/invoice/list', [ InvoiceController::class, 'index'] )->name('invoi
 
 Route::get( '/invoice/invoice_view/{id}', [ InvoiceController::class, 'invoiceView'] )->name('single_view_invoice');
 Route::get( '/invoice/edit_invoice/{id}', [ InvoiceController::class, 'invoiceEdit'] )->name('single_edit_invoice');
-Route::get( '/invoice/invoice_delete/{id}', [ InvoiceController::class, 'destroy'] )->name('single_delete_invoice');
+// Route::get( '/invoice/invoice_delete/{id}', [ InvoiceController::class, 'destroy'] )->name('single_delete_invoice');
 
 
 
@@ -140,7 +143,7 @@ Route::get( '/patient/list', [ PatientController::class, 'index'] )->name('patie
 Route::post( '/patient/update/post/{id}', [ PatientController::class, 'update'] )->name('patient_update_save');
 Route::get( '/patient/show/{id}', [ PatientController::class, 'show'] )->name('patient_show');
 Route::get( '/patient/edit/{id}', [ PatientController::class, 'edit'] )->name('patient_edit');
-Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
+// Route::get( '/patient/delete/{id}', [ PatientController::class, 'destroy'] )->name('patient_delete');
 Route::get( '/patient/service/history/{id}', [ PatientController::class, 'service_history'] )->name('patient_service_history');
 
 
@@ -163,5 +166,21 @@ Route::get( '/report/appointment/filter', [ ReportController::class, 'appoinment
 Route::get( '/report/graphical', [ ReportController::class, 'graphical_report_all'] )->name('graphical_report_all');
 
 // ********************    Report MODULE END ********************************
+
+
+// ********************    ClinicSetting MODULE START ********************************
+Route::get( '/clinic/info', [ ClinicSettingController::class, 'index'] )->name('clinic_info');
+Route::post( '/clinic/info/updated', [ ClinicSettingController::class, 'update'] )->name('clinic_info_update');
+
+Route::get( '/clinic/add/user', [ ClinicSettingController::class, 'add_new_user'] )->name('add_new_user');
+Route::post( '/clinic/add/user/post', [ ClinicSettingController::class, 'add_new_user_post'] )->name('add_new_user_post');
+
+Route::get( '/clinic/user/list', [ ClinicSettingController::class, 'user_list'] )->name('user_list');
+Route::get( '/clinic/user/edit/{id}', [ ClinicSettingController::class, 'clinic_user_edit'] )->name('clinic_user_edit');
+Route::post( '/clinic/user/update/{id}', [ ClinicSettingController::class, 'clinic_update_user'] )->name('clinic_update_user');
+
+
+
+// ********************    ClinicSetting MODULE END ********************************
 
 

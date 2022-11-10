@@ -1,20 +1,19 @@
-
 var productList = [
 	{
 		"label":"Fillings",
-		"value":"4"
+		"value":"11"
 	},
 	{
 		"label":"Root Canals",
-		"value":"4"
+		"value":"11"
 	},
 	{
 		"label":"Root Canals Normal",
-		"value":"4"
+		"value":"12"
 	},
 	{
 		"label":"Root Canals Premium",
-		"value":"4"
+		"value":"12"
 	},
 	{
 		"label":"Implants ",
@@ -44,8 +43,7 @@ var productList = [
 		"label":"Continue Previous Srvice",
 		"value":"10"
 	}
-] ; 
-
+];
 
 APchange = function( event, ui )
 {
@@ -61,7 +59,6 @@ APchange = function( event, ui )
 
         $( ".productSelection" ).autocomplete(
 		{
-
             source: productList,
 			delay:300,
 			focus: function(event, ui) {

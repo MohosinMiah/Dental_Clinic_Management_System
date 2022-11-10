@@ -8,10 +8,9 @@
 @section('content')
 
 <div class="container-fluid">
-
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Add New Appointment</h1>
-
+	<h3 class="text text-info">Add New Appointment</h3>
+	<a href="{{ route('appointment_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Appointment List</a>
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
 	<script src="{{ asset('js/custom.js')}}"></script>

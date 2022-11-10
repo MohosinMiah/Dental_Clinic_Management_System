@@ -27,7 +27,8 @@
 						<div class="row">
 						
 							<div class="col-md-12">
-							<h1 class="h3 mb-4 text-gray-800"> Appointment Report</h1>
+							<h3 class="text text-info"> Appointment Report</h3>
+							<a href="{{ route('appointment_registration_form') }}" class="btn btn-info" style="margin-bottom: 10px;">Add New Appointment</a>
 				<form method="GET" action="{{ route('appoinment_report_filter_appointment') }}">
 				<!-- @csrf -->
 					<div class="row">

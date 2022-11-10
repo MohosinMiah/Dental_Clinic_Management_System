@@ -5,8 +5,8 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Register New Patient</h1>
-
+	<h3 class="text text-info">Add New Patient</h3>
+	<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List</a>
 	<div class="row">
 		@if(session('status'))
 			<div class="alert alert-success">
@@ -40,12 +40,12 @@
 
 				<div class="form-group">
 					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="phone" id="phone" value="{{ old('phone') }}" required class="form-control"  placeholder="Patient Phone">
+					<input type="text" name="phone" id="phone" value="{{ old('phone') }}" required class="form-control"  minlength="11" maxlength="11" placeholder="Ex, 01773193256" >
 				</div>
 
 				<div class="form-group">
-					<label for="age"> Age <span class="required_field"> (*) </span> </label>
-					<input type="number" name="age" id="age" value="{{ old('age') }}" required class="form-control" placeholder="Patient Age , Ex: 50 ">
+					<label for="age"> Age </label>
+					<input type="number" name="age" id="age" value="{{ old('age') }}"  class="form-control" placeholder="Patient Age , Ex: 50 ">
 				</div>
 
 				<div class="form-group">
@@ -54,9 +54,9 @@
 				</div>
 
 				<div class="form-group">
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<label class=" control-label"> Gender  </label>
 					<div>
-							<select class="form-control" name="gender" id="gender" required>
+							<select class="form-control" name="gender" id="gender" >
 							<option value="Male" <?php if( old('gender') == "Male" ) { echo "selected"; } ?>>Male</option>
 							<option value="Female" <?php if( old('gender') == "Female" ) { echo "selected"; } ?>>Female</option>
 							<option value="Other"  <?php if( old('gender') == "Other" ) { echo "selected"; } ?>>Other</option>

@@ -27,8 +27,18 @@ class InvoiceController extends Controller
 	public function get_patient_list_based_patient_id( $id )
 	{
 
-		$patient =  DB::table('patients')->where( 'id', $id )->orWhere( 'phone', $id )->first();
-		$invoice = DB::table('invoices')->where( 'patient_id', $patient->id )->orderBy( 'id', 'DESC' )->first();
+		// $patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->orwhere( 'id', $id )->orWhere( 'phone', $id )->first();
+		if( strlen( (string) $id ) > 4 )
+		{
+			$patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'phone', $id )->first();
+		}
+		else
+		{
+			$patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $id )->first();
+		}
+
+
+		$invoice = DB::table('invoices')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id', $patient->id )->orderBy( 'id', 'DESC' )->first();
 
 		$data = [
 			'patient' => $patient,
@@ -39,13 +49,13 @@ class InvoiceController extends Controller
 	}
 	public function retrieve_service(Request $request)
 	{
-		$service =  DB::table( 'services' )->where( 'id', $request->product_id )->first();
+		$service =  DB::table( 'services' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $request->product_id )->first();
 		return response()->json( $service );
 	}
 
-	public function get_retrieve_service()
+	public function get_retrieve_service( Request $request )
 	{
-		$service =  DB::table('services')->where('id', $request->$request)->first();
+		$service =  DB::table('services')->where( 'clinic_id' , session( 'clinicID' ) )->where('id', $request->product_id)->first();
 		return response()->json($service);
 	}
 
@@ -57,7 +67,7 @@ class InvoiceController extends Controller
 	 */
 	public function index()
 	{
-		$invoices = Invoice::orderBy('id','DESC')->get();
+		$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','DESC')->get();
 		$data = [
 			'invoices' => $invoices
 		];
@@ -72,7 +82,7 @@ class InvoiceController extends Controller
 	public function create()
 	{
 		
-		$doctors = Doctor::orderBy('id','ASC')->get();
+		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','ASC')->get();
 		$data = [
 			'doctors' => $doctors
 		];
@@ -102,6 +112,7 @@ class InvoiceController extends Controller
 
 		$invoice = new Invoice;
 
+		$invoice->clinic_id = session( 'clinicID' );
 		$invoice->patient_id =$request->patient_id;
 		$invoice->doctor_id = $request->doctor_id;
 		$invoice->added_by_id = $request->added_by_id;
@@ -145,6 +156,7 @@ class InvoiceController extends Controller
 		{
 
 			DB::table('invoice_details')->insert([ 
+				'clinic_id' => session( 'clinicID' ),
 				'invoice_id' => $insertedInvoiceID,
 				'service_id' => $request->product_id[$index],
 				'service_name' => $request->product_name[$index],
@@ -203,7 +215,9 @@ class InvoiceController extends Controller
 	public function update( Request $request, $invoiceID )
 	{
 
-		$invoice = Invoice::find( $invoiceID );
+		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
+
+		// $invoice->clinic_id = session( 'clinicID' );
 		$invoice->patient_id =$request->patient_id;
 		$invoice->doctor_id = $request->doctor_id;
 		$invoice->added_by_id = $request->added_by_id;
@@ -243,14 +257,15 @@ class InvoiceController extends Controller
 
 		DB::table('invoice_details')
 			->where( 'invoice_id', $invoiceID )
-			->delete();
-
+			->where( 'clinic_id', session( 'clinicID' ) )
+		->delete();
 
 		$totalDiscount = 0;
 
 		foreach( $request->product_name as  $index=>$product  )
 		{
 			DB::table('invoice_details')->insert([ 
+				'clinic_id' => session( 'clinicID' ),
 				'invoice_id' => $invoiceID,
 				'service_id' => $request->product_id[$index],
 				'service_name' => $request->product_name[$index],
@@ -266,7 +281,7 @@ class InvoiceController extends Controller
 		}
 
 		// Updated Total Discount
-		$invoice = Invoice::find( $invoiceID );
+		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
 		$invoice->total_discount = $totalDiscount;
 		$invoice->save();
 
@@ -283,11 +298,11 @@ class InvoiceController extends Controller
 
 	public function invoiceView( $invoiceID )
 	{
-		$invoice = Invoice::where( 'id', $invoiceID )->first();
+		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
 		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'invoice_id', $invoice->id )->get();
 
-		$doctor = DB::table( 'doctors' )->where( 'id', $invoice->doctor_id )->first();
+		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoice->doctor_id )->first();
 
 		// echo '<pre>';
 
@@ -306,11 +321,11 @@ class InvoiceController extends Controller
 
 	public function invoiceEdit( $invoiceID )
 	{
-		$invoice = Invoice::where( 'id', $invoiceID )->first();
+		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->first();
 		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->get();
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'invoice_id', $invoice->id )->get();
 
-		$doctors = Doctor::all();
+		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->get();
 		// echo '<pre>';
 
 		// var_dump( $invoiceDetails );

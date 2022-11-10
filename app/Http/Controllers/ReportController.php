@@ -33,17 +33,17 @@ class ReportController extends Controller
 
 public function payment_report()
 {
-	$invoices = Invoice::orderBy('id','DESC')->get();
+	$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','DESC')->get();
 	$data = [
 		'invoices'          => $invoices,
-		'total_paid_amount' => DB::table( 'invoices' )->sum( 'paid_amount' )
+		'total_paid_amount' => DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->sum( 'paid_amount' )
 	];
 	return view('backend.layout.report.invoice.index', compact('data'));
 }
 
 public function payment_report_filter()
 {
-	$invoices = DB::table('invoices')->select( '*' );
+	$invoices = DB::table('invoices')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];
@@ -86,17 +86,17 @@ public function payment_report_filter()
 */
 public function appoinment_report()
 {
-	$appointments = Appointment::orderBy( 'id','DESC' )->get();
+	$appointments = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' );
 	$data = [
-		'appointments'          => $appointments,
-		'total_appointment'     => Appointment::count( 'id' )
+		'appointments'          => $appointments->get(),
+		'total_appointment'     => $appointments->count( 'id' )
 	];
 	return view('backend.layout.report.appointment.index', compact('data'));
 }
 
 public function appoinment_report_filter()
 {
-	$appointments = DB::table('appointments')->select( '*' );
+	$appointments = DB::table('appointments')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];
@@ -123,7 +123,7 @@ public function appoinment_report_filter()
 	}
 
 	$data = [
-		'appointments'          => $appointments->get(),
+		'appointments'      => $appointments->get(),
 		'total_appointment' => $appointments->count( 'id' )
 	];
 	return view('backend.layout.report.appointment.index', compact('data'));
@@ -137,21 +137,21 @@ public function appoinment_report_filter()
 /**
  * Patient  Report START 
 */
-
-
 public function patient_report()
 {
-	$patients = Patient::orderBy( 'id','DESC' )->get();
-	$data = [
-		'patients'        => $patients,
-		'total_patient'   => DB::table( 'patients' )->count( 'id' )
+	$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
+	$data =
+	[
+		'patients'        => $patients->get(),
+		'total_patient'   => $patients->count( 'id' )
 	];
 	return view('backend.layout.report.patient.index', compact('data'));
 }
 
 public function patient_report_filter()
 {
-	$patients = DB::table('patients')->select( '*' );
+	$patients = DB::table('patients')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
+
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];

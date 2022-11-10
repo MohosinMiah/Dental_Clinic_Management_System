@@ -24,6 +24,7 @@ class AppointmentController extends Controller
 		// }
 	}
 
+
    /**
 	 * Display a listing of the resource.
 	 *
@@ -31,8 +32,7 @@ class AppointmentController extends Controller
 	 */
 	public function index(Request $request)
 	{
-
-		$appointments = Appointment::orderBy( 'id','DESC' )->get();
+		$appointments = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
 		$data = [
 			'appointments'          => $appointments,
 			'total_appointment'     => Appointment::count( 'id' )
@@ -44,7 +44,7 @@ class AppointmentController extends Controller
 
 	public function appoinment_report_filter_appointment()
 {
-	$appointments = DB::table('appointments')->select( '*' );
+	$appointments = DB::table('appointments')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];
@@ -86,7 +86,7 @@ class AppointmentController extends Controller
 	public function create()
 	{
 		
-        $doctors = Doctor::all();
+        $doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->get();
 		$data = [
 			'doctors' => $doctors
 		];
@@ -104,12 +104,12 @@ class AppointmentController extends Controller
 	public function store(Request $request)
 	{
 		$validatedData = $request->validate([
-			'patient_phone' => 'required',
-			'name' => 'required',
+			'phone' => 'required|max:18',
 		]);
 
 		$appointment = new Appointment;
 
+		$appointment->clinic_id = session( 'clinicID' );
 		$appointment->isRegistered = $request->isRegistered;
 		$appointment->patient_id = $request->patient_id;
 		$appointment->patient_phone = $request->patient_phone;
@@ -133,8 +133,8 @@ class AppointmentController extends Controller
 	 */
 	public function show( $doctorID )
 	{
-		$appointment = DB::table( 'appointments' )->where( 'id' , $doctorID )->first();
-        $doctors = Doctor::all();
+		$appointment = DB::table( 'appointments' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
+        $doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->get();
 
 		$data = [
 			'appointment' => $appointment,
@@ -153,8 +153,8 @@ class AppointmentController extends Controller
 	 */
 	public function edit(  $doctorID  )
 	{
-		$appointment = DB::table( 'appointments' )->where( 'id' , $doctorID )->first();
-        $doctors = Doctor::all();
+		$appointment = DB::table( 'appointments' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
+        $doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->get();
 
 		$data = [
 			'appointment' => $appointment,
@@ -180,8 +180,9 @@ class AppointmentController extends Controller
 			'name' => 'required',
 		]);
 
-		$appointment = Appointment::find( $appointmentID );
+		$appointment = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $appointmentID )->firstOrFail();
 
+		// $appointment->clinic_id = session( 'clinicID' );
 		$appointment->isRegistered = $request->isRegistered;
 		$appointment->patient_id = $request->patient_id;
 		$appointment->patient_phone = $request->patient_phone;
@@ -206,12 +207,11 @@ class AppointmentController extends Controller
 	 */
 	public function destroy( $appointmentID )
 	{
-		$status = Appointment::destroy( $appointmentID );
-		
+		$status = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $appointmentID )->firstOrFail();
+		$status->destroy();
 		if( $status )
 		{
 			return redirect( route('appointment_list') );
 		}
-	
 	}
 }

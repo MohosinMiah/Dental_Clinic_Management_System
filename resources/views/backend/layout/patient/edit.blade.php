@@ -5,7 +5,7 @@
 <div class="container-fluid">
 	<?php $patient = $data['patient'];  ?>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Register New Patient</h1>
+	<h1 class="h3 mb-4 text-gray-800">Edit Patient</h1>
 
 
 	<div class="row">
@@ -41,7 +41,7 @@
 
 				<div class="form-group">
 					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="phone" id="phone"  required class="form-control"   value="{{ $patient->phone }}"
+					<input type="text" name="phone" id="phone"  required class="form-control"   value="{{ $patient->phone }}" minlength="11" maxlength="11" placeholder="Ex, 01773193256" />
 				</div>
 
 				<div class="form-group">

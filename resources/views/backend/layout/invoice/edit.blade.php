@@ -45,7 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="customer_name" class="col-sm-5">Address <i class="text-danger">*</i></label>
+								<label for="customer_name" class="col-sm-5">Address <</label>
 								<div class="col-sm-7">
 									<input  name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>

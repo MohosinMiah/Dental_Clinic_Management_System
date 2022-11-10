@@ -25,7 +25,7 @@
 
 				<div class="form-group">
 					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
-					<input type="text" name="phone" id="phone"  required class="form-control"  value="{{ $doctor->phone }}">
+					<input type="text" name="phone" id="phone"  required class="form-control"  value="{{ $doctor->phone }}" minlength="11" maxlength="11" placeholder="Ex, 01773193256" >
 				</div>
 
 			
@@ -71,9 +71,9 @@
 
 
 				<div class="form-group">
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<label class=" control-label"> Gender  </label>
 					<div>
-							<select class="form-control" name="gender" id="gender" required>
+							<select class="form-control" name="gender" id="gender" >
 							<option value="Male" <?php if( $doctor->gender == 'Male' ) { echo "selected"; } ?> >Male</option>
 							<option value="Female" <?php if( $doctor->gender == 'Female' ) { echo "selected"; } ?> >Female</option>
 							<option value="Other" <?php if( $doctor->gender == 'Other' ) { echo "selected"; } ?> >Other</option>

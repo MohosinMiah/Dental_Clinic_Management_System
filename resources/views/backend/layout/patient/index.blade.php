@@ -15,8 +15,9 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Patient List</h1>
-
+	<!-- Page Heading -->
+	<h3 class="text text-info">Patient List</h3>
+	<a href="{{ route('patient_registration_form') }}" class="btn btn-info" style="margin-bottom: 10px;"> Add New Patient</a>
 	<div class="row">
 		<div class="col-md-12">
 			{{--  Doctor List  Start   --}}
@@ -56,7 +57,7 @@
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('patient_show', $patient->id) }}"><i class="fa fa-eye"></i></a>
 											<a class="btn btn-xs btn-success" href="{{ route('patient_edit', $patient->id) }}"><i class="fa fa-edit"></i></a>
-											<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('patient_delete', $patient->id) }}"><i class="fa fa-trash"></i></a> -->
+
                                         </td>
 									</tr
 								@endforeach

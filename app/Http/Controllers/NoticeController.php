@@ -30,7 +30,7 @@ class NoticeController extends Controller
 	public function index()
 	{
 		//
-		$notices = Notice::all();
+		$notices = Notice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
 		$data = [
 			'notices' => $notices
 		];
@@ -64,6 +64,7 @@ class NoticeController extends Controller
 
 		$notice = new Notice;
 
+		$notice->clinic_id = session( 'clinicID' );
 		$notice->title = $request->title;
 		$notice->description = $request->description;
 		if( $request->hasfile('image') )
@@ -87,7 +88,7 @@ class NoticeController extends Controller
 	 */
 	public function show( $noticeID )
 	{
-		$notice = DB::table( 'notices' )->where( 'id' , $noticeID )->first();
+		$notice = DB::table( 'notices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $noticeID )->first();
 
 		$data = [
             'notice' => $notice
@@ -105,7 +106,7 @@ class NoticeController extends Controller
 	 */
 	public function edit( $noticeID )
 	{
-		$notice = DB::table( 'notices' )->where( 'id' , $noticeID )->first();
+		$notice = DB::table( 'notices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $noticeID )->first();
 		$data = [
 			'notice' => $notice
 		];
@@ -128,8 +129,8 @@ class NoticeController extends Controller
 			'description'  => 'required',
 		]);
  
-		$notice               = Notice::find( $noticeID );
-
+		$notice               = Notice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $noticeID )->first();
+		// $notice->clinic_id = session( 'clinicID' );
 		$notice->title        = $request->title;
 		$notice->description  = $request->description;
 
@@ -154,8 +155,8 @@ class NoticeController extends Controller
 	 */
 	public function destroy( $noticeID )
 	{
-		$status = Notice::destroy( $noticeID );
-		
+		$status = Notice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $noticeID )->firstOrFail();
+		$status->destroy();
 		if( $status )
 		{
 			return redirect( route('notice_list') );

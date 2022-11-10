@@ -7,9 +7,9 @@ use App\Http\Requests\StoreDoctorRequest;
 // use App\Http\Requests\UpdateDoctorRequest;
 use Illuminate\Http\Request;
 use DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Redirector;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
@@ -30,7 +30,7 @@ class DoctorController extends Controller
 	 */
 	public function index()
 	{
-		$doctors = Doctor::all();
+		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
 		$data = [
 			'doctors' => $doctors
 		];
@@ -55,18 +55,25 @@ class DoctorController extends Controller
 	 * @param  \App\Http\Requests\StoreDoctorRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(StoreDoctorRequest $request)
+	public function store(Request $request)
 	{
-		// $validatedData = $request->validate([
-		// 	'name' => 'required',
-		// 	'phone' => 'required|unique:doctors|max:18',
-		// 	'email' => 'required|unique:doctors|max:30',
-		// 	'password' => 'required',
-		// ]);
-
-
+		$validator =  Validator::make($request->all(), [
+			'phone'    => [
+				'required',
+				'max:11',
+				Rule::unique('authentications'),
+			],
+			'name'     => 'required',
+		]);
+		if( $validator->fails() )
+		{
+			return redirect(route('doctor_registration_form'))->with('status', 'Fail, Phone number alrady used');
+		}
+		else
+		{
 			$doctor = new Doctor;
 
+			$doctor->clinic_id = session( 'clinicID' );
 			$doctor->name = $request->name;
 			$doctor->phone = $request->phone;
 			$doctor->password = $request->password;
@@ -108,6 +115,8 @@ class DoctorController extends Controller
 			// }
 	
 			return redirect(route('doctor_registration_form'))->with('status', 'Form Data Has Been Inserted');
+		}
+			
 		
 
 
@@ -121,7 +130,7 @@ class DoctorController extends Controller
 	 */
 	public function show( $doctorID )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
+		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
 
 		$data = [
 			'doctor' => $doctor
@@ -138,7 +147,7 @@ class DoctorController extends Controller
 	 */
 	public function edit(  $doctorID  )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
+		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
 		$data = [
 			'doctor' => $doctor
 		];
@@ -156,15 +165,15 @@ class DoctorController extends Controller
 	 */
 	public function update( Request $request, $doctorID )
 	{
-
 		$validatedData = $request->validate([
 			'name' => 'required',
 			'phone' => 'required|max:18',
 			'password' => 'required',
 		]);
 
-		$doctor = Doctor::find( $doctorID );
+		$doctor = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $doctorID )->firstOrFail();
 
+		// $doctor->clinic_id = session( 'clinicID' );
 		$doctor->name = $request->name;
 		$doctor->phone = $request->phone;
 		$doctor->password = $request->password;
@@ -202,8 +211,8 @@ class DoctorController extends Controller
 	 */
 	public function destroy( $doctorID )
 	{
-		$status = Doctor::destroy( $doctorID );
-		
+		$status = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->firstOrFail();
+		$status->destroy();
 		if( $status )
 		{
 			return redirect( route('doctor_list') );

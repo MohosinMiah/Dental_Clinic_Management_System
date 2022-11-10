@@ -15,7 +15,8 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Invoice List</h1>
+	<h3 class="text text-info">Invoice List</h3>
+	<a href="{{ route('invoice_added_form') }}" class="btn btn-info" style="margin-bottom: 10px;"> Add New Invoice</a>
 
 	<div class="row">
 		<div class="col-md-12">
@@ -75,7 +76,7 @@
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('single_view_invoice', $invoice->id) }}"><i class="fa fa-eye"></i></a>
 											<a class="btn btn-xs btn-success" href="{{ route('single_edit_invoice', $invoice->id) }}"><i class="fa fa-edit"></i></a>
-											<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('single_delete_invoice', $invoice->id) }}"><i class="fa fa-trash"></i></a> -->
+											
                                         </td>
 									</tr
 								@endforeach
