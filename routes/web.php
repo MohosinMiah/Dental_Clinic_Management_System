@@ -117,8 +117,14 @@ Route::post( '/invoice/update/{id}', [ InvoiceController::class, 'update'] )->na
 Route::get( '/invoice/list', [ InvoiceController::class, 'index'] )->name('invoice_list');
 
 
+
+
 Route::get( '/invoice/invoice_view/{id}', [ InvoiceController::class, 'invoiceView'] )->name('single_view_invoice');
 Route::get( '/invoice/edit_invoice/{id}', [ InvoiceController::class, 'invoiceEdit'] )->name('single_edit_invoice');
+
+
+Route::get( '/get_product_service_list', [ InvoiceController::class, 'get_product_service_list'] )->name('get_product_service_list');
+
 // Route::get( '/invoice/invoice_delete/{id}', [ InvoiceController::class, 'destroy'] )->name('single_delete_invoice');
 
 

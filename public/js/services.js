@@ -1,49 +1,85 @@
-var productList = [
-	{
-		"label":"Fillings",
-		"value":"11"
-	},
-	{
-		"label":"Root Canals",
-		"value":"11"
-	},
-	{
-		"label":"Root Canals Normal",
-		"value":"12"
-	},
-	{
-		"label":"Root Canals Premium",
-		"value":"12"
-	},
-	{
-		"label":"Implants ",
-		"value":"5"
-	},
-	{
-		"label":"Bridges",
-		"value":"4"
-	},
-	{
-		"label":"Orthodontics",
-		"value":"4"
-	},
-	{
-		"label":"Complete Exams",
-		"value":"4"
-	},
-	{
-		"label":"X-rays",
-		"value":"4"
-	},
-	{
-		"label":"Dental Cleanings",
-		"value":"4"
-	},
-	{
-		"label":"Continue Previous Srvice",
-		"value":"10"
-	}
-];
+
+var productList = [];
+// 	{
+// 		"label":"Fillings",
+// 		"value":"11"
+// 	},
+// 	{
+// 		"label":"Root Canals",
+// 		"value":"11"
+// 	},
+// 	{
+// 		"label":"Root Canals Normal",
+// 		"value":"12"
+// 	},
+// 	{
+// 		"label":"Root Canals Premium",
+// 		"value":"12"
+// 	},
+// 	{
+// 		"label":"Implants ",
+// 		"value":"5"
+// 	},
+// 	{
+// 		"label":"Bridges",
+// 		"value":"4"
+// 	},
+// 	{
+// 		"label":"Orthodontics",
+// 		"value":"4"
+// 	},
+// 	{
+// 		"label":"Complete Exams",
+// 		"value":"4"
+// 	},
+// 	{
+// 		"label":"X-rays",
+// 		"value":"4"
+// 	},
+// 	{
+// 		"label":"Dental Cleanings",
+// 		"value":"4"
+// 	},
+// 	{
+// 		"label":"Continue Previous Srvice",
+// 		"value":"10"
+// 	}
+// ] ; 
+// var productList =	[
+// 	{
+// 		"value": 11,
+// 		"label": "Root Canals Premium"
+// 	},
+// 	{
+// 		"value": 12,
+// 		"label": "Bridges"
+// 	},
+// 	{
+// 		"value": 13,
+// 		"label": "Continue Previous Service"
+// 	}
+// ];
+
+
+		(function($) {
+				var base_url = $('.baseUrl').val();
+				var csrf_test_name = $("[name=_token]").val();
+				$.ajax
+				   ({
+                        url: "http://127.0.0.1:8000/get_product_service_list",
+                        headers: { 'X-CSRF-Token': csrf_test_name },
+						type: "GET",
+						cache: true,
+						success: function(data)
+						{
+							productList = data;	
+							console.log( productList );
+						} 
+					});
+  })(jQuery);
+
+
+
 
 APchange = function( event, ui )
 {
@@ -56,9 +92,20 @@ APchange = function( event, ui )
 		var priceClass = 'price_item'+cName;
 		var total_tax_price = 'total_tax_'+cName;
 		var available_quantity = 'available_quantity_'+cName;
+		var base_url = $('.baseUrl').val();
+		var csrf_test_name = $("[name=_token]").val();
+
+
+//  *******************
+				
+
+// *****************
+
+
 
         $( ".productSelection" ).autocomplete(
 		{
+
             source: productList,
 			delay:300,
 			focus: function(event, ui) {
@@ -72,8 +119,7 @@ APchange = function( event, ui )
 				$(this).val(ui.item.label);
 
 				var id=ui.item.value;
-				var base_url = $('.baseUrl').val();
-				var csrf_test_name = $("[name=_token]").val();
+		
 
 				$.ajax
 				   ({

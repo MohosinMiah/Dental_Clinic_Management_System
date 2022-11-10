@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 
 
-// isClose = 0 Selected     
+// isClose = 0 Selected   
 $(document).ready(function() {  
 	$('body').on('keyup change', '#isClose', function() {
 		var isClose = $('#isClose').val();

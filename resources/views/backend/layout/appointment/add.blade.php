@@ -68,16 +68,16 @@
 									<input type="date" name="date" class="form-control"  required pattern="\d{2}-\d{2}-\d{4}" />
 									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 									</span>
-									<input type="time" name="time"  class="form-control" />
+									<input type="time" name="time"  class="form-control"  />
 								</div>
 							</div>
 						</div>
 				</div>
 
 				<div class="form-group " >
-					<label class=" control-label"> Select Doctor <span class="required_field"> (*) </span></label>
+					<label class=" control-label"> Select Doctor </label>
 					<div>
-						<select class="form-control" name="doctor_id" id="doctor_id">
+						<select class="form-control" name="doctor_id" id="doctor_id" >
 							@foreach( $data['doctors'] as $doctor )
 
 							<option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
@@ -88,9 +88,9 @@
 				</div>
 
 				<div class="form-group" >
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span></label>
+					<label class=" control-label"> Gender </label>
 					<div>
-						<select class="form-control" name="gender" id="gender" required>
+						<select class="form-control" name="gender" id="gender" >
 							<option value="Male">Male</option>
 							<option value="Female">Female</option>
 							<option value="Other">Other</option>

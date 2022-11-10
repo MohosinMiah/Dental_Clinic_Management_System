@@ -59,33 +59,52 @@ class PatientController extends Controller
     public function store(StorePatientRequest $request)
     {
 
-   
-		$patient = new Patient;
+		$validator =  Validator::make($request->all(), [
+            'phone'    => [
+              'required',
+              'max:18',
+              Rule::unique('patients'),
+            ],
+            'name'     => 'required',
+            
+          ]);
 
-		$patient->clinic_id = session( 'clinicID' );
-		$patient->name               = $request->name;
-		$patient->phone              = $request->phone;
-		$patient->age                = $request->age;
-		$patient->gender             = $request->gender;
-		$patient->email              = $request->email;
-		$patient->blood_group        = $request->blood_group;
-		$patient->address            = $request->address;
+		if( $validator->fails() )
+		{
+			return redirect(route('patient_registration_form'))->with('status', 'Fail, Phone number is alrady used. Please change phone number');
 
-		$patient->db                  = $request->db;
-		$patient->htn                 = $request->htn;
-		$patient->cardiac_disease     = $request->cardiac_disease;
-		$patient->hepatitis           = $request->hepatitis;
-		$patient->asthma              = $request->asthma;
-		$patient->rheumatic_fever     = $request->rheumatic_fever;
-		$patient->bleeding_disorder   = $request->bleeding_disorder;
-		$patient->drug_allergy        = $request->drug_allergy;
-		$patient->pregnant_women      = $request->pregnant_women;
-		$patient->lactating_mother    = $request->lactating_mother;
-		$patient->note                = $request->note;
+		}
+		else
+		{
+
+			$patient = new Patient;
+
+			$patient->clinic_id = session( 'clinicID' );
+			$patient->name               = $request->name;
+			$patient->phone              = $request->phone;
+			$patient->age                = $request->age;
+			$patient->gender             = $request->gender;
+			$patient->email              = $request->email;
+			$patient->blood_group        = $request->blood_group;
+			$patient->address            = $request->address;
+	
+			$patient->db                  = $request->db;
+			$patient->htn                 = $request->htn;
+			$patient->cardiac_disease     = $request->cardiac_disease;
+			$patient->hepatitis           = $request->hepatitis;
+			$patient->asthma              = $request->asthma;
+			$patient->rheumatic_fever     = $request->rheumatic_fever;
+			$patient->bleeding_disorder   = $request->bleeding_disorder;
+			$patient->drug_allergy        = $request->drug_allergy;
+			$patient->pregnant_women      = $request->pregnant_women;
+			$patient->lactating_mother    = $request->lactating_mother;
+			$patient->note                = $request->note;
+	   
+			  $patient->save();
+	   
+			  return redirect(route('patient_registration_form'))->with('status', 'Form Data Has Been Inserted');
+		}
    
-          $patient->save();
-   
-          return redirect(route('patient_registration_form'))->with('status', 'Form Data Has Been Inserted');
     }
 
     /**
@@ -136,12 +155,11 @@ class PatientController extends Controller
           $validator =  Validator::make($request->all(), [
             'phone'    => [
               'required',
-              'max:11',
+              'max:18',
               Rule::unique('patients')->ignore( $patientID ),
             ],
             'name'     => 'required',
-            'age' => 'required',
-            'gender' => 'required',
+            
           ]);
 
 		if( $validator->fails() )

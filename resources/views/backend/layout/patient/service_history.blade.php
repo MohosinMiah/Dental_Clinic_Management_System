@@ -15,7 +15,8 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<h4 class="text-left">Details Information For :<strong> MD MOHOSIN MIAH </strong></h4>
+			<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List</a>
+			<h3 class="text-left">Details Information For :<strong> MD MOHOSIN MIAH </strong></h3>
 			<table class="table">
 				<thead>
 					<tr>

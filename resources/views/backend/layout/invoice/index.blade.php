@@ -72,7 +72,7 @@
 											}
 										?>
 										</td>
-										<td>{{ date('d-m-Y', strtotime( $invoice->created_at  )) }}</td>
+										<td>{{ date('d-m-Y', strtotime( $invoice->payment_date  )) }}</td>
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('single_view_invoice', $invoice->id) }}"><i class="fa fa-eye"></i></a>
 											<a class="btn btn-xs btn-success" href="{{ route('single_edit_invoice', $invoice->id) }}"><i class="fa fa-edit"></i></a>

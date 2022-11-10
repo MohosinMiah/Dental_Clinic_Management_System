@@ -49,13 +49,21 @@ class InvoiceController extends Controller
 	}
 	public function retrieve_service(Request $request)
 	{
-		$service =  DB::table( 'services' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $request->product_id )->first();
+		$service =  DB::table( 'services' )->where( 'id', $request->product_id )->first();
 		return response()->json( $service );
 	}
 
 	public function get_retrieve_service( Request $request )
 	{
-		$service =  DB::table('services')->where( 'clinic_id' , session( 'clinicID' ) )->where('id', $request->product_id)->first();
+		$service =  DB::table('services')->where('id', $request->product_id)->first();
+		return response()->json($service);
+	}
+
+	public function get_product_service_list()
+	{
+		$service =  DB::table('services')
+		->select('id AS value', 'service_name AS label')
+		->where( 'clinic_id' , session( 'clinicID' ) )->get();
 		return response()->json($service);
 	}
 
@@ -122,7 +130,10 @@ class InvoiceController extends Controller
 		$invoice->payment_date = $request->payment_date;
 		$invoice->total_payment = 111;
 		$invoice->tax_total = $request->total_tax;
+		
+		$invoice->total       = $request->grand_total_price;
 		$invoice->grand_total = $request->grandTotalWithDue;
+
 		$invoice->paid_amount = $request->paid_amount;
 		$invoice->previous_due = $request->previous_due;
 
@@ -227,7 +238,10 @@ class InvoiceController extends Controller
 		$invoice->payment_date = $request->payment_date;
 		$invoice->total_payment = 111;
 		$invoice->tax_total = $request->total_tax;
-		$invoice->grand_total = $request->grand_total_price;
+
+		$invoice->total       = $request->grand_total_price;
+		$invoice->grand_total = $request->grandTotalWithDue;
+
 		$invoice->paid_amount = $request->paid_amount;
 		$invoice->previous_due = $request->previous_due;
 

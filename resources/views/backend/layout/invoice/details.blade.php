@@ -5,7 +5,9 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
+    <h3 class="text text-info">Invoice Details</h3>
+	<a href="{{ route('invoice_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Invoice List</a>
+
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
 
@@ -123,7 +125,7 @@
                                                     <abbr title="Grand Total = ( Previous Due + Current Services Total Amount ) - Discount Amount ">Grand Total :</abbr>
                                                     </th>
                                                     <td>
-                                                        {{ ( $data['invoice']->grand_total + $data['invoice']->previous_due ) - $data['invoice']->decrease }}
+                                                        {{  $data['invoice']->grand_total }}
                                                         
                                                     </td>
                                                 </tr>

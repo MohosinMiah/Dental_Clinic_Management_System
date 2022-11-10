@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Routing\Redirector;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
@@ -32,11 +33,36 @@ class AppointmentController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$appointments = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
-		$data = [
-			'appointments'          => $appointments,
-			'total_appointment'     => Appointment::count( 'id' )
-		];
+
+		$appointments = Appointment::orderBy( 'id','DESC' );
+
+		$startDate = date( 'Y-m-d', strtotime( Carbon::now() ) );
+
+	
+		$endDate = date( 'Y-m-d', strtotime( Carbon::now() ) );
+
+
+	if( !empty( $startDate ) )
+	{	
+		$appointments->where( 'date', '>=', $startDate );
+	}
+
+	if( !empty( $endDate ) )
+	{
+		$appointments->where('date', '<=', $endDate);
+
+	}
+	else
+	{
+		$appointments->where( 'date', '<=', date( 'Y-m-d', strtotime( Carbon::now() ) ) );
+	}
+
+	$data = [
+		'appointments'          => $appointments->get(),
+		'total_appointment' => $appointments->count( 'id' )
+	];
+
+	
 
 		return view('backend.layout.appointment.index', compact('data'));
 
@@ -103,26 +129,37 @@ class AppointmentController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$validatedData = $request->validate([
-			'phone' => 'required|max:18',
+		$validator =  Validator::make($request->all(), [
+			'patient_phone'    => [
+				'required',
+				'max:18',
+			],
+			'name'  => 'required',
+			'date'     => 'required',
 		]);
+		if( $validator->fails() )
+		{
+			return redirect( route('appointment_registration_form') )->with('status', 'Fail, Please provide required data');
+		}
+		else
+		{
+			$appointment = new Appointment;
 
-		$appointment = new Appointment;
-
-		$appointment->clinic_id = session( 'clinicID' );
-		$appointment->isRegistered = $request->isRegistered;
-		$appointment->patient_id = $request->patient_id;
-		$appointment->patient_phone = $request->patient_phone;
-		$appointment->name = $request->name;
-		$appointment->date = $request->date;
-		$appointment->time = $request->time;
-		$appointment->doctor_id = $request->doctor_id;
-		$appointment->gender = $request->gender;
-		$appointment->note = $request->note;
-			
-		$appointment->save();
-
-		return redirect(route('appointment_registration_form'))->with('status', 'Form Data Has Been Inserted');
+			$appointment->clinic_id = session( 'clinicID' );
+			$appointment->isRegistered = $request->isRegistered;
+			$appointment->patient_id = $request->patient_id;
+			$appointment->patient_phone = $request->patient_phone;
+			$appointment->name = $request->name;
+			$appointment->date = $request->date;
+			$appointment->time = $request->time;
+			$appointment->doctor_id = $request->doctor_id;
+			$appointment->gender = $request->gender;
+			$appointment->note = $request->note;
+				
+			$appointment->save();
+	
+			return redirect(route('appointment_registration_form'))->with('status', 'Form Data Has Been Inserted');
+		}
 	}
 
 	/**
@@ -175,27 +212,40 @@ class AppointmentController extends Controller
 	public function update( Request $request, $appointmentID )
 	{
 
-		$validatedData = $request->validate([
-			'patient_phone' => 'required',
+
+		$validator =  Validator::make($request->all(), [
+			'patient_phone'    => [
+				'required',
+				'max:18',
+			],
 			'name' => 'required',
+			'date'     => 'required',
 		]);
+		if( $validator->fails() )
+		{
+			return redirect( route( 'appointment_edit', $appointmentID ) )->with('status', 'Fail, Provide required data');
 
-		$appointment = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $appointmentID )->firstOrFail();
+		}
+		else
+		{
+			$appointment = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $appointmentID )->firstOrFail();
 
-		// $appointment->clinic_id = session( 'clinicID' );
-		$appointment->isRegistered = $request->isRegistered;
-		$appointment->patient_id = $request->patient_id;
-		$appointment->patient_phone = $request->patient_phone;
-		$appointment->name = $request->name;
-		$appointment->date = $request->date;
-		$appointment->time = $request->time;
-		$appointment->doctor_id = $request->doctor_id;
-		$appointment->gender = $request->gender;
-		$appointment->note = $request->note;
-			
-		$appointment->save();
-
-		return redirect( route( 'appointment_edit', $appointmentID ) )->with('status', 'Form Data Has Been Updated');
+			// $appointment->clinic_id = session( 'clinicID' );
+			$appointment->isRegistered = $request->isRegistered;
+			$appointment->patient_id = $request->patient_id;
+			$appointment->patient_phone = $request->patient_phone;
+			$appointment->name = $request->name;
+			$appointment->date = $request->date;
+			$appointment->time = $request->time;
+			$appointment->doctor_id = $request->doctor_id;
+			$appointment->gender = $request->gender;
+			$appointment->note = $request->note;
+				
+			$appointment->save();
+	
+			return redirect( route( 'appointment_edit', $appointmentID ) )->with('status', 'Form Data Has Been Updated');
+		}
+		
 
 	}
 

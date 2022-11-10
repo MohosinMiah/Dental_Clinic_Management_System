@@ -95,7 +95,7 @@
 											}
 										?>
 										</td>
-										<td>{{ date('d-m-Y', strtotime( $invoice->created_at  )) }}</td>
+										<td>{{ date('d-m-Y', strtotime( $invoice->payment_date  )) }}</td>
 									</tr
 								@endforeach
 

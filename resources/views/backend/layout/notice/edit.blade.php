@@ -5,7 +5,8 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800"> Update Notice </h1>
+	<h3 class="text text-info"> Update Notice </h3>
+	<a href="{{ route('notice_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Notice List</a>
 
 	<div class="row">
 		@if(session('status'))

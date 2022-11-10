@@ -5,8 +5,8 @@
 <div class="container-fluid">
 	<?php $patient = $data['patient'];  ?>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">View Patient : {{ $patient->name }} , ID: {{  $patient->id }}</h1>
-
+	<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List </a>
+	<h3 class="text text-info">View Patient : {{ $patient->name }} , ID: {{  $patient->id }}</h3>
 	<div class="row">
 		@if(session('status'))
 			<div class="alert alert-success">

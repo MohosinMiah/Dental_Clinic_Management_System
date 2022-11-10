@@ -6,7 +6,8 @@
 	<?php $doctor = $data['doctor']; ?>
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">View doctor : {{ $doctor->name }} , ID: {{  $doctor->id }}</h1>
+	<h1 class="text text-info">View doctor : {{ $doctor->name }} , ID: {{  $doctor->id }}</h1>
+	<a href="{{ route('doctor_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Doctor List</a>
 
 	<div class="row">
 		@if(session('status'))
@@ -26,11 +27,6 @@
 				<div class="form-group">
 					<label for="phone"> Phone Number  <span class="required_field"> (*) </span> </label>
 					<input type="text" readonly name="phone" id="phone"  required class="form-control"  value="{{ $doctor->phone }}">
-				</div>
-
-				<div class="form-group">
-					<label for="password"> Password  <span class="required_field"> (*) </span> </label>
-					<input type="text" readonly name="password" id="password"  required class="form-control"  value="{{ $doctor->password }}">
 				</div>
 
 				<div class="form-group">

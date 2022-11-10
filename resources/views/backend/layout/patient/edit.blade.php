@@ -5,9 +5,8 @@
 <div class="container-fluid">
 	<?php $patient = $data['patient'];  ?>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Edit Patient</h1>
-
-
+	<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List</a>
+	<h3 class="text text-info">Edit Patient</h3>
 	<div class="row">
 		@if(session('status'))
 			<div class="alert alert-success">
@@ -45,19 +44,19 @@
 				</div>
 
 				<div class="form-group">
-					<label for="age"> Age <span class="required_field"> (*) </span> </label>
-					<input type="number" name="age" id="age" required class="form-control" value="{{ $patient->age}}">
+					<label for="age"> Age </label>
+					<input type="number" name="age" id="age"  class="form-control" value="{{ $patient->age}}">
 				</div>
 
 				<div class="form-group">
 					<label for="email"> Email  </label>
-					<input type="email" name="email" id="email" required class="form-control" value="{{ $patient->email }}">
+					<input type="email" name="email" id="email"  class="form-control" value="{{ $patient->email }}">
 				</div>
 
 				<div class="form-group">
-					<label class=" control-label"> Gender <span class="required_field"> (*) </span> </label>
+					<label class=" control-label"> Gender  </label>
 					<div>
-							<select class="form-control" name="gender" id="gender" required>
+							<select class="form-control" name="gender" id="gender" >
 							<option value="Male" <?php if( $patient->gender == 'Male' ) { echo "selected"; } ?> >Male</option>
 							<option value="Female" <?php if( $patient->gender == 'Female' ) { echo "selected"; } ?> >Female</option>
 							<option value="Other" <?php if( $patient->gender == 'Other' ) { echo "selected"; } ?> >Other</option>

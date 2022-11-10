@@ -62,7 +62,7 @@ public function payment_report_filter()
 
 	if( !empty( $endDate ) )
 	{
-		$invoices->where('payment_date', '<=', $endDate);
+		$invoices->where('payment_date', '<=', $endDate );
 
 	}
 	else

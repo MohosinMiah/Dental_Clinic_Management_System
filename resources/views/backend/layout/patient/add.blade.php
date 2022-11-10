@@ -45,7 +45,7 @@
 
 				<div class="form-group">
 					<label for="age"> Age </label>
-					<input type="number" name="age" id="age" value="{{ old('age') }}"  class="form-control" placeholder="Patient Age , Ex: 50 ">
+					<input type="number" name="age" id="age" value="<?php if( old('age') > 0 ) { echo old('age'); }else{ echo '0'; } ?>"  class="form-control" value="0" >
 				</div>
 
 				<div class="form-group">

@@ -5,7 +5,9 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-4 text-gray-800">Add New Invoice</h1>
+	<h3 class="text text-info">Update Invoice</h3>
+	<a href="{{ route('invoice_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Invoice List</a>
+
 	<script src="{{ asset('js/invoice.js')}}"></script>
 	<script src="{{ asset('js/services.js')}}"></script>
 	<script src="{{ asset('js/custom.js')}}"></script>
@@ -45,7 +47,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="customer_name" class="col-sm-5">Address <</label>
+								<label for="customer_name" class="col-sm-5">Address </label>
 								<div class="col-sm-7">
 									<input  name="patient_address" id="patient_address"  class="form-control" value="{{ $data['invoice']->patient_address }}" type="text">
 								</div>
@@ -202,14 +204,21 @@
 								<tr>
 									<td colspan="4"><b>Total Tax:</b></td>
 									<td class="text-right">
-										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="{{ $data['invoice']->tax_total }} " readonly="readonly" type="text">
+										<input id="total_tax_ammount" tabindex="-1" class="form-control text-right" name="total_tax" value="{{ $data['invoice']->tax_total }}" readonly="readonly" type="text">
 									</td>
 								</tr>
 
+						
+								<tr>
+									<td colspan="4"><b> Total:</b></td>
+									<td class="text-right">
+										<input id="grandTotal" tabindex="-1" class="form-control text-right" name="grand_total_price" value="{{ $data['invoice']->total }}" readonly="readonly" type="text">
+									</td>
+								</tr>
 								<tr>
 									<td colspan="4"><b>Grand Total:</b></td>
 									<td class="text-right">
-										<input id="grandTotal" tabindex="-1" class="form-control text-right" name="grand_total_price" value="{{ $data['invoice']->grand_total }}" readonly="readonly" type="text">
+										<input id="grandTotalWithDue" tabindex="-1" class="form-control text-right" name="grandTotalWithDue"  value="{{  $data['invoice']->grand_total }}" readonly="readonly" type="text">
 									</td>
 								</tr>
 
@@ -252,13 +261,19 @@
 							{
 							?>
 							<div class="form-group row" id="decreaseAmountDisplay">
-								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount </span> </label>
 								<div class="col-sm-8">
 									<input type="number" min="0" max="20000" value="{{ $data['invoice']->decrease }}" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
 								</div>
 							</div>
 							<?php } ?>
-
+							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+								</div>
+							</div>
+							
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Treatment Notes</label>
 								<div class="col-sm-8">
@@ -271,8 +286,8 @@
 								<div class="col-sm-8">
 									<select name="payment_method" class=" form-control" required>
 										<option value="">-Select-</option>
-										<option value="master_card" <?php if( $data['invoice']->payment_method == "Cash" ) { echo "selected"; } ?>>Cash</option>
-										<option value="master_card" <?php if( $data['invoice']->payment_method == "Others" ) { echo "selected"; } ?>>Others</option>
+										<option value="Cash" <?php if( $data['invoice']->payment_method == "Cash" ) { echo "selected"; } ?>>Cash</option>
+										<option value="Others" <?php if( $data['invoice']->payment_method == "Others" ) { echo "selected"; } ?>>Others</option>
 									</select>
 								</div>
 							</div>

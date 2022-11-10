@@ -60,8 +60,8 @@ class DoctorController extends Controller
 		$validator =  Validator::make($request->all(), [
 			'phone'    => [
 				'required',
-				'max:11',
-				Rule::unique('authentications'),
+				'max:18',
+				Rule::unique('doctors'),
 			],
 			'name'     => 'required',
 		]);
@@ -165,42 +165,55 @@ class DoctorController extends Controller
 	 */
 	public function update( Request $request, $doctorID )
 	{
-		$validatedData = $request->validate([
-			'name' => 'required',
-			'phone' => 'required|max:18',
-			'password' => 'required',
-		]);
+		$validator =  Validator::make($request->all(), [
+            'phone'    => [
+              'required',
+              'max:18',
+              Rule::unique('doctors')->ignore( $doctorID ),
+            ],
+            'name'     => 'required',
+          ]);
 
-		$doctor = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $doctorID )->firstOrFail();
-
-		// $doctor->clinic_id = session( 'clinicID' );
-		$doctor->name = $request->name;
-		$doctor->phone = $request->phone;
-		$doctor->password = $request->password;
-		$doctor->email = $request->email;
-		$doctor->designation = $request->designation;
-		$doctor->personal_home_page = $request->personal_home_page;
-		$doctor->degress = $request->degress;
-		$doctor->department = $request->department;
-		$doctor->specialist = $request->specialist;
-		$doctor->experience = $request->experience;
-		$doctor->date_of_birth = $request->date_of_birth;
-		$doctor->gender = $request->gender;
-		$doctor->blood_group = $request->blood_group;
-		$doctor->address = $request->address;
-		$doctor->about_me = $request->about_me;
-
-		if( $request->hasfile('profile_pic') )
+		if( $validator->fails() )
 		{
-			$profileImage = $request->profile_pic;
-			$imageName= time().'_'.$profileImage->getClientOriginalName();
-			$profileImage->move(public_path().'/images/', $imageName);  
-			$doctor->profile_pic =  $imageName;
+			return redirect( route('doctor_edit' , $doctorID ))->with('status', 'Error, Fail To Update Data');
+
+		}
+		else
+		{
+			$doctor = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $doctorID )->firstOrFail();
+
+			// $doctor->clinic_id = session( 'clinicID' );
+			$doctor->name = $request->name;
+			$doctor->phone = $request->phone;
+			$doctor->password = $request->password;
+			$doctor->email = $request->email;
+			$doctor->designation = $request->designation;
+			$doctor->personal_home_page = $request->personal_home_page;
+			$doctor->degress = $request->degress;
+			$doctor->department = $request->department;
+			$doctor->specialist = $request->specialist;
+			$doctor->experience = $request->experience;
+			$doctor->date_of_birth = $request->date_of_birth;
+			$doctor->gender = $request->gender;
+			$doctor->blood_group = $request->blood_group;
+			$doctor->address = $request->address;
+			$doctor->about_me = $request->about_me;
+	
+			if( $request->hasfile('profile_pic') )
+			{
+				$profileImage = $request->profile_pic;
+				$imageName= time().'_'.$profileImage->getClientOriginalName();
+				$profileImage->move(public_path().'/images/', $imageName);  
+				$doctor->profile_pic =  $imageName;
+			}
+	
+			$doctor->save();
+	
+			return redirect( route('doctor_edit' , $doctorID ))->with('status', 'Form Data Has Been Updated');
+	
 		}
 
-		$doctor->save();
-
-		return redirect( route('doctor_edit' , $doctorID ))->with('status', 'Form Data Has Been Inserted');
 	}
 
 	/**
