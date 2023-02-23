@@ -25,11 +25,27 @@
 			</div>
 		</div>
 	</form>  --}}
-	
 		<?php
+				if(  !empty( session( 'clinic_image' ) ) )
+				{
+					$clinicLogoURL = "/images/" . session( 'clinic_image' );
+				}
+				else
+				{
+					$clinicLogoURL = "/img/undraw_profile.png";
+				}
+				?>
+				<!--<a href="{{ route('dashboard') }}"-->
+    				<img
+    					class="topbar nav-item nav-link img-profile"
+    					src="{{ $clinicLogoURL }}"
+    				/>
+            	<!--</a>-->
+		<?php
+		
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) )
 		{
-			echo '<h3>Hello : <strong>' . session( 'name' ) . '</strong></h3>';
+			echo '<h3>Welcome To  <strong>' . session( 'clinic_name' ) . '</strong> Automation System</h3>';
 		}
 		?>
 	
@@ -122,7 +138,7 @@
 				}
 				else
 				{
-					$profilePicURL = "/img/undraw_profile.svg";
+					$profilePicURL = "/img/undraw_profile.png";
 				}
 				?>
 				<img

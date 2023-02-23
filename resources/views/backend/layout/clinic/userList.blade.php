@@ -59,7 +59,18 @@
 								<td>
 								
 									<a class="btn btn-xs btn-success" href="{{ route( 'clinic_user_edit', $user->id) }}"><i class="fa fa-edit"></i></a>
-								
+									<?php
+									if( $user->role == 3   )
+									{
+										?>
+										<a class="btn btn-xs btn-danger" href="{{ route( 'clinic_user_delete', $user->id) }}" onclick="return confirm('Are you sure you want to delete this')" ><i class="fa fa-trash"></i></a>
+										<?php
+									}
+									else
+									{
+										echo '<button class="btn btn-primary" > Super Admin</button>';
+									}
+									?>
 								</td>
 							</tr
 						@endforeach

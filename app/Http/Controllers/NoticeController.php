@@ -74,6 +74,7 @@ class NoticeController extends Controller
 			$image->move(public_path().'/images/', $imageName);  
 			$notice->image =  $imageName;
 		}
+        $notice->user_id = session( 'authorID' );
 
 		$notice->save();
 
@@ -141,6 +142,7 @@ class NoticeController extends Controller
 			$image->move(public_path().'/images/', $imageName);  
 			$notice->image =  $imageName;
 		}
+		$notice->user_id = session( 'authorID' );
 
 		$notice->save();
 

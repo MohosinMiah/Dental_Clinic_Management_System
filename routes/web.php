@@ -25,7 +25,9 @@ use App\Models\ClinicSetting;
 Route::get('/', function () {
 
 	return view('backend.layout.dashboard.index');
-});
+})->name('dashboard');
+
+
 
 // ********************    Authentication MODULE START ********************************
 
@@ -57,6 +59,7 @@ Route::post( '/profile/setting/phone/update/post', [ AuthenticationController::c
 Route::post( '/profile/setting/password/update/post', [ AuthenticationController::class, 'profile_setting_update_password'] )->name('profile_setting_update_password');
 
 
+Route::get( '/user/delete/{id}', [ AuthenticationController::class, 'destroy'] )->name('clinic_user_delete');
 
 
 

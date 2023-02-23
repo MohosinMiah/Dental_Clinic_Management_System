@@ -29,7 +29,7 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Department</th>
@@ -39,7 +39,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Department</th>
@@ -48,9 +48,10 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php $i = 1;?>
 								@foreach( $data['doctors'] as $doctor )
 									<tr>
-										<td>{{ $doctor->id }}</td>
+										<td>{{ $i++ }}</td>
 										<td>{{ $doctor->name }}</td>
 										<td>{{ $doctor->phone }}</td>
 										<td>{{ $doctor->department }}</td>

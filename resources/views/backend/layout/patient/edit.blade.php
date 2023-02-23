@@ -6,7 +6,7 @@
 	<?php $patient = $data['patient'];  ?>
 	<!-- Page Heading -->
 	<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List</a>
-	<h3 class="text text-info">Edit Patient</h3>
+	<h3 class="text text-info">Edit Patient : {{ $patient->name }} , ID: {{  $patient->id }}</h3>
 	<div class="row">
 		@if(session('status'))
 			<div class="alert alert-success">
@@ -93,7 +93,7 @@
 							<h2>Please select Illness as following</h2>
 						</div>
 						<div class="form-group col-md-3">
-							<label class="control-label"> DB </label>
+							<label class="control-label"> DM </label>
 							<div class="">
 								<select class="form-control" name="db">
 									<option value="No" <?php if( $patient->db == "No" ) { echo "selected"; } ?>>No</option>

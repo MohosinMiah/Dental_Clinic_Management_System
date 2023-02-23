@@ -129,6 +129,7 @@ class ClinicSettingController extends Controller
 					$password                = md5( $request->password );
 					$adminUser->password     = $password;
 				}
+				$adminUser->user_id = session( 'authorID' );
 				$save =  $adminUser->save();
 				return redirect( route('clinic_user_edit' , $userID ))->with('status', 'User Data Updated');
 			
@@ -177,7 +178,7 @@ class ClinicSettingController extends Controller
 	
 				$password = md5( $request->password );
 				$adminUser->password     = $password;
-	
+        		$adminUser->user_id = session( 'authorID' );
 				$save =  $adminUser->save();
 	
 				return redirect(route('add_new_user'))->with('status', 'Form Data Has Been Inserted');
@@ -243,10 +244,11 @@ class ClinicSettingController extends Controller
 			$clinic = ClinicSetting::where( 'id' , session( 'clinicID' ) )->firstOrFail();
 
 			$clinic->phone   = $request->phone;
-			$clinic->email   = $request->email;
+			$clinic->clinic_name   = $request->clinic_name;
 			$clinic->address = $request->address;
 			$clinic->note    = $request->note;
-	
+			$clinic->user_id = session( 'authorID' );
+
 			if( $request->hasfile( 'logo' ) )
 			{
 				$clinic_logo = $request->logo;

@@ -139,7 +139,7 @@ public function appoinment_report_filter()
 */
 public function patient_report()
 {
-	$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
+	$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' );
 	$data =
 	[
 		'patients'        => $patients->get(),

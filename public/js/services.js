@@ -123,7 +123,7 @@ APchange = function( event, ui )
 
 				$.ajax
 				   ({
-                        url: base_url + "/retrieve_service",
+                        url: "http://127.0.0.1:8000/retrieve_service",
                         headers: { 'X-CSRF-Token': csrf_test_name },
 						type: "POST",
 						data: { product_id:id },

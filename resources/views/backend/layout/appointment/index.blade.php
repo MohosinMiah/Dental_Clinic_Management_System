@@ -8,6 +8,14 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
+<script>
+	// dataTable in asc order
+	$(document).ready(function() {
+		$('#dataTableAppointment').DataTable( {
+			"order": [[ 0, "asc" ]]
+		} );
+	} );
+</script>
 @endsection
 
 @section('content')
@@ -17,7 +25,7 @@
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-md-12">
-			<h3 class="text text-info"> Appointment Report</h3>
+			<h3 class="text text-info"> Appointment List</h3>
 			<a href="{{ route('appointment_registration_form') }}" class="btn btn-info" style="margin-bottom: 10px;"> Add Appointment </a>
 
 				<form method="GET" action="{{ route('appoinment_report_filter_appointment') }}">
@@ -25,11 +33,11 @@
 					<div class="row">
 						<div class="col">
 							<label>From</label>
-							<input type="date" name="start_date" class="form-control"   value="<?php if( !empty($_GET['start_date'])) { echo $_GET['start_date']; }else{ echo date('Y-m-d'); } ?>"  placeholder="From" >
+							<input type="date" name="start_date" class="form-control"   value="<?php if( !empty($_GET['start_date'])) { echo $_GET['start_date']; }else{ echo $data['startDate']; } ?>"  placeholder="From" >
 						</div>
 						<div class="col">
 							<label>To</label>
-							<input type="date" name="end_date" class="form-control"   value="<?php if( !empty($_GET['end_date'])) { echo $_GET['end_date']; }else{ echo date('Y-m-d'); } ?>"  placeholder="To">
+							<input type="date" name="end_date" class="form-control"   value="<?php if( !empty($_GET['end_date'])) { echo $_GET['end_date']; }else{ echo $data['endDate']; } ?>"  placeholder="To">
 						</div>
 					</div>
 					<div class="row">
@@ -40,7 +48,7 @@
 				</form>
 			<br>
 			<?php if( !empty($_GET['start_date']) ) ?>
-			<p class="text-danger">By Default you will see Todays Appointment. <strong>Please chage Date Filter For More Appointments</strong> </p>
+			<p class="text-danger">By Default One Week Appointment List Will Display.<strong>Please chage Date Filter For More Appointments</strong> </p>
 			<h3>
 				Total Appointment Number  :
 				<strong> {{ $data['total_appointment'] }} </strong>
@@ -48,35 +56,39 @@
 							</div>
 						</div>
 
-							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							<table class="table table-bordered" id="dataTableAppointment" width="100%" cellspacing="0">
 								
 								<thead>
 									<tr>
-										<th>ID</th>
+										<th>SN</th>
 										<th>Name</th>
 										<th>Phone</th>
-										<th>Date/Time</th>
+										<th>Date</th>
+										<th>Time</th>
 										<th>Gender</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tfoot>
 									<tr>
-										<th>ID</th>
+										<th>SN</th>
 										<th>Name</th>
 										<th>Phone</th>
-										<th>Date/Time</th>
+										<th>Date</th>
+										<th>Time</th>
 										<th>Gender</th>
 										<th>Action</th>
 									</tr>
 								</tfoot>
 								<tbody>
+								    <?php $i = 1;?>
 									@foreach( $data['appointments'] as $appointment )
 										<tr>
-											<td>{{ $appointment->id }}</td>
+											<td>{{ $i++ }}</td>
 											<td>{{ $appointment->name }}</td>
 											<td>{{ $appointment->patient_phone }}</td>
-											<td>Date: {{ $appointment->date }} / Time:  {{ $appointment->time }}</td>
+											<td>{{ $appointment->date }}</td>
+											<td>{{$appointment->time}}</td>
 											<td>{{ $appointment->gender }}</td>
 											<td>
 												<a class="btn btn-xs btn-info" href="{{ route('appointment_show', $appointment->id) }}"><i class="fa fa-eye"></i></a>

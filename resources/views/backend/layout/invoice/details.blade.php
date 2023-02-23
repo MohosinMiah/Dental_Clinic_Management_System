@@ -23,9 +23,9 @@
                 <div id="printableArea">
                     <div class="panel-body">
                         <div class="row">
-                                
+                                	
                             <div class="col-sm-8">
-                                <img src="/images/fcdz.jpg" class="img img-responsive" alt="Family Care Dental Zone" height="100" width="100">
+                                <img src="/images/<?php echo session( 'clinic_image' ); ?>" class="img img-responsive" alt="Family Care Dental Zone" height="100" width="100">
                                     <br>
                                     <span class="label label-success-outline m-r-15">Billing From</span>
                                     <address>
@@ -148,7 +148,7 @@
 
                                             </tbody>
                                         </table>
-                                        <div>Authorised By : fcdzbd.com</div>
+                                        <div>Authorised By : <?php echo session( 'clinic_name' ); ?> </div>
                                     </div>
                                 </div>
                             </div>

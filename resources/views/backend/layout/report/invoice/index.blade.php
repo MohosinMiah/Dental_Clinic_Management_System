@@ -54,7 +54,7 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>Invoice Id</th>
+									<th>SN</th>
 									<th>Patient Name</th>
 									<th>Grand Total</th>
 									<th>Paid</th>
@@ -65,7 +65,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Invoice Id</th>
+									<th>SN</th>
 									<th>Patient Name</th>
 									<th>Grand Total</th>
 									<th>Paid</th>
@@ -75,9 +75,10 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php $i = 1;?>
 								@foreach( $data['invoices'] as $invoice )
 									<tr>
-										<td>{{ $invoice->id }}</td>
+										<td>{{ $i++ }}</td>
 										<td>{{ $invoice->patient_name }}</td>
 										<td>{{ $invoice->grand_total }}</td>
 										<td>{{ $invoice->paid_amount }}</td>

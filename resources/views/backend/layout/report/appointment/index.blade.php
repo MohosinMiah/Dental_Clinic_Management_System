@@ -56,7 +56,7 @@
 							
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Date/Time</th>
@@ -66,7 +66,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Date/Time</th>
@@ -75,9 +75,10 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php $i = 1;?>
 								@foreach( $data['appointments'] as $appointment )
 									<tr>
-										<td>{{ $appointment->id }}</td>
+										<td>{{ $i++ }}</td>
 										<td>{{ $appointment->name }}</td>
 										<td>{{ $appointment->patient_phone }}</td>
 										<td>Date: {{ $appointment->date }} / Time:  {{ $appointment->time }}</td>

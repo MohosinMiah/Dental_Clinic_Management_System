@@ -52,7 +52,7 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Registered</th>
@@ -62,7 +62,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Phone</th>
 									<th>Registered</th>
 									<th>Age</th>
@@ -70,9 +70,10 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php $i = 1;?>
 								@foreach( $data['patients'] as $patient )
 									<tr>
-										<td>{{ $patient->id }}</td>
+										<td>{{ $i++ }}</td>
 										<td><a href='{{ route("patient_service_history", $patient->id ) }}'>{{ $patient->name }} </a></td>
 										<td>{{ $patient->phone }}</td>
 										<td>{{ date('d-m-Y', strtotime( $patient->created_at  )) }}</td>
@@ -80,7 +81,7 @@
 										<td>
 											<a class="btn btn-xs btn-info" href="{{ route('patient_show', $patient->id) }}"><i class="fa fa-eye"></i></a>
 											<a class="btn btn-xs btn-success" href="{{ route('patient_edit', $patient->id) }}"><i class="fa fa-edit"></i></a>
-											<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('patient_delete', $patient->id) }}"><i class="fa fa-trash"></i></a> -->
+										
                                         </td>
 									</tr
 								@endforeach

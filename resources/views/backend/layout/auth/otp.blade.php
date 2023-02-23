@@ -48,7 +48,7 @@
 								</form>
 								<hr>
 								<div class="text-center">
-									<a class="small" href="forgot-password.html">Back To Login</a>
+									<a class="small" href="{{ route('dashboard') }}">Back To Login</a>
 								</div>
 							</div>
 						</div>

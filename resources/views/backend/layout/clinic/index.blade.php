@@ -63,8 +63,8 @@
 			</div>
 
 			<div class="form-group">
-				<label for="email">Clinic  Email  <span class="required_field"> (*) </span> </label>
-				<input type="email" name="email" id="email"  required class="form-control"   value="{{ $data['clinic_info']->email }}" />
+				<label for="clinic_name">Clinic  Name  <span class="required_field"> (*) </span> </label>
+				<input type="text" name="clinic_name" id="clinic_name"  required class="form-control"   value="{{ $data['clinic_info']->clinic_name }}" />
 			</div>
 			
 			<div class="form-group">

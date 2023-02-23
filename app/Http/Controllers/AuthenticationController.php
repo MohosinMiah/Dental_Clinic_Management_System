@@ -58,7 +58,7 @@ class AuthenticationController extends Controller
 		$phone              = $request->phone; 
 		$password           = $request->password;
 		// Convert plain text to md5() type
-		$password           = md5( $password );
+		$password           = md5( $password ); 
 		
 		$authenticatedUser  = DB::table('authentications')->where( 'phone', $phone )->where( 'password', $password )->first();
 	
@@ -73,6 +73,12 @@ class AuthenticationController extends Controller
 			session( [ 'role'        => $authenticatedUser->role   ] );
 			session( [ 'profile_pic' => $authenticatedUser->profile_pic ] );
 			session( [ 'isLogin'     => true                       ] );
+
+
+            $clinic_setting = DB::table( 'clinic_settings' )->where( 'id' , $authenticatedUser->clinic_id )->first();
+            
+            	session( [ 'clinic_name'    =>  $clinic_setting->clinic_name     ] );
+			session( [ 'clinic_image'    =>  $clinic_setting->logo     ] );
 
 			return redirect('/');
 		}
@@ -364,15 +370,24 @@ class AuthenticationController extends Controller
 		//
 	}
 
-	/**
+/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  \App\Models\Authentication  $authentication
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Authentication $authentication)
+	public function destroy(  $authenticationID  )
 	{
-		//
+		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) && session( 'role' ) == 1  )
+		{
+
+			$authentication = Authentication::destroy( $authenticationID );
+			return redirect(route('user_list'));
+		}
+		else
+		{
+			return redirect(route('user_list'));
+		}
 	}
 
 	public function validateloginCheck()

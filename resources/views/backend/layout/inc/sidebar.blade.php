@@ -10,12 +10,7 @@
 			<i class="fas fa-laugh-wink"></i>
 		</div>
 		<div class="sidebar-brand-text mx-3">
-			<?php
-				if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) )
-				{
-					echo '<strong>' . session( 'name' ) . '</strong>';
-				}
-			?>
+		Admin
 		</div>
 	</a>
 

@@ -16,7 +16,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<a href="{{ route('patient_list') }}" class="btn btn-info" style="margin-bottom: 10px;"> Patient List</a>
-			<h3 class="text-left">Details Information For :<strong> MD MOHOSIN MIAH </strong></h3>
+			<h3 class="text-left">Details Information For :<strong> {{ $data['patient']->name }} </strong></h3>
 			<table class="table">
 				<thead>
 					<tr>
@@ -50,7 +50,7 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				<thead>
 					<tr>
-						<th>Invoice Id</th>
+						<th>SN</th>
 						<th>Grand Total</th>
 						<th>Treatement Record</th>
 						<th>Paid</th>
@@ -61,7 +61,7 @@
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Invoice Id</th>
+						<th>SN</th>
 						<th>Grand Total</th>
 						<th>Treatement Record</th>
 						<th>Paid</th>
@@ -71,9 +71,10 @@
 					</tr>
 				</tfoot>
 				<tbody>
+				    <?php $i = 1;?>
 					@foreach( $data['invoices'] as $invoice )
 						<tr>
-							<td>{{ $invoice->id }}</td>
+							<td>{{ $i++ }}</td>
 							<td>{{ $invoice->grand_total }}</td>
 							<td>{{ $invoice->payment_note }}</td>
 							<td>{{ $invoice->paid_amount }}</td>
@@ -95,7 +96,7 @@
 							<td>
 								<a class="btn btn-xs btn-info" href="{{ route('single_view_invoice', $invoice->id) }}"><i class="fa fa-eye"></i></a>
 								<a class="btn btn-xs btn-success" href="{{ route('single_edit_invoice', $invoice->id) }}"><i class="fa fa-edit"></i></a>
-								<!-- <a class="btn btn-xs btn-danger" onclick="return confirm(' Are You Sure To Delete')" href="{{ route('single_delete_invoice', $invoice->id) }}"><i class="fa fa-trash"></i></a> -->
+							
 							</td>
 						</tr
 					@endforeach

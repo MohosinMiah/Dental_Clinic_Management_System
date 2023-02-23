@@ -51,10 +51,10 @@
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+<script src="{{ asset('js/sb-admin-2.min.js') }}"></script> 
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/circliful/2.0.17/circliful.js'></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 <script src="{{ asset('js/common_function.js') }}" type="text/javascript"></script>
 
 @yield('js')

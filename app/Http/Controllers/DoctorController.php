@@ -89,7 +89,7 @@ class DoctorController extends Controller
 			$doctor->blood_group = $request->blood_group;
 			$doctor->address = $request->address;
 			$doctor->about_me = $request->about_me;
-	
+    		$doctor->user_id = session( 'authorID' );
 			if( $request->hasfile('profile_pic') )
 			{
 				$profileImage = $request->profile_pic;
@@ -199,7 +199,7 @@ class DoctorController extends Controller
 			$doctor->blood_group = $request->blood_group;
 			$doctor->address = $request->address;
 			$doctor->about_me = $request->about_me;
-	
+        	$doctor->user_id = session( 'authorID' );
 			if( $request->hasfile('profile_pic') )
 			{
 				$profileImage = $request->profile_pic;

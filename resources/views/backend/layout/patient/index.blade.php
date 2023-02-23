@@ -8,6 +8,15 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('#dataTablepatient').DataTable( {
+        "lengthMenu": [100, "All", 50, 25],
+    } );
+} );
+</script>
+
 @endsection
 
 @section('content')
@@ -26,10 +35,11 @@
 
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<table class="table table-bordered" id="dataTablepatient" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
+									<th> ID</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Registered</th>
@@ -39,6 +49,7 @@
 							</thead>
 							<tfoot>
 								<tr>
+									<th>SN</th>
 									<th>ID</th>
 									<th>Phone</th>
 									<th>Registered</th>
@@ -47,9 +58,13 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php 
+							    $i =  1;
+							    ?>
 								@foreach( $data['patients'] as $patient )
 									<tr>
-										<td>{{ $patient->id }}</td>
+									<td>{{ $i++ }} </td>
+									<td>{{ $patient->id }} </td>
 										<td><a href='{{ route("patient_service_history", $patient->id ) }}'> {{ $patient->name }} </a></td>
 										<td>{{ $patient->phone }}</td>
 										<td>{{ date('d-m-Y', strtotime( $patient->created_at  )) }}</td>

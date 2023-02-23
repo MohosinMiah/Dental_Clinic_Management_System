@@ -33,7 +33,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-		$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
+		$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','ASC' )->get();
         $data = [
             'patients' => $patients
         ];
@@ -99,8 +99,9 @@ class PatientController extends Controller
 			$patient->pregnant_women      = $request->pregnant_women;
 			$patient->lactating_mother    = $request->lactating_mother;
 			$patient->note                = $request->note;
-	   
-			  $patient->save();
+    	    $patient->user_id = session( 'authorID' );
+
+			$patient->save();
 	   
 			  return redirect(route('patient_registration_form'))->with('status', 'Form Data Has Been Inserted');
 		}
@@ -191,6 +192,7 @@ class PatientController extends Controller
 			$patient->note                = $request->note;
 
 			$patient->note               = $request->note;
+        	$patient->user_id = session( 'authorID' );
 	
 			$patient->save();
    

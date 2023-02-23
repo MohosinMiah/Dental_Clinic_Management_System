@@ -67,7 +67,7 @@
 
 				<div class="form-group">
 					<label for="date_of_birth"> Doctor Date Of Birth </label>
-					<input type="text" name="date_of_birth" id="date_of_birth" class="form-control"   value="{{ $doctor->date_of_birth }}">
+					<input type="date" name="date_of_birth" id="date_of_birth" class="form-control"   value="{{ $doctor->date_of_birth }}">
 				</div>
 
 

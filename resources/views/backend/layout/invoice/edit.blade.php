@@ -1,5 +1,20 @@
 @extends('backend.home')
+@section('js')
+<!-- ✅ load jQuery ✅ -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
 
+    <!-- ✅ load jQuery UI ✅ -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+@endsection
 @section('content')
 
 <div class="container-fluid">
@@ -71,7 +86,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Date <i class="text-danger">*</i></label>
 								<div class="col-sm-8">
-									   <input class="form-control" size="50" name="payment_date" id="payment_date" required="" value="2022-06-06" type="date" />
+									   <input type="date" class="form-control"  name="payment_date" id="payment_date" required="" value="{{ $data['invoice']->payment_date }}"  />
 								</div>
 							</div>
 

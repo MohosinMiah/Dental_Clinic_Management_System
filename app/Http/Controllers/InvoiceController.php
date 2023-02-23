@@ -27,8 +27,8 @@ class InvoiceController extends Controller
 	public function get_patient_list_based_patient_id( $id )
 	{
 
-		// $patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->orwhere( 'id', $id )->orWhere( 'phone', $id )->first();
-		if( strlen( (string) $id ) > 4 )
+		// $patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'phone', $id )->first();
+		if( strlen( (string) $id ) > 5 )
 		{
 			$patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'phone', $id )->first();
 		}
@@ -75,7 +75,7 @@ class InvoiceController extends Controller
 	 */
 	public function index()
 	{
-		$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','DESC')->get();
+		$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','ASC')->get();
 		$data = [
 			'invoices' => $invoices
 		];
@@ -105,7 +105,6 @@ class InvoiceController extends Controller
 	 */
 	public function store(Request $request)
 	{
-
 		// return $request->all();
 		// $validatedData = $request->validate([
 		//     'patient_id' => 'required',
@@ -157,7 +156,8 @@ class InvoiceController extends Controller
 		$invoice->payment_note = $request->payment_note;
 		$invoice->payment_method = $request->payment_method;
 		$invoice->payment_method_note = $request->payment_method_note;
-
+        $invoice->user_id = session( 'authorID' );
+        
 		$invoice->save();
 
 		$insertedInvoiceID = $invoice->id;
@@ -265,7 +265,8 @@ class InvoiceController extends Controller
 		$invoice->payment_note = $request->payment_note;
 		$invoice->payment_method = $request->payment_method;
 		$invoice->payment_method_note = $request->payment_method_note;
-
+        $invoice->user_id = session( 'authorID' );
+ 
 		$invoice->save();
 
 

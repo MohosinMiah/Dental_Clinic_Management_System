@@ -92,7 +92,7 @@
 							<h2>Please select Illness as following</h2>
 						</div>
 						<div class="form-group col-md-3">
-							<label class="control-label"> DB </label>
+							<label class="control-label"> DM </label>
 							<div class="">
 								<select class="form-control" name="db">
 									<option value="No" <?php if( old('db') == "No" ) { echo "selected"; } ?>>No</option>

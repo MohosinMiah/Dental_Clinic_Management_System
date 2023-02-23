@@ -29,7 +29,7 @@
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Title</th>
 									<th>Description</th>
 									<th>Create At</th>
@@ -38,7 +38,7 @@
 							</thead>
 							<tfoot>
 								<tr>
-									<th>ID</th>
+									<th>SN</th>
 									<th>Title</th>
 									<th>Description</th>
 									<th>Create At</th>
@@ -46,9 +46,10 @@
 								</tr>
 							</tfoot>
 							<tbody>
+							    <?php $i = 1;?>
 								@foreach( $data['notices'] as $notice )
 									<tr>
-										<td>{{ $notice->id }}</td>
+										<td>{{ $i++ }}</td>
 										<td>{{ $notice->title }}</td>
 										<td>{{ Str::words( $notice->description, 8, ' (...)') }}</td>
 										<td>{{ $notice->created_at }}</td>

@@ -38,30 +38,32 @@ class AppointmentController extends Controller
 
 		$startDate = date( 'Y-m-d', strtotime( Carbon::now() ) );
 
-	
-		$endDate = date( 'Y-m-d', strtotime( Carbon::now() ) );
+		// end time will be more than 7 day than current date
+		$endDate = date( 'Y-m-d', strtotime( Carbon::now()->addDays( 7 ) ) );
 
+		if( !empty( $startDate ) )
+		{	
+			$appointments->where( 'date', '>=', $startDate );
+		}
 
-	if( !empty( $startDate ) )
-	{	
-		$appointments->where( 'date', '>=', $startDate );
-	}
+		if( !empty( $endDate ) )
+		{
+			$appointments->where('date', '<=', $endDate);
 
-	if( !empty( $endDate ) )
-	{
-		$appointments->where('date', '<=', $endDate);
+		}
+		else
+		{
+			$appointments->where( 'date', '<=', date( 'Y-m-d', strtotime( Carbon::now() ) ) );
+		}
+		// appointments order by id asc
+		// $appointments->orderBy( 'id', 'DESC' );
 
-	}
-	else
-	{
-		$appointments->where( 'date', '<=', date( 'Y-m-d', strtotime( Carbon::now() ) ) );
-	}
-
-	$data = [
-		'appointments'          => $appointments->get(),
-		'total_appointment' => $appointments->count( 'id' )
-	];
-
+		$data = [
+			'appointments'          => $appointments->get(),
+			'total_appointment'     => $appointments->count( 'id' ),
+			'startDate'             => $startDate,
+			'endDate'               => $endDate
+		];
 	
 
 		return view('backend.layout.appointment.index', compact('data'));
@@ -155,6 +157,7 @@ class AppointmentController extends Controller
 			$appointment->doctor_id = $request->doctor_id;
 			$appointment->gender = $request->gender;
 			$appointment->note = $request->note;
+			$appointment->user_id = session( 'authorID' );
 				
 			$appointment->save();
 	
@@ -240,7 +243,8 @@ class AppointmentController extends Controller
 			$appointment->doctor_id = $request->doctor_id;
 			$appointment->gender = $request->gender;
 			$appointment->note = $request->note;
-				
+			$appointment->user_id = session( 'authorID' );
+
 			$appointment->save();
 	
 			return redirect( route( 'appointment_edit', $appointmentID ) )->with('status', 'Form Data Has Been Updated');
