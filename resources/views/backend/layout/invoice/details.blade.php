@@ -43,23 +43,17 @@
                                     <div>Invoice No: {{ $data['invoice']->id }}</div>
                                     <div class="m-b-15">{{ $data['invoice']->payment_date }}</div>
                                     <strong>Doctor : </strong>
-                                        {{ $data['doctor']->name }}
+                                        : {{ $data['doctor']->name }}
                                         <br>
                                     <span class="label label-success-outline m-r-15">Billing To</span>
 
 									<address>  
-										<strong> </strong><br>
-										<strong>Address</strong>
-										<p>
+                                    <strong>Patient Name : </strong>  {{ $data['invoice']->patient_name }}<br>
+                                        
+										<strong>Address</strong></br>
 											{{ $data['invoice']->patient_address }}
-										</p>
-										<abbr>Phone Number: </abbr>
-										{{ $data['invoice']->patient_phone }}
-                                        <br>
-                                       
-										<abbr>Email Address:</abbr> 
-										{{ $data['invoice']->patient_phone }}
-									</address>
+                                            </br>
+										<strong> Phone Number: </strong>{{ $data['invoice']->patient_phone }}</abbr>
                                 </div>
                             </div> <hr>
 

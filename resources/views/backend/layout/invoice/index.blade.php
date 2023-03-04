@@ -33,7 +33,9 @@
 									<th>Patient Name</th>
 									<th>Grand Total</th>
 									<th>Paid</th>
+									<th>Cash Back</th>
 									<th>Due</th>
+									<th>Decrease</th>
 									<th>IsClose</th>
 									<th>Date</th>
 									<th>Action</th>
@@ -45,7 +47,9 @@
 									<th>Patient Name</th>
 									<th>Grand Total</th>
 									<th>Paid</th>
+									<th>Cash Back</th>
 									<th>Due</th>
+									<th>Decrease</th>
 									<th>IsClose</th>
 									<th>Date</th>
 									<th>Action</th>
@@ -59,7 +63,11 @@
 										<td>{{ $invoice->patient_name }}</td>
 										<td>{{ $invoice->grand_total }}</td>
 										<td>{{ $invoice->paid_amount }}</td>
+										<td>{{ $invoice->cash_back }}</td>
 										<td>{{ $invoice->due_total }}</td>
+										<td>{{ $invoice->decrease }}</td>
+
+
 										<td> 
 											<?php 
 											if( $invoice->isClose == 1)

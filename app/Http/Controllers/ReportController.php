@@ -33,17 +33,17 @@ class ReportController extends Controller
 
 public function payment_report()
 {
-	$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','DESC')->get();
+	$invoices = Invoice::orderBy('id','DESC')->get();
 	$data = [
 		'invoices'          => $invoices,
-		'total_paid_amount' => DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->sum( 'paid_amount' )
+		'total_paid_amount' => DB::table( 'invoices' )->sum( 'paid_amount' )
 	];
 	return view('backend.layout.report.invoice.index', compact('data'));
 }
 
 public function payment_report_filter()
 {
-	$invoices = DB::table('invoices')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
+	$invoices = DB::table('invoices')->select( '*' );
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];
@@ -86,7 +86,7 @@ public function payment_report_filter()
 */
 public function appoinment_report()
 {
-	$appointments = Appointment::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' );
+	$appointments = Appointment::orderBy( 'id','DESC' );
 	$data = [
 		'appointments'          => $appointments->get(),
 		'total_appointment'     => $appointments->count( 'id' )
@@ -96,7 +96,7 @@ public function appoinment_report()
 
 public function appoinment_report_filter()
 {
-	$appointments = DB::table('appointments')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
+	$appointments = DB::table('appointments')->select( '*' );
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{
 		$startDate  = $_GET[ 'start_date' ];
@@ -139,7 +139,7 @@ public function appoinment_report_filter()
 */
 public function patient_report()
 {
-	$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' );
+	$patients = Patient::orderBy( 'id','DESC' );
 	$data =
 	[
 		'patients'        => $patients->get(),
@@ -150,7 +150,7 @@ public function patient_report()
 
 public function patient_report_filter()
 {
-	$patients = DB::table('patients')->select( '*' )->where( 'clinic_id' , session( 'clinicID' ) );
+	$patients = DB::table('patients')->select( '*' );
 
 	if( !empty( $_GET[ 'start_date' ] ) )
 	{

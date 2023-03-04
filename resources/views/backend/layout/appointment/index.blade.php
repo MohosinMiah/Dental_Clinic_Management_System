@@ -66,6 +66,7 @@
 										<th>Date</th>
 										<th>Time</th>
 										<th>Gender</th>
+										<th>Doctor</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -77,12 +78,16 @@
 										<th>Date</th>
 										<th>Time</th>
 										<th>Gender</th>
+										<th>Doctor</th>
 										<th>Action</th>
 									</tr>
 								</tfoot>
 								<tbody>
 								    <?php $i = 1;?>
 									@foreach( $data['appointments'] as $appointment )
+									<?php
+									$doctor = DB::table('doctors')->where('id', $appointment->doctor_id)->first();
+									?>
 										<tr>
 											<td>{{ $i++ }}</td>
 											<td>{{ $appointment->name }}</td>
@@ -90,14 +95,13 @@
 											<td>{{ $appointment->date }}</td>
 											<td>{{$appointment->time}}</td>
 											<td>{{ $appointment->gender }}</td>
+											<td>{{ $doctor->name }}</td>
 											<td>
 												<a class="btn btn-xs btn-info" href="{{ route('appointment_show', $appointment->id) }}"><i class="fa fa-eye"></i></a>
 												<a class="btn btn-xs btn-success" href="{{ route('appointment_edit', $appointment->id) }}"><i class="fa fa-edit"></i></a>
-										
 											</td>
 										</tr
 									@endforeach
-
 								</tbody>
 							</table>
 						</div>

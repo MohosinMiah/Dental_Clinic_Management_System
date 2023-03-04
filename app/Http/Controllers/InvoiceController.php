@@ -27,18 +27,18 @@ class InvoiceController extends Controller
 	public function get_patient_list_based_patient_id( $id )
 	{
 
-		// $patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'phone', $id )->first();
+		// $patient =  DB::table('patients')->where( 'phone', $id )->first();
 		if( strlen( (string) $id ) > 5 )
 		{
-			$patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'phone', $id )->first();
+			$patient =  DB::table('patients')->where( 'phone', $id )->first();
 		}
 		else
 		{
-			$patient =  DB::table('patients')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $id )->first();
+			$patient =  DB::table('patients')->where( 'id', $id )->first();
 		}
 
 
-		$invoice = DB::table('invoices')->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id', $patient->id )->orderBy( 'id', 'DESC' )->first();
+		$invoice = DB::table('invoices')->where( 'patient_id', $patient->id )->orderBy( 'id', 'DESC' )->first();
 
 		$data = [
 			'patient' => $patient,
@@ -63,7 +63,7 @@ class InvoiceController extends Controller
 	{
 		$service =  DB::table('services')
 		->select('id AS value', 'service_name AS label')
-		->where( 'clinic_id' , session( 'clinicID' ) )->get();
+		->get();
 		return response()->json($service);
 	}
 
@@ -75,7 +75,7 @@ class InvoiceController extends Controller
 	 */
 	public function index()
 	{
-		$invoices = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','ASC')->get();
+		$invoices = Invoice::orderBy('id','ASC')->get();
 		$data = [
 			'invoices' => $invoices
 		];
@@ -90,7 +90,7 @@ class InvoiceController extends Controller
 	public function create()
 	{
 		
-		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->orderBy('id','ASC')->get();
+		$doctors = Doctor::orderBy('id','ASC')->get();
 		$data = [
 			'doctors' => $doctors
 		];
@@ -105,21 +105,9 @@ class InvoiceController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		// return $request->all();
-		// $validatedData = $request->validate([
-		//     'patient_id' => 'required',
-		//     'patient_phone' => 'required',
-		//     'patient_name' => 'required',
-		//     'payment_date' => 'required',
-		//     'total' => 'required',
-		//     'grand_total' => 'required',
-		//     'paid_amount' => 'required',
-		//     'payment_method' => 'required',
-		//   ]);
 
 		$invoice = new Invoice;
 
-		$invoice->clinic_id = session( 'clinicID' );
 		$invoice->patient_id =$request->patient_id;
 		$invoice->doctor_id = $request->doctor_id;
 		$invoice->added_by_id = $request->added_by_id;
@@ -127,7 +115,7 @@ class InvoiceController extends Controller
 		$invoice->patient_name = $request->patient_name;
 		$invoice->patient_address = $request->patient_address;
 		$invoice->payment_date = $request->payment_date;
-		$invoice->total_payment = 111;
+		$invoice->total_payment = 0;
 		$invoice->tax_total = $request->total_tax;
 		
 		$invoice->total       = $request->grand_total_price;
@@ -141,10 +129,14 @@ class InvoiceController extends Controller
 		{
 			$invoice->decrease = $request->decrease;
 		}
+		if( !empty( $request->cash_back ) )
+		{
+			$invoice->cash_back = $request->cash_back;
+		}
+
 		if( $request->isClose == 1 )
 		{
 			$invoice->due_total = $request->due_amount;
-
 		}else{
 			$invoice->due_total = 0;
 
@@ -167,7 +159,6 @@ class InvoiceController extends Controller
 		{
 
 			DB::table('invoice_details')->insert([ 
-				'clinic_id' => session( 'clinicID' ),
 				'invoice_id' => $insertedInvoiceID,
 				'service_id' => $request->product_id[$index],
 				'service_name' => $request->product_name[$index],
@@ -177,6 +168,7 @@ class InvoiceController extends Controller
 				'total' => $request->total_price[$index],
 				'service_total_tax' => $request->service_total_tax[$index],
 				'service_all_tax' => $request->service_all_tax[$index],
+				'soft_delete' => false,
 			]);
 
 			$totalDiscount += $request->discount[$index];
@@ -189,7 +181,7 @@ class InvoiceController extends Controller
 		$invoice->save();
 		
 
-		return redirect( route( 'invoice_added_form' ) )->with( 'status', 'Form Data Has Been Inserted' );
+		return redirect( route( 'single_view_invoice', $insertedInvoiceID ) )->with( 'status', 'Form Data Has Been Inserted' );
 
 
 	}
@@ -226,9 +218,8 @@ class InvoiceController extends Controller
 	public function update( Request $request, $invoiceID )
 	{
 
-		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
+		$invoice = Invoice::where( 'id', $invoiceID )->firstOrFail();
 
-		// $invoice->clinic_id = session( 'clinicID' );
 		$invoice->patient_id =$request->patient_id;
 		$invoice->doctor_id = $request->doctor_id;
 		$invoice->added_by_id = $request->added_by_id;
@@ -249,6 +240,10 @@ class InvoiceController extends Controller
 		if( !empty( $request->decrease ) )
 		{
 			$invoice->decrease = $request->decrease;
+		}
+		if( !empty( $request->cash_back ) )
+		{
+			$invoice->cash_back = $request->cash_back;
 		}
 		if( $request->isClose == 1 )
 		{
@@ -271,16 +266,14 @@ class InvoiceController extends Controller
 
 
 		DB::table('invoice_details')
-			->where( 'invoice_id', $invoiceID )
-			->where( 'clinic_id', session( 'clinicID' ) )
-		->delete();
-
+		->where( 'invoice_id', $invoiceID )
+		->update(['soft_delete' => true ]);
+		
 		$totalDiscount = 0;
 
 		foreach( $request->product_name as  $index=>$product  )
 		{
 			DB::table('invoice_details')->insert([ 
-				'clinic_id' => session( 'clinicID' ),
 				'invoice_id' => $invoiceID,
 				'service_id' => $request->product_id[$index],
 				'service_name' => $request->product_name[$index],
@@ -290,13 +283,14 @@ class InvoiceController extends Controller
 				'total' => $request->total_price[$index],
 				'service_total_tax' => $request->service_total_tax[$index],
 				'service_all_tax' => $request->service_all_tax[$index],
+				'soft_delete' => false,
 			]);
 
 			$totalDiscount += $request->discount[$index];
 		}
 
 		// Updated Total Discount
-		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
+		$invoice = Invoice::where( 'id', $invoiceID )->firstOrFail();
 		$invoice->total_discount = $totalDiscount;
 		$invoice->save();
 
@@ -313,11 +307,11 @@ class InvoiceController extends Controller
 
 	public function invoiceView( $invoiceID )
 	{
-		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->firstOrFail();
+		$invoice = Invoice::where( 'id', $invoiceID )->firstOrFail();
 		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'invoice_id', $invoice->id )->get();
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->where( 'soft_delete', false )->get();
 
-		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoice->doctor_id )->first();
+		$doctor = DB::table( 'doctors' )->where( 'id', $invoice->doctor_id )->first();
 
 		// echo '<pre>';
 
@@ -336,11 +330,11 @@ class InvoiceController extends Controller
 
 	public function invoiceEdit( $invoiceID )
 	{
-		$invoice = Invoice::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $invoiceID )->first();
+		$invoice = Invoice::where( 'id', $invoiceID )->first();
 		
-		$invoiceDetails = DB::table( 'invoice_details' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'invoice_id', $invoice->id )->get();
+		$invoiceDetails = DB::table( 'invoice_details' )->where( 'invoice_id', $invoice->id )->where( 'soft_delete', false )->get();
 
-		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->get();
+		$doctor = DB::table( 'doctors' )->get();
 		// echo '<pre>';
 
 		// var_dump( $invoiceDetails );
@@ -350,7 +344,7 @@ class InvoiceController extends Controller
 		$data = [
 			'invoice' => $invoice,
 			'invoiceDetails' => $invoiceDetails,
-			'doctors'  => $doctors
+			'doctors' => $doctor
 		];
 
 		return view('backend.layout.invoice.edit', compact('data') );

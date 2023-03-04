@@ -36,7 +36,7 @@
 		@endif
 		<div class="col-md-12">
 			{{--  Doctor Registration Form Start   --}}
-			<form action="{{ route('invoice_added_save') }}"  class="form-vertical" method="post">
+			<form action="{{ route('invoice_added_save') }}" onsubmit="formValidation()"  class="form-vertical" method="post">
 				@csrf
 				<div class="panel-body">
 
@@ -215,7 +215,10 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="4"><b>Grand Total:</b></td>
+									<td colspan="4"><b>Grand Total:</b>
+										<input type="hidden" name="previous_due" id="previous_due_set" value="0"> 
+										<bold style="color:blue"> ( Previous Due: <span id="previous_due" > </span> )<bold>
+									</td>
 									<td class="text-right">
 										<input id="grandTotalWithDue" tabindex="-1" class="form-control text-right" name="grandTotalWithDue" value="0" readonly="readonly" type="text">
 									</td>
@@ -238,8 +241,6 @@
 											<option value="1">Continue</option>
 											<option value="0">Close</option>
 										</select>
-										<input type="hidden" name="previous_due" id="previous_due_set" value="0"> 
-										<bold>Previous Due Was : <span id="previous_due" > </span> <bold>
 									</td>
 									<td class="text-right">
 										<input id="dueAmmount" class="form-control text-right" name="due_amount" value="0" readonly="readonly" type="text">
@@ -252,12 +253,20 @@
 					<div class="row">
 						<div class="col-md-8">
 
-							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
-								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+							<div class="form-group row isCloseDisplayChashBack"  style="display:none">
+								<label for="date" class="col-sm-4 col-form-label"> <span class="text-primary text-bold"> Cash Back Amount</span> </label>
 								<div class="col-sm-8">
-									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+									<input type="number" min="0" max="20000" name="cash_back" id="cash_back" class="form-control" ></input>
 								</div>
 							</div>
+
+							<div class="form-group row isCloseDisplayDecrease" style="display:none">
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount </span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" ></input>
+								</div>
+							</div>
+
 
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Treatment Notes</label>

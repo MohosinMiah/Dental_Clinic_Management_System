@@ -231,7 +231,11 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="4"><b>Grand Total:</b></td>
+									<td colspan="4">
+										<b>Grand Total:</b>
+										<input type="hidden" name="previous_due" id="previous_due_set" value="{{ $data['invoice']->previous_due }}"> 
+										<bold style="color:blue"> ( Previous Due: <span id="previous_due" >{{ $data['invoice']->previous_due }}</span> )<bold>
+								</td>
 									<td class="text-right">
 										<input id="grandTotalWithDue" tabindex="-1" class="form-control text-right" name="grandTotalWithDue"  value="{{  $data['invoice']->grand_total }}" readonly="readonly" type="text">
 									</td>
@@ -256,8 +260,7 @@
 											<option value="1" <?php if( $data['invoice']->isClose == 1 ) { echo "selected"; } ?> >Continue</option>
 											<option value="0" <?php if( $data['invoice']->isClose == 0 ) { echo "selected"; } ?>>Close</option>
 										</select>
-										<input type="hidden" name="previous_due" id="previous_due_set" value="{{ $data['invoice']->previous_due }}"> 
-										<bold>Previous Due Was : <span id="previous_due" > {{ $data['invoice']->previous_due }} </span> <bold>
+								
 									</td>
 
 									<td class="text-right">
@@ -275,20 +278,35 @@
 							if( $data['invoice']->isClose == 0 )
 							{
 							?>
-							<div class="form-group row" id="decreaseAmountDisplay">
+	
+							<div class="form-group row editIsClose"  >
+								<label for="date" class="col-sm-4 col-form-label"> <span class="text-primary text-bold"> Cash Back Amount</span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="cash_back" value="{{ $data['invoice']->cash_back }}"  class="form-control" ></input>
+								</div>
+							</div>
+
+							<div class="form-group row editIsClose" >
 								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount </span> </label>
 								<div class="col-sm-8">
-									<input type="number" min="0" max="20000" value="{{ $data['invoice']->decrease }}" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+									<input type="number" min="0" max="20000" name="decrease" value="{{ $data['invoice']->decrease }}"  class="form-control" ></input>
 								</div>
 							</div>
+
 							<?php } ?>
-							<div class="form-group row" id="decreaseAmountDisplay" style="display:none">
-								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount (*)</span> </label>
+							<div class="form-group row isCloseDisplayChashBack" style="display:none;" >
+								<label for="date" class="col-sm-4 col-form-label"> <span class="text-primary text-bold"> Cash Back Amount</span> </label>
 								<div class="col-sm-8">
-									<input type="number" min="0" max="20000" name="decrease" id="decreaseAmount" class="form-control" placeholder="0"></input>
+									<input type="number" min="0" max="20000" name="cash_back" value="{{ $data['invoice']->cash_back }}" id="cash_back" class="form-control" ></input>
 								</div>
 							</div>
-							
+
+							<div class="form-group row isCloseDisplayDecrease" style="display:none;"  >
+								<label for="date" class="col-sm-4 col-form-label"> <span style="color:red;font-weight: bold"> Decrease Amount </span> </label>
+								<div class="col-sm-8">
+									<input type="number" min="0" max="20000" name="decrease" value="{{ $data['invoice']->decrease }}" id="decreaseAmount" class="form-control" ></input>
+								</div>
+							</div>
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Treatment Notes</label>
 								<div class="col-sm-8">
@@ -310,9 +328,7 @@
 							<div class="form-group row">
 								<label for="date" class="col-sm-4 col-form-label">Payment Method Notes  </label>
 								<div class="col-sm-8">
-									<textarea name="payment_method_note" class="form-control" placeholder="Payment Method Notes ">
-										{{ $data['invoice']->payment_method_note }}
-									</textarea>
+									<textarea name="payment_method_note" class="form-control" placeholder="Payment Method Notes ">{{ $data['invoice']->payment_method_note }}</textarea>
 								</div>
 							</div>
 						</div>

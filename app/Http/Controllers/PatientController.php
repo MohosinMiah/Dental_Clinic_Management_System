@@ -33,7 +33,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-		$patients = Patient::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','ASC' )->get();
+		$patients = Patient::orderBy( 'id','ASC' )->get();
         $data = [
             'patients' => $patients
         ];
@@ -79,7 +79,6 @@ class PatientController extends Controller
 
 			$patient = new Patient;
 
-			$patient->clinic_id = session( 'clinicID' );
 			$patient->name               = $request->name;
 			$patient->phone              = $request->phone;
 			$patient->age                = $request->age;
@@ -116,7 +115,7 @@ class PatientController extends Controller
      */
     public function show( $patientID )
     {
-		$patient = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
+		$patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
 
 		$data = [
             'patient' => $patient
@@ -134,7 +133,7 @@ class PatientController extends Controller
      */
     public function edit( $patientID )
     {
-        $patient = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
+        $patient = DB::table( 'patients' )->where( 'id' , $patientID )->first();
 
 		$data = [
             'patient' => $patient
@@ -169,7 +168,7 @@ class PatientController extends Controller
 		}
 		else
 		{
-			$patient = Patient::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $patientID )->firstOrFail();
+			$patient = Patient::where( 'id', $patientID )->firstOrFail();
 		
 			$patient->name               = $request->name;
 			$patient->phone              = $request->phone;
@@ -203,9 +202,9 @@ class PatientController extends Controller
 
     function service_history( $patientID )
     {
-		$patient    = DB::table( 'patients' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->first();
-		$invoices   = DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id' , $patientID )->get();
-		$total_paid = DB::table( 'invoices' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'patient_id' , $patientID )->sum( 'paid_amount' );
+		$patient    = DB::table( 'patients' )->where( 'id' , $patientID )->first();
+		$invoices   = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->get();
+		$total_paid = DB::table( 'invoices' )->where( 'patient_id' , $patientID )->sum( 'paid_amount' );
 
 		$data = [
             'patient'    => $patient,
@@ -223,7 +222,7 @@ class PatientController extends Controller
      */
     public function destroy( $patientID )
     {
-		$status = Patient::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $patientID )->firstOrFail();
+		$status = Patient::where( 'id' , $patientID )->firstOrFail();
 		$status->destroy();
 		if( $status )
 		{

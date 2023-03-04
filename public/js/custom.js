@@ -67,23 +67,84 @@ $(document).ready(function() {
 // isClose = 0 Selected   
 $(document).ready(function() {  
 	$('body').on('keyup change', '#isClose', function() {
+		$('.editIsClose').css("display", "none");
 		var isClose = $('#isClose').val();
 		if( parseInt(isClose) === 0)
 		{
-		
-			$('#decreaseAmountDisplay').css("display", "");
+			$('.isCloseDisplayChashBack').css("display", "");
+			$('.isCloseDisplayDecrease').css("display", "");
 
+			// Cash Back
+			$("#cash_back").on('keyup ', function(){
+				var grandTotal       = parseInt( $('#grandTotal').val() );
+				var paidAmount       = parseInt( document.getElementById('paidAmount').value );
+				var previous_due_set = parseInt( $('#previous_due_set').val() );
+				var decreaseAmountValue = parseInt( $('#decreaseAmount').val() ) ;
+				var cashBack 	           = parseInt( $('#cash_back').val() );
+
+				// check decreaseAmountValue is NaN
+				if( isNaN(decreaseAmountValue) )
+				{
+					decreaseAmountValue = 0;
+				}
+
+				if( isNaN( cashBack ) )
+				{
+					cashBack = 0;
+				}
+
+				
+		
+				if( previous_due_set > 0 )
+				{
+					 finalDue =  Math.abs( ( grandTotal + previous_due_set ) ) - paidAmount ;
+			
+				}else{
+					 finalDue = grandTotal - Math.abs( ( paidAmount - previous_due_set ) );
+				
+				}
+	
+
+				finalDue = finalDue - decreaseAmountValue;
+			
+				var dueAmountAfterCashBack = finalDue  + Math.abs(cashBack);
+
+				if( cashBack >= 0 && dueAmountAfterCashBack <= 0 )
+				{
+					$('#dueAmmount').val( dueAmountAfterCashBack );
+				}
+				else
+				{
+					if( cashBack != 0 && isNaN( decreaseAmountValue ) == false)
+					{
+						$('#cash_back').val(0);
+						$('#dueAmmount').val( finalDue );
+						alert('Cash Back is not valid');
+					}
+				}
+			});
+
+			// Decerase Amount
 			$("#decreaseAmount").on('keyup change', function(){
 
 				var grandTotal       = parseInt( $('#grandTotal').val() );
 				var paidAmount       = parseInt( document.getElementById('paidAmount').value );
-				var dueAmmount = parseInt( document.getElementById('dueAmmount').value );
 				var previous_due_set = parseInt( $('#previous_due_set').val() );
-				
+				var cashBack 	           = parseInt( $('#cash_back').val() );
+
 				var decreaseAmountValue = parseInt( $('#decreaseAmount').val() );
 
 
-		
+				if( isNaN(decreaseAmountValue) )
+				{
+					decreaseAmountValue = 0;
+				}
+
+				if( isNaN( cashBack ) )
+				{
+					cashBack = 0;
+				}
+
 				if( previous_due_set > 0 )
 				{
 					 finalDue =  Math.abs( ( grandTotal + previous_due_set ) ) - paidAmount ;
@@ -91,23 +152,22 @@ $(document).ready(function() {
 				}else{
 					 finalDue = grandTotal - Math.abs( ( paidAmount - previous_due_set ) );
 				}
+				console.log( 'finalDue = ' );
+				console.log( finalDue );
+				var finalDueAfterCashBack = finalDue + cashBack;
 
 				if( paidAmount < 0 )
 				{
 					paidAmount = 0;
 				}
 				// Id dueAmmount is greater than 0  
-
-				if(  decreaseAmountValue >= 0 )
+				console.log("finalDueAfterCashBack  Before IF =  " + finalDueAfterCashBack);
+				
+				if(  decreaseAmountValue >= 0 && finalDueAfterCashBack != 0 )
 				{
-				
-					console.log("previous_due_set = "+ previous_due_set)
-					console.log("Paid =  " + ( paidAmount + previous_due_set ));
-				
-					console.log( decreaseAmountValue );
-					$('#dueAmmount').val( finalDue - decreaseAmountValue);
-
+					$('#dueAmmount').val( ( finalDueAfterCashBack - decreaseAmountValue ) );
 				}
+				
 
 			});
 
@@ -118,11 +178,13 @@ $(document).ready(function() {
 			var paidAmount       = parseInt( document.getElementById('paidAmount').value );
 			var previous_due_set = parseInt( $('#previous_due_set').val() );
 
-			$('#decreaseAmountDisplay').css("display", "none");
-			
+			$('.isCloseDisplayChashBack').css("display", "none");
+			$('.isCloseDisplayDecrease').css("display", "none");
+						
 			console.log( Math.abs( ( paidAmount + previous_due_set ) ) );
 			if( previous_due_set > 0 )
 			{
+
 				 finalDue =  Math.abs( ( grandTotal + previous_due_set ) ) - paidAmount ;
 
 			}else{
@@ -135,10 +197,40 @@ $(document).ready(function() {
 			}
 
 			$('#dueAmmount').val( finalDue );
+			$('#cash_back').val(0);
 			$('#decreaseAmount').val(0);
 		}
 	});
 });
+
+function formValidation()
+{
+	// Form submit prevent default behaviour
+	
+	var isClose = $('#isClose').val();
+	
+
+
+	console.log('isClose = ' + isClose);
+	if( isClose == 0 )
+	{
+		
+		var dueAmount = $('#dueAmmount').val();
+
+		// dueAmount is not less and greater than 0
+		if( dueAmount < 0 || dueAmount > 0 )
+		{
+			event.preventDefault();
+			alert( 'Due Amount Should Be 0' );
+			return false;
+		}
+	}
+	
+
+}
+
+
+
 
 
 // Appointment Patient ID Field Conditional Display

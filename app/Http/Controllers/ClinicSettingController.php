@@ -26,7 +26,7 @@ class ClinicSettingController extends Controller
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) && session( 'role' ) == 1  )
 		{
 
-			$clinic_info = ClinicSetting::where( 'id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->first();
+			$clinic_info = ClinicSetting::first();
 			$data = [
 				'clinic_info' => $clinic_info
 			];
@@ -62,7 +62,7 @@ class ClinicSettingController extends Controller
     {
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) && session( 'role' ) == 1  )
 		{
-			$users = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
+			$users = Authentication::orderBy( 'id','DESC' )->get();
 			$data = [
 				'users' => $users
 			];
@@ -80,7 +80,7 @@ class ClinicSettingController extends Controller
 	{
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) && session( 'role' ) == 1  )
 		{
-			$user = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $userID )->first();
+			$user = Authentication::where( 'id' , $userID )->first();
 
 			$data = [
 				'user' => $user,
@@ -104,7 +104,7 @@ class ClinicSettingController extends Controller
 
 		if( session( 'isLogin' ) == true && !empty( session( 'name' ) ) && session( 'role' ) == 1  )
 		{
-			$adminUser = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $userID )->firstOrFail();
+			$adminUser = Authentication::where( 'id', $userID )->firstOrFail();
 
 			$validator =  Validator::make($request->all(), [
 				'phone'    => [
@@ -171,7 +171,6 @@ class ClinicSettingController extends Controller
 			if ($validator->fails()) {
 				return redirect( route('add_new_user') )->with('status', 'This phone number alrady used.Use different phone number');
 			} else {
-				$adminUser->clinic_id = session( 'clinicID' );
 				$adminUser->name      = $request->name;
 				$adminUser->phone     = $request->phone;
 				$adminUser->email     = $request->email;

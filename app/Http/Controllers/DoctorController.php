@@ -30,7 +30,7 @@ class DoctorController extends Controller
 	 */
 	public function index()
 	{
-		$doctors = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->orderBy( 'id','DESC' )->get();
+		$doctors = Doctor::orderBy( 'id','ASC' )->get();
 		$data = [
 			'doctors' => $doctors
 		];
@@ -73,7 +73,6 @@ class DoctorController extends Controller
 		{
 			$doctor = new Doctor;
 
-			$doctor->clinic_id = session( 'clinicID' );
 			$doctor->name = $request->name;
 			$doctor->phone = $request->phone;
 			$doctor->password = $request->password;
@@ -130,7 +129,7 @@ class DoctorController extends Controller
 	 */
 	public function show( $doctorID )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
+		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
 
 		$data = [
 			'doctor' => $doctor
@@ -147,7 +146,7 @@ class DoctorController extends Controller
 	 */
 	public function edit(  $doctorID  )
 	{
-		$doctor = DB::table( 'doctors' )->where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->first();
+		$doctor = DB::table( 'doctors' )->where( 'id' , $doctorID )->first();
 		$data = [
 			'doctor' => $doctor
 		];
@@ -181,9 +180,8 @@ class DoctorController extends Controller
 		}
 		else
 		{
-			$doctor = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $doctorID )->firstOrFail();
+			$doctor = Doctor::where( 'id', $doctorID )->firstOrFail();
 
-			// $doctor->clinic_id = session( 'clinicID' );
 			$doctor->name = $request->name;
 			$doctor->phone = $request->phone;
 			$doctor->password = $request->password;
@@ -224,7 +222,7 @@ class DoctorController extends Controller
 	 */
 	public function destroy( $doctorID )
 	{
-		$status = Doctor::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id' , $doctorID )->firstOrFail();
+		$status = Doctor::where( 'id' , $doctorID )->firstOrFail();
 		$status->destroy();
 		if( $status )
 		{

@@ -65,7 +65,6 @@ class AuthenticationController extends Controller
 		if( !empty( $authenticatedUser )  )
 		{
 			// Store data in the session...
-			session( [ 'clinicID'    => $authenticatedUser->clinic_id     ] );
 			session( [ 'authorID'    => $authenticatedUser->id     ] );
 			session( [ 'name'        => $authenticatedUser->name   ] );
 			session( [ 'phone'       => $authenticatedUser->phone  ] );
@@ -75,7 +74,7 @@ class AuthenticationController extends Controller
 			session( [ 'isLogin'     => true                       ] );
 
 
-            $clinic_setting = DB::table( 'clinic_settings' )->where( 'id' , $authenticatedUser->clinic_id )->first();
+            $clinic_setting = DB::table( 'clinic_settings' )->first();
             
             	session( [ 'clinic_name'    =>  $clinic_setting->clinic_name     ] );
 			session( [ 'clinic_image'    =>  $clinic_setting->logo     ] );
@@ -231,7 +230,7 @@ class AuthenticationController extends Controller
 
 		$authorID = session( 'authorID' );
 
-		$authentication       = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $authorID )->firstOrFail();
+		$authentication       = Authentication::where( 'id', $authorID )->firstOrFail();
 
 		$authentication->name = $request->name;
 			
@@ -309,11 +308,11 @@ class AuthenticationController extends Controller
 		$oldPassword = md5( $request->oldPassword );
 
 		// Check password  is write or not
-		$authenticatedUser = Authentication::where( 'id', $authorID )->where( 'clinic_id' , session( 'clinicID' ) )->first();
+		$authenticatedUser = Authentication::where( 'id', $authorID )->first();
 
 		if( $authenticatedUser->password === $oldPassword )
 		{
-			$authentication = Authentication::where( 'clinic_id' , session( 'clinicID' ) )->where( 'id', $authorID )->firstOrFail();
+			$authentication = Authentication::where( 'id', $authorID )->firstOrFail();
 			$authentication->password = $oldPassword;
 			$authentication->save();
 			return redirect()->back()->with('status',"Password Updated Successfully!");
